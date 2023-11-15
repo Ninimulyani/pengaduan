@@ -9,6 +9,16 @@
         $max_id = $key['id']+1;
     }
 
+
+    if (isset($_POST['submit'])){
+            $status = "Menunggu";
+			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`) VALUES ('$_POST[id]','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status')";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            echo "selesai validasi";
+			header("Location: ../public/home.php");
+        } 
+
 ?>
 
 <head>
@@ -79,7 +89,7 @@
             <hr/>
             <div class="row">
                 <div class="col-md-8 card-shadow-2 form-custom">
-                    <form class="form-horizontal" role="form" method="post" action="../private/validasi.php">
+                    <form class="form-horizontal" role="form" method="post">
                         <div class="form-group">
                             <label for="nomor" class="col-sm-3 control-label">Nomor Pengaduan</label>
                             <div class="col-sm-9">
@@ -88,7 +98,7 @@
 
                                     <i class="bi bi-123"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nomor" name="nama" value="<?php echo $max_id; ?>" readonly>
+                                    <input type="text" class="form-control" id="nomor" name="id" value="<?php echo $max_id; ?>" readonly>
                                 </div>
                             </div>
                         </div>
@@ -154,25 +164,6 @@
                                     <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['pengaduanError'] ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="captcha" class="col-sm-3 control-label">Captcha</label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <!--menampilkan gambar captcha-->
-                                    <img class="card-shadow-2" src="../private/captcha.php"/> <br/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="captcha" class="col-sm-3 control-label"></label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-open"></span></div>
-                                    <input type="text" class="form-control" id="captcha" name="captcha" placeholder="Masukkan Captcha di Atas" value="<?= @$_GET['captcha'] ?>" required>
-                                </div>
-                                <p class="error"><?= @$_GET['captchaError'] ?></p>
                             </div>
                         </div>
                         <div class="form-group">

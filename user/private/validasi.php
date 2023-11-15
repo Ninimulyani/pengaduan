@@ -1,45 +1,10 @@
 <?php
 	session_start();
 	require_once("database.php");
-	header("Location: ../public/home?status=success");
+	header("Location: ../public/home.php");
 	// Atasi Undefined
 	$nama = $email = $telpon = $alamat = $pengaduan = $captcha = $is_valid = "";
 	$namaError = $emailError = $telponError = $alamatError = $pengaduanError = $captchaError = "";
-
-    if (isset($_POST['submit'])){
-        echo "mulai validasi";
-
-        $nomor     = $_POST['nomor'];
-        $nama      = $_POST['nama'];
-        $email     = $_POST['email'];
-        $telpon    = $_POST['telpon'];
-        $alamat    = $_POST['alamat'];
-        $tujuan    = $_POST['tujuan'];
-        $pengaduan = $_POST['pengaduan'];
-        $captcha   = $_POST['captcha'];
-        $is_valid  = true;
-        // validate_input();
-
-        if ($is_valid) {
-			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`) VALUES (:nomor, :nama, :email, :telpon, :alamat, :tujuan, :isi, CURRENT_TIMESTAMP, :status)";
-			$stmt = $db->prepare($sql);
-			$stmt->bindValue(':nomor', $nomor);
-			$stmt->bindValue(':nama', $nama);
-			$stmt->bindValue(':email', $email);
-			$stmt->bindValue(':telpon', $telpon);
-			$stmt->bindValue(':alamat', htmlspecialchars($alamat));
-			$stmt->bindValue(':tujuan', $tujuan);
-			$stmt->bindValue(':isi', htmlspecialchars($pengaduan));
-			$stmt->bindValue(':status', "Menunggu");
-
-			$stmt->execute();
-            echo "selesai validasi";
-			header("Location: ../public/home?status=success");
-        } elseif (!$is_valid) {
-            echo "selesai validasi";
-            header("Location: ../public/lapor.php?nomor=$nomor&nama=$nama&namaError=$namaError&email=$email&emailError=$emailError&telpon=$telpon&telponError=$telponError&alamat=$alamat&alamatError=$alamatError&pengaduan=$pengaduan&pengaduanError=$pengaduanError&captcha=$captcha&captchaError=$captchaError");
-        }
-    }
 
     // Fungsi Untuk Melakukan Pengecekan Dari Setiap Inputan Di Masing - masing Fungsi
     function validate_input() {
