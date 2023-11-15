@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Cara | Dispendukcapil Bangkalan</title>
+    <title>Cara | Kantor Kelurahan Tamalanrea</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -38,8 +38,6 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="home.php">HOME</a></li>
-                            <li><a href="lapor.php">LAPOR</a></li>
-                            <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
                             <li class="active"><a href="">CARA</a></li>
                             <li class="dropdown">
                                 <a href="profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>

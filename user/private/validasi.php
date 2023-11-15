@@ -7,6 +7,8 @@
 	$namaError = $emailError = $telponError = $alamatError = $pengaduanError = $captchaError = "";
 
     if (isset($_POST['submit'])){
+        echo "mulai validasi";
+
         $nomor     = $_POST['nomor'];
         $nama      = $_POST['nama'];
         $email     = $_POST['email'];
@@ -16,7 +18,7 @@
         $pengaduan = $_POST['pengaduan'];
         $captcha   = $_POST['captcha'];
         $is_valid  = true;
-        validate_input();
+        // validate_input();
 
         if ($is_valid) {
 			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`) VALUES (:nomor, :nama, :email, :telpon, :alamat, :tujuan, :isi, CURRENT_TIMESTAMP, :status)";
@@ -31,8 +33,10 @@
 			$stmt->bindValue(':status', "Menunggu");
 
 			$stmt->execute();
+            echo "selesai validasi";
 			header("Location: ../public/home?status=success");
         } elseif (!$is_valid) {
+            echo "selesai validasi";
             header("Location: ../public/lapor.php?nomor=$nomor&nama=$nama&namaError=$namaError&email=$email&emailError=$emailError&telpon=$telpon&telponError=$telponError&alamat=$alamat&alamatError=$alamatError&pengaduan=$pengaduan&pengaduanError=$pengaduanError&captcha=$captcha&captchaError=$captchaError");
         }
     }
