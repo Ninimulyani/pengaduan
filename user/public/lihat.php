@@ -226,6 +226,9 @@ if(isset($_POST['submit'])) {
                                     }
                                     ?>
                                 </div>
+                                    <div>
+                                        <a href="detail.php?id=<?php echo $key['id']; ?>" class="btn btn-primary">Lihat Detail</a>
+                                    </div>
                                 <!-- panel body -->
                             </div>
                             <?php
