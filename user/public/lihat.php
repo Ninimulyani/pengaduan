@@ -52,7 +52,13 @@ if(isset($_POST['submit'])) {
     <!-- Bootstrap JavaScript -->
     <script src="js/bootstrap.js"></script>
 </head>
+<style>
+    .wrapper-media{
+        display: grid;
+        grid-template-columns: repeat(2, 100px);
+    }
 
+</style>
 <body>
     <!--Success Modal Saved-->
     <div class="modal fade" id="failedmodal" tabindex="-1" role="dialog">
@@ -176,6 +182,7 @@ if(isset($_POST['submit'])) {
                                 </div>
                                 <hr class="hr-laporan">
                                 <a class="media-left" href="#"><img class="img-circle card-shadow-2 img-sm" src="images/avatar/avatar1.png"></a>
+                            <div class="wrapper-media">
                                 <div class="media-body">
                                     <div>
                                         <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $key['nama']; ?></h4>
@@ -225,10 +232,53 @@ if(isset($_POST['submit'])) {
                                         echo "<h5 class=\"text-muted text-lg\"><i class=\"fa fa-exclamation-circle fa-fw\"></i>  Belum Ada Tanggapan</h5>";
                                     }
                                     ?>
-                                </div>
-                                    <div>
+                                    
+                                     <div>
                                         <a href="detail.php?id=<?php echo $key['id']; ?>" class="btn btn-primary">Lihat Detail</a>
                                     </div>
+                                </div>
+                                <div class="komen">
+
+                                <?php
+
+                                    require "function.php";
+
+                                    if (isset($_POST["komen"])){
+
+                                        if (tambah($_POST) > 0){
+                                            echo "<script>
+                                            alert('Data Berhasil Ditambahkan!')
+                                            </script>";
+                                        }else{
+                                            
+                                            echo "<script>
+                                            alert('Data Gagal Ditambahkan!')
+                                            </script>";
+                                        }
+
+
+                                    }
+
+                                    $result = mysqli_query($conn,"SELECT * FROM tb_komentar");
+                                    // $row = mysqli_fetch_assoc($result);
+                                    ?>
+                                    <form action="" method="post">
+                                        <label for="komentar">Komentar</label><br>
+                                        <input type="text" name="komentar">
+                                        <button type="submit" name="komen">Submit</button>
+                                    </form>
+
+
+                                    <h2>Komentar</h2>
+                                    <?php 
+                                    foreach ($result as $row):
+                                    ?>
+                                        <p><?= $row['komentar']?></p>
+                                    <?php endforeach;?>
+                                    
+                                </div>
+                            </div>
+                                   
                                 <!-- panel body -->
                             </div>
                             <?php
