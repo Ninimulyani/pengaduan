@@ -260,36 +260,32 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
+                                    <th>Username</th>
                                     <th>Email</th>
-                                    <th>Telpon</th>
                                     <th>Alamat</th>
-                                    <th>Tujuan</th>
-                                    <th>Isi Laporan</th>
-                                    <th>Tanggal</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                             // Ambil semua record dari tabel laporan
-                                $statement = $koneksi->query("SELECT * FROM user DESC");
+                                $statement = $koneksi->query("SELECT * FROM user ORDER BY nama DESC");
                             
-
+                                $no = 1;
                             foreach ($statement as $key ) {
-                                $mysqldate = $key['tanggal'];
-                                $phpdate = strtotime($mysqldate);
-                                $tanggal = date( 'd/m/Y', $phpdate);
                                 ?>
                                 <tr>
+                                    <td><?php echo $no++ ?></td>
                                     <td><?php echo $key['nama']; ?></td>
+                                    <td><?php echo $key['username']; ?></td>
                                     <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['telpon']; ?></td>
                                     <td><?php echo $key['alamat']; ?></td>
-                                    <td><?php echo $key['nama_divisi']; ?></td>
-                                    <td><?php echo $key['isi']; ?></td>
-                                    <td><?php echo $tanggal; ?></td>
-                                    <td><?php echo $key['status']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="">Edit</a>
+                                        <a class="btn btn-danger" href="">Hapus</a>
+                                    </td>
                                 </tr>
                                 <?php
                             }
