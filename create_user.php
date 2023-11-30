@@ -82,7 +82,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="images/logo.png">
+    <link rel="shortcut icon" href="user/public/images/logo.png">
     <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -108,7 +108,7 @@
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="image/logo.pbg" width="80">
+                            <img alt="image" src="user/public/images/logo.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
