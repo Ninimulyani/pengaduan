@@ -1,6 +1,46 @@
 <?php
     require_once("database.php"); // koneksi DB
 
+    function input($key) {
+        $key = trim($key);
+        $key = stripslashes($key);
+        $key = htmlspecialchars($key);
+        return $key;
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id=htmlspecialchars($_POST["id"]);
+        $nama=input($_POST["nama"]);
+        $angkatan=input($_POST["angkatan"]);
+        $telpon=input($_POST["telpon"]);
+        $email=input($_POST["email"]);
+        $alamat=input($_POST["alamat"]);
+        $nama_divisi=input($_POST["nama_divisi"]);
+        $isi=input($_POST["isi"]);
+        $status=input($_POST["status"]);
+        
+
+        $sql="UPDATE laporan SET
+        nama='$nama',
+        email='$email',
+        telpon='$telpon',
+        alamat='$alamat',
+        nama_divisi='$nama_divisi',
+        isi='$isi',
+        status='$status'
+		where id=$id";
+        
+        $hasil=mysqli_query($koneksi,$sql);
+
+        if ($hasil) {
+            echo '<script language="javascript"> location.href ="index.php?msg=succes_edit"; </script>';
+        }
+        else {
+            echo "<div class='alert alert-danger'> Data Gagal disimpan.</div>";
+
+        }
+
+    }
+
     logged_admin ();
     global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
     if ($id_admin > 0) {
@@ -29,7 +69,49 @@
         }
     }
 
- ?>
+
+    if(isset($_GET['hasil'])){
+        if($_GET['hasil'] == "edit"){
+            $tampil = mysqli_query($koneksi, "SELECT * from laporan where id = '$_GET[id]'");
+            $key = mysqli_fetch_assoc($tampil);
+            if($key){
+                $id = $key['id'];
+                $nama = $key['nama'];
+                $email = $key['email'];
+                $telpon = $key['telpon'];
+                $alamat = $key['alamat'];
+                $nama_divisi = $key['nama_divisi'];
+                $isi = $key['isi'];
+                $status = $key['status'];
+            }
+        }
+    }
+    
+    if(isset($_POST['submit'])){
+        $submit = mysqli_query($koneksi, "UPDATE laporan set
+                                    id = '$_POST[id]',
+                                    nama = '$_POST[nama]',
+                                    email = '$_POST[email]',
+                                    telpon = '$_POST[telpon]',
+                                    alamat = '$_POST[alamat]',
+                                    nama_divisi = '$_POST[nama_divisi]',
+                                    isi = '$_POST[isi]',
+                                    status = '$_POST[status]' where id = '$_GET[id]'");
+    if($submit)
+    {
+        echo "<script>
+                alert('simpan data sukses!');
+                document.location='index.php';
+            </script>";
+    }
+    else{
+        echo "<script>
+                alert('simpan data gagal');
+                document.location='index.php';
+                </script>";
+    }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +121,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png"width="40">
+    <link rel="shortcut icon" href="images/logo.png">
     <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -65,7 +147,7 @@
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="user/public/images/logo.png" width="80">
+                            <img alt="image" src="image/logo.pbg" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
@@ -172,7 +254,7 @@
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">My Dashboard</li>
+                <li class="breadcrumb-item active">Update Data</li>
             </ol>
 
             <!-- Icon Cards-->
@@ -252,72 +334,105 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Laporan
+                    <i class="fa fa-table"></i> Update Data Laporan
                 </div>
-                <div class="card-body">
-                    <a href="create.php" class="btn btn-primary mb-3 mx-2">Tambah Data</a>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
-                                    <th>Tujuan</th>
-                                    <th>Isi Laporan</th>
-                                    <th>Tanggal</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                            // Ambil semua record dari tabel laporan
-                            if ($id_admin > 0) {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = $id_admin ORDER BY laporan.id DESC");
-                            } else {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi ORDER BY laporan.id DESC");
-                            }
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
+                    <form class="form-horizontal" role="form" method="POST" action="perintah_update_laporan.php">
+                        <div class="form-group">
+                            <label for="nomor" class="col-sm-3 control-label">Nomor Pengaduan</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
 
-                            foreach ($statement as $key ) {
-                                $mysqldate = $key['tanggal'];
-                                $phpdate = strtotime($mysqldate);
-                                $tanggal = date( 'd/m/Y', $phpdate);
-                                ?>
-                                <tr>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['telpon']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
-                                    <td><?php echo $key['nama_divisi']; ?></td>
-                                    <td><?php echo $key['isi']; ?></td>
-                                    <td><?php echo $tanggal; ?></td>
-                                    <td><?php echo $key['status']; ?></td>
-                                    <td>
-                                    <?php
-                                        $id = base64_encode($key['id']);
-                                    ?>
-                                    <span><a href="update.php?id=<?php echo $id ?>" onclick="return confirm('Apakah anda yakin untuk edit data ?')" class="btn btn-info"><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg></a></span>
-                                    <span><a href="delete.php?id=<?php echo $id  ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?') " ><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                    </svg></a></span>
-                                </tr>
-                
-                                <?php
-                            }
-                            ?>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                    <i class="bi bi-123"></i>
+                                    </div>
+                                    <input type="text" class="form-control" id="nomor" name="id" value="<?php echo $max_id; ?>" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama" class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" id="nama" name="Nama" placeholder="Nama Lengkap" value="<?= $nama ?>" required autofocus />
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?= @$_GET['email'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['emailError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telpon" class="col-sm-3 control-label">Telpon</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
+                                    <input type="text" class="form-control" id="telpon" name="telpon" placeholder="087123456789" value="<?= @$_GET['telpon'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['telponError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat" class="col-sm-3 control-label">Alamat</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="<?= @$_GET['alamat'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['alamatError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tujuan" class="col-sm-3 control-label">Tujuan Pengaduan</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span></div>
+                                    <select class="form-control" name="tujuan">
+                                        <option value="1">Pelayanan Pendaftaran Penduduk</option>
+                                        <option value="2">Pelayanan Pencatatan Sipil</option>
+                                        <option value="3">Pengelolaan Informasi Administrasi Kependudukan</option>
+                                        <option value="4">Pemanfaatan Data Dan Inovasi Pelayanan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pengaduan" class="col-sm-3 control-label">Isi Pengaduan</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
+                                    <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
+                                </div>
+                                <p class="error"><?= @$_GET['pengaduanError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="komentar" class="col-sm-3 control-label">Komentar</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
+                                    <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= @$_GET['komentar'] ?></textarea>
+                                </div>
+                                <p class="error"><?= @$_GET['komentarError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-3">
+                                <input id="submit" name="submit" type="submit" value="Update Pengaduan" class="btn btn-primary-custom form-shadow">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
         <!-- /.container-fluid-->
