@@ -57,7 +57,7 @@ if(isset($_POST['login'])){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="images/logo.ico" width="20">
+    <link rel="shortcut icon" href="user/public/images/logo.png" width="20">
     <title>Login - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
     
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
