@@ -243,16 +243,16 @@ if(isset($_POST['submit'])) {
 
                                     require "function.php";
 
-                                    if (isset($_POST["komen"])){
+                                    if (isset($_POST["submit"])){
 
                                         if (tambah($_POST) > 0){
                                             echo "<script>
-                                            alert('Data Berhasil Ditambahkan!')
+                                            alert('Data Berhasil Ditambahkan!');
                                             </script>";
                                         }else{
                                             
                                             echo "<script>
-                                            alert('Data Gagal Ditambahkan!')
+                                            alert('Data Gagal Ditambahkan!');
                                             </script>";
                                         }
 

@@ -29,6 +29,25 @@
         }
     }
 
+    require_once("user/private/database.php");
+    
+    $statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
+
+    foreach ($statement as $key ) {
+        // get max id from tabel laporan
+        $max_id = $key['id']+1;
+    }
+
+
+    if (isset($_POST['submit'])){
+            $status = "Menunggu";
+			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`,`komentar`) VALUES ('$_POST[id]','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status','$_POST[komentar]')";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            echo "selesai validasi";
+			header("Location: index.php");
+        } 
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,7 +191,7 @@
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">My Dashboard</li>
+                <li class="breadcrumb-item active">Tambah Data</li>
             </ol>
 
             <!-- Icon Cards-->
@@ -252,56 +271,105 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Laporan
+                    <i class="fa fa-table"></i> Tambah Data Laporan
                 </div>
-                <div class="card-body">
-                    <a href="create.php" class="btn btn-primary mb-3 mx-2">Tambah Data</a>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
-                                    <th>Tujuan</th>
-                                    <th>Isi Laporan</th>
-                                    <th>Tanggal</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                            // Ambil semua record dari tabel laporan
-                            if ($id_admin > 0) {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = $id_admin ORDER BY laporan.id DESC");
-                            } else {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi ORDER BY laporan.id DESC");
-                            }
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
+                    <form class="form-horizontal" role="form" method="post">
+                        <div class="form-group">
+                            <label for="nomor" class="col-sm-3 control-label">Nomor Pengaduan</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
 
-                            foreach ($statement as $key ) {
-                                $mysqldate = $key['tanggal'];
-                                $phpdate = strtotime($mysqldate);
-                                $tanggal = date( 'd/m/Y', $phpdate);
-                                ?>
-                                <tr>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['telpon']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
-                                    <td><?php echo $key['nama_divisi']; ?></td>
-                                    <td><?php echo $key['isi']; ?></td>
-                                    <td><?php echo $tanggal; ?></td>
-                                    <td><?php echo $key['status']; ?></td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                    <i class="bi bi-123"></i>
+                                    </div>
+                                    <input type="text" class="form-control" id="nomor" name="id" value="<?php echo $max_id; ?>" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama" class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap" value="<?= @$_GET['nama'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?= @$_GET['email'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['emailError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telpon" class="col-sm-3 control-label">Telpon</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
+                                    <input type="text" class="form-control" id="telpon" name="telpon" placeholder="087123456789" value="<?= @$_GET['telpon'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['telponError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat" class="col-sm-3 control-label">Alamat</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="<?= @$_GET['alamat'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['alamatError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tujuan" class="col-sm-3 control-label">Tujuan Pengaduan</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span></div>
+                                    <select class="form-control" name="tujuan">
+                                        <option value="1">Pelayanan Pendaftaran Penduduk</option>
+                                        <option value="2">Pelayanan Pencatatan Sipil</option>
+                                        <option value="3">Pengelolaan Informasi Administrasi Kependudukan</option>
+                                        <option value="4">Pemanfaatan Data Dan Inovasi Pelayanan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pengaduan" class="col-sm-3 control-label">Isi Pengaduan</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
+                                    <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
+                                </div>
+                                <p class="error"><?= @$_GET['pengaduanError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="komentar" class="col-sm-3 control-label">Komentar</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
+                                    <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= @$_GET['komentar'] ?></textarea>
+                                </div>
+                                <p class="error"><?= @$_GET['komentarError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-3">
+                                <input id="submit" name="submit" type="submit" value="Kirim Pengaduan" class="btn btn-primary-custom form-shadow">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
         <!-- /.container-fluid-->

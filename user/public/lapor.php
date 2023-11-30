@@ -12,7 +12,7 @@
 
     if (isset($_POST['submit'])){
             $status = "Menunggu";
-			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`) VALUES ('$_POST[id]','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status')";
+			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`,`komentar`) VALUES ('$_POST[id]','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status','$_POST[komentar]')";
             $stmt = $db->prepare($sql);
             $stmt->execute();
             echo "selesai validasi";
@@ -164,6 +164,16 @@
                                     <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['pengaduanError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="komentar" class="col-sm-3 control-label">Komentar</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
+                                    <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= @$_GET['komentar'] ?></textarea>
+                                </div>
+                                <p class="error"><?= @$_GET['komentarError'] ?></p>
                             </div>
                         </div>
                         <div class="form-group">
