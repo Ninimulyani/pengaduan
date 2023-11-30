@@ -252,7 +252,7 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Laporan
+                    <i class="fa fa-table"></i> Semua User
                 </div>
                 <div class="card-body">
                     <a href="create_user.php" class="btn btn-primary mb-3 mx-2">Tambah Data User</a>

@@ -29,24 +29,52 @@
         }
     }
 
-    require_once("user/private/database.php");
+    require_once("database.php");
     
-    $statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
-
-    foreach ($statement as $key ) {
-        // get max id from tabel laporan
-        $max_id = $key['id']+1;
+    if(isset($_GET['edit'])){
+            $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = 1 AND laporan.id = '$_GET[id]'");
+            $data = mysqli_fetch_array($tampil);
+            if($data){
+                $id = $data['id'];
+                $nama = $data['nama'];
+                $email = $data['email'];
+                $telpon = $data['telpon'];
+                $alamat = $data['alamat'];
+                $tujuan = $data['nama_divisi'];
+                $id_tujuan = $data['tujuan'];
+                $isi = $data['isi'];
+                $tanggal = $data['tanggal'];
+                $status = $data['status'];
+                $komentar = $data['komentar'];
+            }
     }
 
-
-    if (isset($_POST['submit'])){
-            $status = "Menunggu";
-			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`,`komentar`) VALUES ('$_POST[id]','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status','$_POST[komentar]')";
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            echo "selesai validasi";
-			header("Location: index.php");
-        } 
+            //Perintah Mengubah Data
+            if(isset($_POST['submit'])){
+                $tanggal_sekarang = date("Y-m-d");
+                $simpan = mysqli_query($koneksi, "UPDATE laporan SET
+                                                    nama = '$_POST[nama]',
+                                                    email = '$_POST[email]',
+                                                    telpon = '$_POST[telpon]',
+                                                    alamat = '$_POST[alamat]', 
+                                                    status = '$_POST[status]', 
+                                                    isi = '$_POST[pengaduan]',
+                                                    komentar = '$_POST[komentar]', 
+                                                    tanggal = $tanggal_sekarang
+                                                    WHERE id = '$_GET[id]'");
+                
+            if($simpan){
+                echo "<script>
+                        alert('Edit data sukses!');
+                        document.location='index.php';
+                    </script>";
+            } else {
+                echo "<script>
+                        alert('Edit data Gagal!');
+                        document.location='index.php';
+                    </script>";
+            }
+            }
 
  ?>
 <!DOCTYPE html>
@@ -191,7 +219,7 @@
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Tambah Data</li>
+                <li class="breadcrumb-item active">Edit</li>
             </ol>
 
             <!-- Icon Cards-->
@@ -271,7 +299,7 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Tambah Data Laporan
+                    <i class="fa fa-table"></i> Edit Laporan
                 </div>
                 <div class="card-body mx-2 col-8">
                     <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
@@ -284,7 +312,7 @@
 
                                     <i class="bi bi-123"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nomor" name="id" value="<?php echo $max_id; ?>" readonly>
+                                    <input type="text" class="form-control" id="nomor" name="id" value="<?= $id ?>" readonly>
                                 </div>
                             </div>
                         </div>
@@ -293,7 +321,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap" value="<?= @$_GET['nama'] ?>" required>
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap" value="<?= $nama ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
@@ -303,7 +331,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?= @$_GET['email'] ?>" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?= $email ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['emailError'] ?></p>
                             </div>
@@ -313,7 +341,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
-                                    <input type="text" class="form-control" id="telpon" name="telpon" placeholder="087123456789" value="<?= @$_GET['telpon'] ?>" required>
+                                    <input type="text" class="form-control" id="telpon" name="telpon" placeholder="087123456789" value="<?= $telpon ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['telponError'] ?></p>
                             </div>
@@ -323,21 +351,20 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
-                                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="<?= @$_GET['alamat'] ?>" required>
+                                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="<?= $alamat ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['alamatError'] ?></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tujuan" class="col-sm-3 control-label">Tujuan Pengaduan</label>
+                            <label for="tujuan" class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span></div>
-                                    <select class="form-control" name="tujuan">
-                                        <option value="1">Pelayanan Pendaftaran Penduduk</option>
-                                        <option value="2">Pelayanan Pencatatan Sipil</option>
-                                        <option value="3">Pengelolaan Informasi Administrasi Kependudukan</option>
-                                        <option value="4">Pemanfaatan Data Dan Inovasi Pelayanan</option>
+                                    <select class="form-control" name="status">
+                                        <option value="<?= $status ?>"><?= $status ?></option>
+                                        <option value="Setuju">Setuju</option>
+                                        <option value="Menunggu">Menunggu</option>
                                     </select>
                                 </div>
                             </div>
@@ -347,7 +374,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                                    <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
+                                    <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= $isi ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['pengaduanError'] ?></p>
                             </div>
@@ -357,14 +384,14 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                                    <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= @$_GET['komentar'] ?></textarea>
+                                    <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= $komentar ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['komentarError'] ?></p>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-10 col-sm-offset-3">
-                                <input id="submit" name="submit" type="submit" value="Kirim Pengaduan" class="btn btn-primary-custom form-shadow">
+                                <input id="submit" name="submit" type="submit" value="Ubah" class="btn btn-primary-custom form-shadow">
                             </div>
                         </div>
                     </form>

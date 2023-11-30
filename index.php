@@ -255,7 +255,6 @@
                     <i class="fa fa-table"></i> Semua Laporan
                 </div>
                 <div class="card-body">
-                    <a href="create.php" class="btn btn-primary mb-3 mx-2">Tambah Data</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
@@ -268,6 +267,7 @@
                                     <th>Isi Laporan</th>
                                     <th>Tanggal</th>
                                     <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
+                                    <th class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -293,6 +293,9 @@
                                     <td><?php echo $key['isi']; ?></td>
                                     <td><?php echo $tanggal; ?></td>
                                     <td><?php echo $key['status']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                    </td>
                                 </tr>
                                 <?php
                             }
