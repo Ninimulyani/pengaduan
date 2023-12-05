@@ -266,6 +266,7 @@
                                     <th>Tujuan</th>
                                     <th>Isi Laporan</th>
                                     <th>Tanggal</th>
+                                    <th>File</th>
                                     <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
                                     <th class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
                                 </tr>
@@ -285,17 +286,18 @@
                                 $tanggal = date( 'd/m/Y', $phpdate);
                                 ?>
                                 <tr>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['telpon']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
-                                    <td><?php echo $key['nama_divisi']; ?></td>
-                                    <td><?php echo $key['isi']; ?></td>
-                                    <td><?php echo $tanggal; ?></td>
-                                    <td><?php echo $key['status']; ?></td>
-                                    <td>
-                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                    </td>
+                                        <td><?php echo $key['nama']; ?></td>
+                                        <td><?php echo $key['email']; ?></td>
+                                        <td><?php echo $key['telpon']; ?></td>
+                                        <td><?php echo $key['alamat']; ?></td>
+                                        <td><?php echo $key['nama_divisi']; ?></td>
+                                        <td><?php echo $key['isi']; ?></td>
+                                        <td><?php echo $tanggal; ?></td>
+                                        <td><a class="btn btn-danger" href="<?= 'user/public/' . $key['pdf_path'] ?>" download="<?= 'user/public/' . $key['pdf_path'] ?>">Download PDF</a></td>
+                                        <td><?php echo $key['status']; ?></td>
+                                        <td>
+                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        </td>
                                 </tr>
                 
                                 <?php

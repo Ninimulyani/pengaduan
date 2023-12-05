@@ -1,25 +1,37 @@
-
 <?php
-    require_once("../private/database.php");
-    $statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
+ require_once("../private/database.php");
 
+ // Fetch the max id from the 'laporan' table
+ $statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
+ foreach ($statement as $key) {
+     // get max id from tabel laporan
+     $max_id = $key['id'] + 1;
+ }
 
-    foreach ($statement as $key ) {
-        // get max id from tabel laporan
-        $max_id = $key['id']+1;
-    }
+ if (isset($_POST['submit'])) {
+     // Set the default status
+     $status = "Menunggu";
 
+     // Handle PDF file upload
+     $uploadDir = 'uploads/';
+     $pdfFileName = $_FILES['pdfFile']['name'];
+     $pdfFilePath = $uploadDir . $pdfFileName;
 
-    if (isset($_POST['submit'])){
-            $status = "Menunggu";
-			$sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`,`komentar`) VALUES ('$_POST[id]','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status','$_POST[komentar]')";
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            echo "selesai validasi";
-			header("Location: ../public/home.php");
-        } 
-
-?>
+     // Move the uploaded file to the specified directory
+     if (move_uploaded_file($_FILES['pdfFile']['tmp_name'], $pdfFilePath)) {
+         // Insert data into the database
+         $sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`, `komentar`, `pdf_path`) 
+                 VALUES ('$max_id','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status','$_POST[komentar]', '$pdfFilePath')";
+         $stmt = $db->prepare($sql);
+         $stmt->execute();
+         
+         echo "selesai validasi";
+         header("Location: ../public/home.php");
+     } else {
+         echo 'Failed to upload PDF file.';
+     }
+ }
+ ?>
 
 <head>
     <meta charset="utf-8">
@@ -89,7 +101,7 @@
             <hr/>
             <div class="row">
                 <div class="col-md-8 card-shadow-2 form-custom">
-                    <form class="form-horizontal" role="form" method="post">
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nomor" class="col-sm-3 control-label">Nomor Pengaduan</label>
                             <div class="col-sm-9">
@@ -174,6 +186,15 @@
                                     <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= @$_GET['komentar'] ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['komentarError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">Upload PDF File</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="bi bi-file-pdf"></i></div>
+                                    <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf" required>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
