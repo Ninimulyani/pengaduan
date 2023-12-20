@@ -89,12 +89,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Export">
-                    <a class="nav-link" href="export">
-                        <i class="fa fa-fw fa-print"></i>
-                        <span class="nav-link-text">Export</span>
-                    </a>
-                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">

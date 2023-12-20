@@ -49,6 +49,10 @@
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/admin.css" rel="stylesheet">
+
+    <style>
+
+</style>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -89,12 +93,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Export">
-                    <a class="nav-link" href="export">
-                        <i class="fa fa-fw fa-print"></i>
-                        <span class="nav-link-text">Export</span>
-                    </a>
-                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -257,6 +255,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <a style="margin-left:20px;" href="cetak.php" class="btn btn-success mb-3" href="">Print</a>
                             <thead>
                                 <tr>
                                     <th>Nama</th>
