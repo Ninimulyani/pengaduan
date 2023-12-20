@@ -51,7 +51,7 @@
                 </tr>
             </table>
             <section class="content-header">
-                <h3 align="center">Laporan Hasil Ujian</h3>
+                <h3 align="center">Laporan Pengaduan</h3>
             </section>
             <section class="content">
                 <div class="row">
