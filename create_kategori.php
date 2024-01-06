@@ -29,6 +29,45 @@
         }
     }
 
+
+    if (isset($_POST['register'])) {
+        $nama_divisi = $_POST['nama_divisi'];
+       
+        // Periksa apakah semua field yang diperlukan diisi
+        if (!empty($nama_divisi)) {
+            $sql = "INSERT INTO divisi (nama_divisi) VALUES (?)";
+            $stmt = $koneksi->prepare($sql);
+    
+            if ($stmt) {
+                $stmt->bind_param("s", $nama_divisi);
+    
+                if ($stmt->execute()) {
+                    session_start();
+                    $_SESSION['nama_divisi'] = $nama_divisi;
+                    $_SESSION['status'] = "register";
+                    header('location:kategori.php');
+                } else {
+                    echo "<script>
+                    alert('Register Gagal, Periksa Email dan Password Anda!');
+                    window.location.href = '../kategori/';
+                    </script>";
+                }
+    
+                $stmt->close();
+            } else {
+                echo "<script>
+                alert('Gagal menyiapkan pernyataan SQL.');
+                window.location.href = '../kategori/';
+                </script>";
+            }
+        } else {
+            echo "<script>
+            alert('Pendaftaran Gagal, Harap Isi Semua Informasi.');
+            window.location.href = '../kategori/';
+            </script>";
+        }
+    }
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +78,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png"width="40">
+    <link rel="shortcut icon" href="user/public/images/logo.png">
     <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -49,10 +88,6 @@
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/admin.css" rel="stylesheet">
-
-    <style>
-
-</style>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -100,6 +135,12 @@
                     </a>
                 </li>
 
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Export">
+                    <a class="nav-link" href="export">
+                        <i class="fa fa-fw fa-print"></i>
+                        <span class="nav-link-text">Export</span>
+                    </a>
+                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -177,7 +218,7 @@
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">My Dashboard</li>
+                <li class="breadcrumb-item active">Tambah Data</li>
             </ol>
 
             <!-- Icon Cards-->
@@ -257,65 +298,20 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Laporan
+                    <i class="fa fa-table"></i> Tambah Data Kategori
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <a style="margin-left:20px;" href="cetak.php" class="btn btn-success mb-3" href="">Print</a>
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
-                                    <th>Tujuan</th>
-                                    <th>Isi Laporan</th>
-                                    <th>Tanggal</th>
-                                    <th>File</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                            // Ambil semua record dari tabel laporan
-                            if ($id_admin > 0) {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = $id_admin ORDER BY laporan.id DESC");
-                            } else {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi ORDER BY laporan.id DESC");
-                            }
-
-                            foreach ($statement as $key ) {
-                                $mysqldate = $key['tanggal'];
-                                $phpdate = strtotime($mysqldate);
-                                $tanggal = date( 'd/m/Y', $phpdate);
-                                ?>
-                                <tr>
-                                        <td><?php echo $key['nama']; ?></td>
-                                        <td><?php echo $key['email']; ?></td>
-                                        <td><?php echo $key['telpon']; ?></td>
-                                        <td><?php echo $key['alamat']; ?></td>
-                                        <td><?php echo $key['nama_divisi']; ?></td>
-                                        <td><?php echo $key['isi']; ?></td>
-                                        <td><?php echo $tanggal; ?></td>
-                                        <td><a class="btn btn-danger" href="<?= 'user/public/' . $key['pdf_path'] ?>" download="<?= 'user/public/' . $key['pdf_path'] ?>">Download PDF</a></td>
-                                        <td><?php echo $key['status']; ?></td>
-                                        <td>
-                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                        </td>
-                                </tr>
-                
-                                <?php
-                            }
-                            ?>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
+                    <form class="form-horizontal" role="form" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nama Kategori</label>
+                        <input class="form-control" id="nama" type="text" name="nama" aria-describedby="userlHelp" placeholder="Masukkan Nama Kategori" required>
                     </div>
+
+                    <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Tambah">
+                    </form>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
         <!-- /.container-fluid-->

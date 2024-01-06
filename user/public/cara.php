@@ -152,8 +152,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jalan Soekarno-Hatta No 50
-                            <br>Bangkalan, Jawa Timur
+                            Jl.Bumi Tamalanrea Permai No.1,Tamalanrea 
+                            <br>Kec.Tamalanrea, Kota Makassar, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -188,9 +188,9 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                031-3095331 <br>
-                                dispendukcapil@bangkalankab.go.id <br>
-                                dispendukcapil.bangkalan@gmail.com
+                                0411-590753 <br>
+                                kelurahantamalanreatamalanrea.go.id <br>
+                                pemda.keluarahantamalanrea@gmail.com
                             </p>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
 
                 <div class="copyright py-4 text-center text-white">
                     <!-- <div class="container"> -->
-                        <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                        <small>V-3.0 | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
                     <!-- </div> -->
                 </div>
                 <!-- shadow -->

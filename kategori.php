@@ -39,7 +39,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png"width="40">
+    <link rel="shortcut icon" href="user/public/images/logo.png">
     <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -49,10 +49,6 @@
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/admin.css" rel="stylesheet">
-
-    <style>
-
-</style>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -257,60 +253,38 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Laporan
+                    <i class="fa fa-table"></i> Semua Kategori
                 </div>
                 <div class="card-body">
+                    <a href="create_kategori.php" class="btn btn-primary mb-3 mx-2">Tambah Data Kategori</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <a style="margin-left:20px;" href="cetak.php" class="btn btn-success mb-3" href="">Print</a>
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
-                                    <th>Tujuan</th>
-                                    <th>Isi Laporan</th>
-                                    <th>Tanggal</th>
-                                    <th>File</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
+                                    <th>No</th>
+                                    <th>Nama Divisi</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                             // Ambil semua record dari tabel laporan
-                            if ($id_admin > 0) {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = $id_admin ORDER BY laporan.id DESC");
-                            } else {
-                                $statement = $koneksi->query("SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi ORDER BY laporan.id DESC");
-                            }
-
+                                $statement = $koneksi->query("SELECT * FROM divisi ORDER BY nama_divisi DESC");
+                            
+                                $no = 1;
                             foreach ($statement as $key ) {
-                                $mysqldate = $key['tanggal'];
-                                $phpdate = strtotime($mysqldate);
-                                $tanggal = date( 'd/m/Y', $phpdate);
                                 ?>
                                 <tr>
-                                        <td><?php echo $key['nama']; ?></td>
-                                        <td><?php echo $key['email']; ?></td>
-                                        <td><?php echo $key['telpon']; ?></td>
-                                        <td><?php echo $key['alamat']; ?></td>
-                                        <td><?php echo $key['nama_divisi']; ?></td>
-                                        <td><?php echo $key['isi']; ?></td>
-                                        <td><?php echo $tanggal; ?></td>
-                                        <td><a class="btn btn-danger" href="<?= 'user/public/' . $key['pdf_path'] ?>" download="<?= 'user/public/' . $key['pdf_path'] ?>">Download PDF</a></td>
-                                        <td><?php echo $key['status']; ?></td>
-                                        <td>
-                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                        </td>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $key['nama_divisi']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="edit-kategori.php">Edit</a>
+                                        <a class="btn btn-danger">Hapus</a>
+                                    </td>
                                 </tr>
-                
                                 <?php
                             }
                             ?>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -48,6 +48,30 @@ if(isset($_POST['login'])){
         }
     }
  ?>
+
+<?php
+
+    
+$message = "";
+if(isset($_POST['login'])){
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+
+    $login = mysqli_query($koneksi, "SELECT * FROM ketua_rt WHERE username='$username' and password='$password'");
+    $cek = mysqli_num_rows($login);
+
+    if($cek > 0) {
+        $_SESSION['username'] = $username;
+        $_SESSION['status'] = "login";
+        header('location:dashboard-rt.php');
+    } else {
+        echo "<script>
+        alert('Login Gagal, Periksa Username dan Password Anda!');
+        header('location:../admin/');
+             </script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -73,30 +73,16 @@
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
-                            <span class="">Admin</span><br><br>
+                            <span class="">Ketua RT</span><br><br>
                             <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="index.php">
+                    <a class="nav-link" href="dashboard-rt.php">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
-                    </a>
-                </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="user.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data User</span>
-                    </a>
-                </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="kategori.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Kategori</span>
                     </a>
                 </li>
 
@@ -175,7 +161,7 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="index.php">Dashboard</a>
+                    <a href="dashboard-rt.php">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">My Dashboard</li>
             </ol>
