@@ -38,8 +38,6 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="home.php">HOME</a></li>
-                            <li><a href="lapor.php">LAPOR</a></li>
-                            <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
                             <li><a href="cara.php">CARA</a></li>
                             <li class="dropdown">
                                 <a href="profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -56,6 +54,8 @@
                             <li><a href="faq.php">FAQ</a></li>
                             <li><a href="bantuan.php">BANTUAN</a></li>
                             <li class="active"><a href="">KONTAK</a></li>
+                            <li><a href="../../login.php">LOGIN</a></li>
+                            <li><a href="register-user.php">REGISTER</a></li>
                         </ul>
                         <!-- <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">LOGIN</a></li>

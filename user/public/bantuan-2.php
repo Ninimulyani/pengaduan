@@ -35,27 +35,28 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="home.php">HOME</a></li>
-                            <li><a href="cara.php">CARA</a></li>
-                            <li class="dropdown">
-                                <a href="profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="profildinas.php">Profil Dinas</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="profildinas.php">Visi dan Misi</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="profildinas.php">Struktur Organisasi</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="profildinas.php">Motto / Maklumat Pelayanan</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="faq.php">FAQ</a></li>
-                            <li  class="active"><a href="">BANTUAN</a></li>
-                            <li><a href="kontak.php">KONTAK</a></li>
-                            <li><a href="../../login.php">LOGIN</a></li>
-                            <li><a href="register-user.php">REGISTER</a></li>
-                        </ul>
+                    <ul class="nav navbar-nav">
+                        <li><a href="home-2.php">HOME</a></li>
+                        <li><a href="lapor.php">LAPOR</a></li>
+                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="cara-2.php">CARA</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="profildinas-2.php">Profil Dinas</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Visi dan Misi</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="faq-2.php">FAQ</a></li>
+                        <li class="active"><a href="bantuan-2.php">BANTUAN</a></li>
+                        <li><a href="kontak-2.php">KONTAK</a></li>
+                        <li><a href="../../login.php">LOGOUT</a></li>
+                    </ul>
                         <!-- <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">LOGIN</a></li>
                             <li><a href="#">REGISTER</a></li>

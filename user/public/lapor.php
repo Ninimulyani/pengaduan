@@ -69,7 +69,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.php">HOME</a></li>
+                        <li><a href="home-2.php">HOME</a></li>
                         <li class="active"><a href="lapor">LAPOR</a></li>
                         <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
                         <li><a href="cara.php">CARA</a></li>

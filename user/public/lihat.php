@@ -39,7 +39,7 @@ if(isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lihat Pengaduan | Dispendukcapil Bangkalan</title>
+    <title>Lihat Pengaduan | Ke</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -106,25 +106,26 @@ if(isset($_POST['submit'])) {
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.php">HOME</a></li>
+                        <li><a href="home-2.php">HOME</a></li>
                         <li><a href="lapor.php">LAPOR</a></li>
-                        <li class="active"><a href="lihat">LIHAT PENGADUAN</a></li>
-                        <li><a href="cara.php">CARA</a></li>
+                        <li class="active"><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="profildinas.php">Profil Dinas</a></li>
+                                <li><a href="profildinas-2.php">Profil Dinas</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas.php">Visi dan Misi</a></li>
+                                <li><a href="profildinas-2.php">Visi dan Misi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas.php">Struktur Organisasi</a></li>
+                                <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas.php">Motto / Maklumat Pelayanan</a></li>
+                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
-                        <li><a href="faq.php">FAQ</a></li>
-                        <li><a href="bantuan.php">BANTUAN</a></li>
-                        <li><a href="kontak.php">KONTAK</a></li>
+                        <li><a href="faq-2.php">FAQ</a></li>
+                        <li><a href="bantuan-2.php">BANTUAN</a></li>
+                        <li><a href="kontak-2.php">KONTAK</a></li>
+                        <li><a href="../../login.php">LOGOUT</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -135,17 +136,31 @@ if(isset($_POST['submit'])) {
             <h3>Lihat Pengaduan</h3>
             <hr/>
             <div class="row">
-                <div class="col-md-6 card-shadow-2 form-custom">
+                <div class="col-md-11.5 card-shadow-1 form-custom">
                     <form class="form-horizontal" role="form" method="post">
                         <div class="form-group">
-                            <label for="nomor" class="col-sm-4 control-label">Nomor Pengaduan</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-exclamation-sign"></span></div>
-                                    <input type="text" class="form-control" id="nomor" name="nomor" placeholder="Masukkan Nomor Pengaduan" required>
-                                </div>
-                                <p class="error"><?= @$nomorError ?></p>
-                            </div>
+                        <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <a style="margin-left:20px;" href="cetak.php" class="btn btn-success mb-3" href="">Print</a>
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Telpon</th>
+                                    <th>Alamat</th>
+                                    <th>Tujuan</th>
+                                    <th>Isi Laporan</th>
+                                    <th>Tanggal</th>
+                                    <th>File</th>
+                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
+                                    <th class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
+                                </tr>
+                            </thead>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-4">

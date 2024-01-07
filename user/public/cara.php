@@ -54,6 +54,8 @@
                             <li><a href="faq.php">FAQ</a></li>
                             <li><a href="bantuan.php">BANTUAN</a></li>
                             <li><a href="kontak.php">KONTAK</a></li>
+                            <li><a href="../../login.php">LOGIN</a></li>
+                            <li><a href="register-user.php">REGISTER</a></li>
                         </ul>
                         <!-- <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">LOGIN</a></li>
@@ -103,7 +105,7 @@
                     </li>
         			<li>
                         <p>
-                            Dispendukcapil Bangkalan akan menghubungi Anda melalui saluran yang telah Anda
+                            Kelurahan Tamalanrea akan menghubungi Anda melalui saluran yang telah Anda
                             cantumkan dalam form pengaduan apabila pengaduan yang Anda sampaikan belum
                             memenuhi kriteria untuk ditindaklanjuti.
                         </p>
