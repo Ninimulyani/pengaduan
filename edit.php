@@ -28,8 +28,6 @@
             $total_laporan_menunggu = $row['COUNT(*)'];
         }
     }
-
-    require_once("database.php");
     
     if(isset($_GET['edit'])){
             $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = 1 AND laporan.id = '$_GET[id]'");

@@ -29,6 +29,19 @@
         }
     }
 
+        // Logic to handle delete action
+        if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+            $deleteId = $_GET['id'];
+            // Perform the deletion query
+            $koneksi->query("DELETE FROM divisi WHERE id_divisi = $deleteId");
+            // Redirect to the same page after deletion
+            echo "<script>
+            alert('Hapus data sukses!');
+            document.location='kategori.php';
+            </script>";
+            exit();
+        }
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,8 +228,8 @@
                                     <td><?php echo $no++ ?></td>
                                     <td><?php echo $key['nama_divisi']; ?></td>
                                     <td>
-                                        <a class="btn btn-warning" href="edit-kategori.php">Edit</a>
-                                        <a class="btn btn-danger">Hapus</a>
+                                        <a class="btn btn-warning" href="edit-kategori.php?edit&id=<?= $key['id_divisi'] ?>">Edit</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id_divisi'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
                                     </td>
                                 </tr>
                                 <?php

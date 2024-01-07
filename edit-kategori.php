@@ -32,7 +32,7 @@
     require_once("database.php");
     
     if(isset($_GET['edit'])){
-            $tampil = mysqli_query($koneksi, "SELECT * FROM divisi, divisi WHERE nama_divisi = divisi.id_divisi = '$_GET[id]'");
+            $tampil = mysqli_query($koneksi, "SELECT * FROM divisi WHERE id_divisi = '$_GET[id]'");
             $data = mysqli_fetch_array($tampil);
             if($data){
                 $id_divisi = $data['id_divisi'];
@@ -45,8 +45,8 @@
             if(isset($_POST['submit'])){
                 $tanggal_sekarang = date("Y-m-d");
                 $simpan = mysqli_query($koneksi, "UPDATE divisi SET
-                                                    nama_divisi = '$_POST[nama_divisi]',
-                                                    WHERE id_divisi = '$_GET[id_divisi]'");
+                                                    nama_divisi = '$_POST[nama_divisi]'
+                                                    WHERE id_divisi = '$_GET[id]'");
                 
             if($simpan){
                 echo "<script>
@@ -302,7 +302,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control" id_divisi="nama_divisi" nama_divisi="nama_divisi" placeholder="Nama Kategori" value="<?= $nama_divisi ?>" required>
+                                    <input type="text" class="form-control"  name="nama_divisi" placeholder="Nama Kategori" value="<?= $nama_divisi ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>

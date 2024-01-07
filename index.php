@@ -29,6 +29,19 @@
         }
     }
 
+    // Logic to handle delete action
+        if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+            $deleteId = $_GET['id'];
+            // Perform the deletion query
+            $koneksi->query("DELETE FROM laporan WHERE id = $deleteId");
+            // Redirect to the same page after deletion
+            echo "<script>
+            alert('Hapus data sukses!');
+            document.location='index.php';
+            </script>";
+            exit();
+        }
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -240,6 +253,7 @@
                                         <td><?php echo $key['status']; ?></td>
                                         <td>
                                             <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                            <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
                                         </td>
                                 </tr>
                 
