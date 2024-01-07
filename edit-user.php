@@ -29,18 +29,46 @@
         }
     }
 
-            // Logic to handle delete action
-            if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
-                $deleteId = $_GET['id'];
-                // Perform the deletion query
-                $koneksi->query("DELETE FROM user WHERE id = $deleteId");
-                // Redirect to the same page after deletion
-                echo "<script>
-                alert('Hapus data sukses!');
-                document.location='user.php';
-                </script>";
-                exit();
+    require_once("database.php");
+    
+    if(isset($_GET['edit'])){
+            $tampil = mysqli_query($koneksi, "SELECT * FROM user WHERE id = '$_GET[id]'");
+            $data = mysqli_fetch_array($tampil);
+            if($data){
+                $id = $data['id'];
+                $nama = $data['nama'];
+                $username = $data['username'];
+                $email = $data['email'];
+                $alamat = $data['alamat'];
+                $telepon = $data['telpon'];
+
             }
+    }
+
+            //Perintah Mengubah Data
+            if(isset($_POST['submit'])){
+                $tanggal_sekarang = date("Y-m-d");
+                $simpan = mysqli_query($koneksi, "UPDATE user SET
+                                                    nama = '$_POST[nama]',
+                                                    username = '$_POST[username]',
+                                                    email = '$_POST[email]',
+                                                    alamat = '$_POST[alamat]',
+                                                    telpon = '$_POST[telepon]'
+                                                    WHERE id = '$_GET[id]'");
+                
+            if($simpan){
+                echo "<script>
+                        alert('Edit data sukses!');
+                        document.location='user.php';
+                    </script>";
+            } else {
+                echo "<script>
+                        alert('Edit data Gagal!');
+                        document.location='kategori.php';
+                    </script>";
+            }
+            }
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +79,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
+    <link rel="shortcut icon" href=" user/public/images/logo.png">
     <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -108,13 +136,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="kategori.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Komentar</span>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Export">
+                    <a class="nav-link" href="export">
+                        <i class="fa fa-fw fa-print"></i>
+                        <span class="nav-link-text">Export</span>
                     </a>
                 </li>
-
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -126,6 +153,54 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-envelope"></i>
+                        <span class="d-lg-none">Messages
+                            <span class="badge badge-pill badge-primary">12 New</span>
+                        </span>
+                        <span class="indicator text-primary d-none d-lg-block">
+                            <i class="fa fa-fw fa-circle"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+                        <h6 class="dropdown-header">New Messages:</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                            <strong>David Miller</strong>
+                            <span class="small float-right text-muted">11:21 AM</span>
+                            <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item small" href="#">View all messages</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-bell"></i>
+                        <span class="d-lg-none">Alerts
+                            <span class="badge badge-pill badge-warning">6 New</span>
+                        </span>
+                        <span class="indicator text-warning d-none d-lg-block">
+                            <i class="fa fa-fw fa-circle"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                        <h6 class="dropdown-header">New Alerts:</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                            <span class="text-success">
+                                <strong>
+                                    <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
+                                </strong>
+                            </span>
+                            <span class="small float-right text-muted">11:21 AM</span>
+                            <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item small" href="#">View all alerts</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out"></i>Logout
@@ -144,7 +219,7 @@
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">My Dashboard</li>
+                <li class="breadcrumb-item active">Edit</li>
             </ol>
 
             <!-- Icon Cards-->
@@ -201,6 +276,21 @@
                     </div>
                 </div>
 
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-danger o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fa fa-fw fa-support"></i>
+                            </div>
+                            <div class="mr-5">13 New Tickets!</div>
+                        </div>
+                        <a class="card-footer text-white clearfix small z-1" href="#">
+                            <span class="float-left">Laporan Masuk</span>
+                            <span class="float-right">
+                                <i class="fa fa-angle-right"></i>
+                            </span>
+                        </a>
+                    </div>
                 </div>
 
             </div>
@@ -209,49 +299,72 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua User
+                    <i class="fa fa-table"></i> Edit Kategori
                 </div>
-                <div class="card-body">
-                    <a href="create_user.php" class="btn btn-primary mb-3 mx-2">Tambah Data User</a>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Alamat</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                            // Ambil semua record dari tabel laporan
-                                $statement = $koneksi->query("SELECT * FROM user ORDER BY nama DESC");
-                            
-                                $no = 1;
-                            foreach ($statement as $key ) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['username']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
-                                    <td>
-                                        <a class="btn btn-warning" href="edit-user.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="card-body mx-2 col-8">
+                    <a href="kategori.php" class="btn btn-primary mb-3">Kembali</a>
+                    <form class="form-horizontal" role="form" method="post">
+
+                        <div class="form-group">
+                            <label for="nama" class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control"  name="nama" placeholder="Nama User" value="<?= $nama ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-3 control-label">Username</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control"  name="username" placeholder="Username" value="<?= $username ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="email" class="form-control"  name="email" placeholder="Email" value="<?= $email ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat" class="col-sm-3 control-label">Alamat</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control"  name="alamat" placeholder="Telepon" value="<?= $alamat ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telepon" class="col-sm-3 control-label">Telepon</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control"  name="telepon" placeholder="Telepon" value="<?= $telepon ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-3">
+                                <input id="submit" name="submit" type="submit" value="Ubah" class="btn btn-primary-custom form-shadow">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                <div class="card-footer small text-muted"></div>
             </div>
         </div>
         <!-- /.container-fluid-->
