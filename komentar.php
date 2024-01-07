@@ -28,22 +28,7 @@
             $total_laporan_menunggu = $row['COUNT(*)'];
         }
     }
-    if (isset($_GET['submit'])) {
-        $id =htmlspecialchars($_GET["id"]);
-        $id = base64_decode($id);
-        
 
-        $sql="delete from user where id ='$id' ";
-        $hasil=mysqli_query($kon,$sql);
-
-            if ($hasil) {
-                echo '<script language="javascript"> location.href ="user.php?msg=succes_hapus"; </script>';
-            }
-            else {
-                echo "<div class='alert alert-danger'> Data Gagal dihapus.</div>";
-
-            }
-        }
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +97,7 @@
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="kategori.php">
+                    <a class="nav-link" href="komentar.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Komentar</span>
                     </a>
@@ -212,39 +197,33 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua User
+                    <i class="fa fa-table"></i> Semua Komentar
                 </div>
                 <div class="card-body">
-                    <a href="create_user.php" class="btn btn-primary mb-3 mx-2">Tambah Data User</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Username</th>
                                     <th>Email</th>
-                                    <th>Alamat</th>
+                                    <th>Isi Komentar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                             // Ambil semua record dari tabel laporan
-                                $statement = $koneksi->query("SELECT * FROM user ORDER BY nama DESC");
+                                $statement = $koneksi->query("SELECT * FROM komentar ORDER BY id_komentar DESC");
                             
                                 $no = 1;
                             foreach ($statement as $key ) {
                                 ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['username']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
+                                    <td><?php echo $key['id_komentar']; ?></td>
+                                    <td><?php echo $key['isi_komentar']; ?></td>
                                     <td>
-                                        <a class="btn btn-warning" href="">Edit</a>
-                                        <a class="btn btn-danger" href="delete-user.php?id=<?php echo $data['id']; ?>">Hapus</a>
+                                        <a class="btn btn-danger">Hapus</a>
                                     </td>
                                 </tr>
                                 <?php

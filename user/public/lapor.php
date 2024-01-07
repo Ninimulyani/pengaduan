@@ -72,22 +72,23 @@
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="active"><a href="lapor">LAPOR</a></li>
                         <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
-                        <li><a href="cara.php">CARA</a></li>
+                        <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="profildinas.php">Profil Dinas</a></li>
+                                <li><a href="profildinas-2.php">Profil Dinas</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas.php">Visi dan Misi</a></li>
+                                <li><a href="profildinas-2.php">Visi dan Misi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas.php">Struktur Organisasi</a></li>
+                                <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas.php">Motto / Maklumat Pelayanan</a></li>
+                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
-                        <li><a href="faq.php">FAQ</a></li>
-                        <li><a href="bantuan.php">BANTUAN</a></li>
-                        <li><a href="kontak.php">KONTAK</a></li>
+                        <li><a href="faq-2.php">FAQ</a></li>
+                        <li><a href="bantuan-2.php">BANTUAN</a></li>
+                        <li><a href="kontak-2.php">KONTAK</a></li>
+                        <li><a href="../../login.php">LOGOUT</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

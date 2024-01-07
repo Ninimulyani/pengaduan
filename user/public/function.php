@@ -1,4 +1,4 @@
-<?php 
+<!-- <?php 
 $conn = mysqli_connect("localhost", "root", "", "kp");
 
 
@@ -17,4 +17,4 @@ function tambah($data){
 	mysqli_query($conn, $query);
 	return mysqli_affected_rows($conn);
 }
-?>
+?> -->

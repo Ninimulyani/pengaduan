@@ -1,4 +1,30 @@
-<?php?>
+<?php
+ require_once("../private/database.php");
+ 
+if (isset($_POST['submit'])) {
+    // Set the default status
+    $status = "Menunggu";
+
+    // Handle PDF file upload
+    $uploadDir = 'uploads/';
+    $pdfFileName = $_FILES['pdfFile']['name'];
+    $pdfFilePath = $uploadDir . $pdfFileName;
+
+    // Move the uploaded file to the specified directory
+    if (move_uploaded_file($_FILES['pdfFile']['tmp_name'], $pdfFilePath)) {
+        // Insert data into the database
+        $sql = "INSERT INTO `komentar` (`id_komentar`, `email`, `isi_komentar`) 
+                VALUES ('$max_id','$_POST[email]','$_POST[isi_komentar]')";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        
+        echo "selesai validasi";
+        header("Location: ../public/faq.php");
+    } else {
+        echo 'Failed to upload PDF file.';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -69,6 +95,34 @@
             <div class="main-content">
                 <h3>Frequently Asked Question (FAQ):</h3>
                 <hr/>
+                <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                            <label for="email" class="col-sm-1 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?= @$_GET['email'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['emailError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telpon" class="col-sm-1 control-label">Isi Komentar</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
+                                    <input type="text" class="form-control" id="isi_komentar" name="telpon" placeholder="Dimana alamat kantornya ?" value="<?= @$_GET['isi_komentar'] ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['telponError'] ?></p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-10 col-sm-offset-1">
+                                <input id="submit" name="submit" type="submit" value="Kirim Komentar" class="btn btn-primary-custom form-shadow">
+                            </div>
+                        </div>
+                        <br>
+                        <br>
 		        <p class="text-justify">
                     Q: Apakah Aplikasi Pengaduan Masyarakat Dispendukcapil Bangkalan ini?
                     <br />

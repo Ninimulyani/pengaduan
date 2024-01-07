@@ -33,6 +33,7 @@ if(isset($_POST['submit'])) {
         }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -106,7 +107,7 @@ if(isset($_POST['submit'])) {
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="home-2.php">HOME</a></li>
+                        <li><a href="home.php">HOME</a></li>
                         <li><a href="lapor.php">LAPOR</a></li>
                         <li class="active"><a href="lihat.php">LIHAT PENGADUAN</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
@@ -136,52 +137,22 @@ if(isset($_POST['submit'])) {
             <h3>Lihat Pengaduan</h3>
             <hr/>
             <div class="row">
-                <div class="col-md-11.5 card-shadow-1 form-custom">
+                <div class="col-md-6 card-shadow-2 form-custom">
                     <form class="form-horizontal" role="form" method="post">
                         <div class="form-group">
-                        <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
-                                    <th>Isi Laporan</th>
-                                    <th>Tanggal</th>
-                                    <th href="detail.php" class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                            // Ambil semua record dari tabel laporan
-                                $statement = $koneksi->query("SELECT * FROM laporan ORDER BY id DESC");
-                            
-                                $no = 1;
-                            foreach ($statement as $key ) {
-                                ?>
-                                <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['telpon']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
-                                    <td><?php echo $key['isi']; ?></td>
-                                    <td><?php echo $key['tanggal']; ?></td>
-                                    <td>
-                                        <a class="btn btn-warning" href="">Detail</a>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                            </tbody>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <label for="nomor" class="col-sm-4 control-label">Nomor Pengaduan</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-exclamation-sign"></span></div>
+                                    <input type="text" class="form-control" id="nomor" name="nomor" placeholder="Masukkan Nomor Pengaduan" required>
+                                </div>
+                                <p class="error"><?= @$nomorError ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-4">
+                                <input id="submit" name="submit" type="submit" value="Lihat Pengaduan" class="btn btn-primary-custom form-shadow">
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -290,29 +261,6 @@ if(isset($_POST['submit'])) {
 
                                     }
 
-                                    $result = mysqli_query($conn,"SELECT * FROM tb_komentar");
-                                    // $row = mysqli_fetch_assoc($result);
-                                    ?>
-                                    <form action="" method="post">
-                                        <label for="komentar">Komentar</label><br>
-                                        <input type="text" name="komentar">
-                                        <button type="submit" name="komen">Submit</button>
-                                    </form>
-
-
-                                    <h2>Komentar</h2>
-                                    <?php 
-                                    foreach ($result as $row):
-                                    ?>
-                                        <p><?= $row['komentar']?></p>
-                                    <?php endforeach;?>
-                                    
-                                </div>
-                            </div>
-                                   
-                                <!-- panel body -->
-                            </div>
-                            <?php
                         }
                     }
                     ?>
