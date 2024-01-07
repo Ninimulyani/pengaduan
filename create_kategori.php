@@ -45,7 +45,10 @@
                     session_start();
                     $_SESSION['nama_divisi'] = $nama_divisi;
                     $_SESSION['status'] = "register";
-                    header('location:kategori.php');
+                    echo "<script>
+                    alert('Tambah data sukses!');
+                    document.location='kategori.php';
+                    </script>";
                 } else {
                     echo "<script>
                     alert('Register Gagal, Periksa Email dan Password Anda!');
@@ -63,7 +66,7 @@
         } else {
             echo "<script>
             alert('Pendaftaran Gagal, Harap Isi Semua Informasi.');
-            window.location.href = '../kategori/';
+            window.location.href = 'create_kategori.php';
             </script>";
         }
     }
@@ -301,11 +304,11 @@
                     <i class="fa fa-table"></i> Tambah Data Kategori
                 </div>
                 <div class="card-body mx-2 col-8">
-                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
+                    <a href="kategori.php" class="btn btn-primary mb-3">Kembali</a>
                     <form class="form-horizontal" role="form" method="post">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kategori</label>
-                        <input class="form-control" id="nama" type="text" name="nama" aria-describedby="userlHelp" placeholder="Masukkan Nama Kategori" required>
+                        <input class="form-control" id="nama" type="text" name="nama_divisi" aria-describedby="userlHelp" placeholder="Masukkan Nama Kategori" required>
                     </div>
 
                     <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Tambah">
