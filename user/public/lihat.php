@@ -141,31 +141,47 @@ if(isset($_POST['submit'])) {
                         <div class="form-group">
                         <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <a style="margin-left:20px;" href="cetak.php" class="btn btn-success mb-3" href="">Print</a>
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Telpon</th>
                                     <th>Alamat</th>
-                                    <th>Tujuan</th>
                                     <th>Isi Laporan</th>
                                     <th>Tanggal</th>
-                                    <th>File</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Status</th>
-                                    <th class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
+                                    <th href="detail.php" class="sorting_asc_disabled sorting_desc_disabled">Aksi</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <?php
+                            // Ambil semua record dari tabel laporan
+                                $statement = $koneksi->query("SELECT * FROM laporan ORDER BY id DESC");
+                            
+                                $no = 1;
+                            foreach ($statement as $key ) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $key['nama']; ?></td>
+                                    <td><?php echo $key['email']; ?></td>
+                                    <td><?php echo $key['telpon']; ?></td>
+                                    <td><?php echo $key['alamat']; ?></td>
+                                    <td><?php echo $key['isi']; ?></td>
+                                    <td><?php echo $key['tanggal']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="">Detail</a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-4">
-                                <input id="submit" name="submit" type="submit" value="Lihat Pengaduan" class="btn btn-primary-custom form-shadow">
-                            </div>
                         </div>
                     </form>
                 </div>
