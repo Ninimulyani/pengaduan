@@ -49,7 +49,6 @@
                                 <li class="divider"></li>
                                 <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>
@@ -108,7 +107,7 @@
                     <li>
                         Untuk mendapatkan nomor pengaduan silakan hubungi
                         <a href="kontak.php">Bagian Pengaduan Masyarakat</a>
-                        Dispendukcapil Bangkalan
+                        Kelurahan Tamalanrea
                     </li>
                     <li>
                         Untuk mengetahui status pengaduan, masukan nomor pengaduan
@@ -123,7 +122,7 @@
                     <li>
                         Silahkan datang langsung ke alamat
                         <a href="kontak.php">Bagian Hubungan Masyarakat</a>
-                        Dispendukcapil Bangkalan
+                        Kelurahan Tamalanrea
                     </li>
                     <li>
                         Setelah data Anda dimasukan, Anda akan diberikan nomor pengaduan,
@@ -176,8 +175,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jalan Soekarno-Hatta No 50
-                            <br>Bangkalan, Jawa Timur
+                            Jl.Bumi Tamalanrea Permai No.1,Tamalanrea
+                            <br>Kec.Tamalanrea, Kota Makassar, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -212,9 +211,9 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                031-3095331 <br>
-                                dispendukcapil@bangkalankab.go.id <br>
-                                dispendukcapil.bangkalan@gmail.com
+                                90245 <br>
+                                kelurahantamalanrea@tamalanrea.go.id <br>
+                                kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
                     </div>
@@ -223,7 +222,7 @@
 
             <div class="copyright py-4 text-center text-white">
                 <div class="container">
-                    <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                    <small>| Copyright &copy; Kelurahan Tamalanrea</small>
                 </div>
             </div>
             <!-- shadow -->

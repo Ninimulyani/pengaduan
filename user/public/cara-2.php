@@ -50,7 +50,6 @@
                                 <li class="divider"></li>
                                 <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>

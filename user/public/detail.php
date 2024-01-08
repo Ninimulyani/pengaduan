@@ -29,7 +29,7 @@ if ($id !== null) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lihat Pengaduan | Dispendukcapil Bangkalan</title>
+    <title>Lihat Pengaduan | Kelurahan Tamalanrea</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -178,7 +178,7 @@ if ($id !== null) {
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
             </div>
         </div>
     </div>

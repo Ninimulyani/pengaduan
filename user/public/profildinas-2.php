@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Profil Dinas | Dispendukcapil Bangkalan</title>
+    <title>Profil Dinas | Kantor Kelurahan Tamalanrea</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -50,7 +50,6 @@
                                 <li class="divider"></li>
                                 <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>
@@ -73,7 +72,6 @@
                       <li class="active"><a href="#profil" data-toggle="tab">Profil Dinas</a></li> <!-- Untuk Tab pertama berikan li class=”active” agar pertama kali halaman di load tab langsung active-->
                       <li><a href="#visi" data-toggle="tab">Visi dan Misi</a></li>
                       <li><a href="#struktur" data-toggle="tab">Struktur Organisasi</a></li>
-                      <li><a href="#motto" data-toggle="tab">Motto / Maklumat Pelayanan</a></li>
                 </ul>
 
                 <!-- Tab panes, ini content dari tab di atas -->
@@ -196,12 +194,7 @@
                       </div>
                       <!-- End Struktur -->
 
-                      <!-- Motto -->
-                      <div class="tab-pane" id="motto">
-                          <h4>Motto</h4>
-                          <img src="images/motto.jpg" class="img-responsive shadow" alt="">
-                      </div>
-                      <!-- End Motto -->
+                     
 
                 </div>
                 <!-- End Tab content -->
@@ -248,8 +241,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jalan Soekarno-Hatta No 50
-                            <br>Bangkalan, Jawa Timur
+                            Jl. Bumi Tamalanrea Permai No.1, Tamalanrea,
+                        <br>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -263,7 +256,7 @@
                             </ul>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/1607792839472522?ref=embed_page">
                                         <i class="fa fa-fw fa-facebook"></i>
                                     </a>
                                 </li>
@@ -284,9 +277,9 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                031-3095331 <br>
-                                dispendukcapil@bangkalankab.go.id <br>
-                                dispendukcapil.bangkalan@gmail.com
+                                90245 <br>
+                                kelurahantamalanrea@tamalanrea.go.id <br>
+                                kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
                     </div>
@@ -295,7 +288,7 @@
 
                 <div class="copyright py-4 text-center text-white">
                     <!-- <div class="container"> -->
-                        <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                        <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
                     <!-- </div> -->
                 </div>
                 <!-- shadow -->

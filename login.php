@@ -39,7 +39,7 @@ if(isset($_POST['login'])){
         if($cek > 0) {
             $_SESSION['username'] = $username;
             $_SESSION['status'] = "login";
-            header('location:user/public/lapor.php');
+            header('location:user/public/home-2.php');
         } else {
             echo "<script>
             alert('Login Gagal, Periksa Username dan Password Anda!');

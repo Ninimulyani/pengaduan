@@ -120,7 +120,6 @@ if(isset($_POST['submit'])) {
                                 <li class="divider"></li>
                                 <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>
@@ -239,8 +238,7 @@ if(isset($_POST['submit'])) {
                                         <a href="detail.php?id=<?php echo $key['id']; ?>" class="btn btn-primary">Lihat Detail</a>
                                     </div>
                                 </div>
-                                <div class="komen">
-
+                                
                                 <?php
 
                                     require "function.php";

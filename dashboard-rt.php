@@ -225,7 +225,7 @@
                                         <td><a class="btn btn-danger" href="<?= 'user/public/' . $key['pdf_path'] ?>" download="<?= 'user/public/' . $key['pdf_path'] ?>">Download PDF</a></td>
                                         <td><?php echo $key['status']; ?></td>
                                         <td>
-                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                            <a class="btn btn-warning" href="edit-rt.php?edit&id=<?= $key['id'] ?>">Edit</a>
                                         </td>
                                 </tr>
                 

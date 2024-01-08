@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>FAQ | Dispendukcapil Bangkalan</title>
+    <title>FAQ | Kantor Kelurahan Tamalanrea</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -49,7 +49,6 @@
                                 <li class="divider"></li>
                                 <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>
@@ -71,15 +70,15 @@
                 <h3>Frequently Asked Question (FAQ):</h3>
                 <hr/>
 		        <p class="text-justify">
-                    Q: Apakah Aplikasi Pengaduan Masyarakat Dispendukcapil Bangkalan ini?
+                    Q: Apakah Aplikasi Pengaduan Masyarakat Kelurahan Tamalanrea ini?
                     <br />
-		            A: Aplikasi Pengaduan Masyarakat Dispendukcapil Bangkalan adalah aplikasi
+		            A: Aplikasi Pengaduan Masyarakat Kelurahan Tamalanrea adalah aplikasi
                     pengelolaan dan tindak lanjut pengaduan serta pelaporan hasil pengelolaan pengaduan yang
-                    disediakan oleh Dispendukcapil Bangkalan sebagai salah satu sarana bagi
-                    setiap pejabat/pegawai Dispendukcapil Bangkalan sebagai pihak internal
-                    maupun masyarakat luas pengguna layanan Dispendukcapil Bangkalan sebagai
+                    disediakan oleh Kelurahan Tamalanrea sebagai salah satu sarana bagi
+                    setiap pejabat/pegawai Kelurahan Tamalanrea sebagai pihak internal
+                    maupun masyarakat luas pengguna layanan Kelurahan Tamalanrea sebagai
                     pihak eksternal untuk melaporkan dugaan adanya pelanggaran dan/atau ketidakpuasan terhadap
-                    pelayanan yang dilakukan/diberikan oleh pejabat/pegawai Dispendukcapil Bangkalan.
+                    pelayanan yang dilakukan/diberikan oleh pejabat/pegawai Kelurahan Tamalanrea.
                 </p>
                 <hr/>
         		<p class="text-justify">
@@ -175,8 +174,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jalan Soekarno-Hatta No 50
-                            <br>Bangkalan, Jawa Timur
+                            Jl. Bumi Tamalanrea Permai No.1, Tamalanrea,
+                           <br> Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -211,9 +210,9 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                031-3095331 <br>
-                                dispendukcapil@bangkalankab.go.id <br>
-                                dispendukcapil.bangkalan@gmail.com
+                                90245 <br>
+                                kelurahantamalanrea@tamalanrea.go.id <br>
+                                kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
                     </div>
@@ -222,7 +221,7 @@
 
             <div class="copyright py-4 text-center text-white">
                 <div class="container">
-                    <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                    <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
                 </div>
             </div>
             <!-- shadow -->

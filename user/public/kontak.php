@@ -48,7 +48,6 @@
                                     <li class="divider"></li>
                                     <li><a href="profildinas.php">Struktur Organisasi</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="profildinas.php">Motto / Maklumat Pelayanan</a></li>
                                 </ul>
                             </li>
                             <li><a href="faq.php">FAQ</a></li>
@@ -158,7 +157,7 @@
                             </ul>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/1607792839472522?ref=embed_page">
                                         <i class="fa fa-fw fa-facebook"></i>
                                     </a>
                                 </li>

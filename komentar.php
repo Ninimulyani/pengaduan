@@ -27,6 +27,7 @@
         foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
             $total_laporan_menunggu = $row['COUNT(*)'];
         }
+        
     }
 
  ?>
@@ -95,7 +96,6 @@
                         <span class="nav-link-text">Data Kategori</span>
                     </a>
                 </li>
-
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="komentar.php">
                         <i class="fa fa-fw fa-table"></i>
@@ -220,7 +220,7 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $key['id_komentar']; ?></td>
+                                    <td><?php echo $key['email']; ?></td>
                                     <td><?php echo $key['isi_komentar']; ?></td>
                                     <td>
                                         <a class="btn btn-danger">Hapus</a>

@@ -30,49 +30,53 @@
     }
     
     if(isset($_GET['edit'])){
-            $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = 1 AND laporan.id = '$_GET[id]'");
-            $data = mysqli_fetch_array($tampil);
-            if($data){
-                $id = $data['id'];
-                $nama = $data['nama'];
-                $email = $data['email'];
-                $telpon = $data['telpon'];
-                $alamat = $data['alamat'];
-                $tujuan = $data['nama_divisi'];
-                $id_tujuan = $data['tujuan'];
-                $isi = $data['isi'];
-                $tanggal = $data['tanggal'];
-                $status = $data['status'];
-            }
+        $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = 1 AND laporan.id = '$_GET[id]'");
+        $data = mysqli_fetch_array($tampil);
+        if($data){
+            $id = $data['id'];
+            $nama = $data['nama'];
+            $email = $data['email'];
+            $telpon = $data['telpon'];
+            $alamat = $data['alamat'];
+            $tujuan = $data['nama_divisi'];
+            $id_tujuan = $data['tujuan'];
+            $isi = $data['isi'];
+            $tanggal = $data['tanggal'];
+            $status = $data['status'];
+        }
     }
 
-            //Perintah Mengubah Data
-            if(isset($_POST['submit'])){
-                $tanggal_sekarang = date("Y-m-d");
-                $simpan = mysqli_query($koneksi, "UPDATE laporan SET
-                                                    nama = '$_POST[nama]',
-                                                    email = '$_POST[email]',
-                                                    telpon = '$_POST[telpon]',
-                                                    alamat = '$_POST[alamat]', 
-                                                    status = '$_POST[status]', 
-                                                    isi = '$_POST[pengaduan]', 
-                                                    tanggal = $tanggal_sekarang
-                                                    WHERE id = '$_GET[id]'");
-                
+    // Periksa apakah $id sudah di-set sebelum digunakan
+    if(isset($id)) {
+        // Perintah Mengubah Data
+        if(isset($_POST['submit'])){
+            $tanggal_sekarang = date("Y-m-d");
+            $simpan = mysqli_query($koneksi, "UPDATE laporan SET
+                                                nama = '$_POST[nama]',
+                                                email = '$_POST[email]',
+                                                telpon = '$_POST[telpon]',
+                                                alamat = '$_POST[alamat]', 
+                                                status = '$_POST[status]', 
+                                                isi = '$_POST[pengaduan]', 
+                                                tanggal = $tanggal_sekarang
+                                                WHERE id = '$_GET[id]'");
+            
             if($simpan){
                 echo "<script>
                         alert('Edit data sukses!');
-                        document.location='index.php';
+                        document.location='dashboard-rt.php';
                     </script>";
             } else {
                 echo "<script>
                         alert('Edit data Gagal!');
-                        document.location='index.php';
+                        document.location='edit-rt.php';
                     </script>";
             }
-            }
-
- ?>
+        }
+    } else {
+        echo "Debug: \$id is not set"; // Tambahkan informasi debugging jika $id tidak di-set
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -112,7 +116,7 @@
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
-                            <span class="">Admin</span><br><br>
+                            <span class="">Ketua RT</span><br><br>
                             <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
@@ -122,20 +126,6 @@
                     <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Dashboard</span>
-                    </a>
-                </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="user.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data User</span>
-                    </a>
-                </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="kategori.php">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Kategori</span>
                     </a>
                 </li>
 
@@ -226,7 +216,7 @@
                     <i class="fa fa-table"></i> Edit Laporan
                 </div>
                 <div class="card-body mx-2 col-8">
-                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
+                    <a href="dashboard-rt.php" class="btn btn-primary mb-3">Kembali</a>
                     <form class="form-horizontal" role="form" method="post">
                         <div class="form-group">
                             <label for="nomor" class="col-sm-3 control-label">Nomor Pengaduan</label>

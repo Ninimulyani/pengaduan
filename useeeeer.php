@@ -272,7 +272,7 @@
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                <small>| Copyright &copy; Kantor Kelurahan Tamalanrea</small>
             </div>
         </div>
         <!-- shadow -->

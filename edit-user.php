@@ -136,12 +136,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Export">
-                    <a class="nav-link" href="export">
-                        <i class="fa fa-fw fa-print"></i>
-                        <span class="nav-link-text">Export</span>
-                    </a>
-                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -153,54 +147,6 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-fw fa-envelope"></i>
-                        <span class="d-lg-none">Messages
-                            <span class="badge badge-pill badge-primary">12 New</span>
-                        </span>
-                        <span class="indicator text-primary d-none d-lg-block">
-                            <i class="fa fa-fw fa-circle"></i>
-                        </span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header">New Messages:</h6>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            <strong>David Miller</strong>
-                            <span class="small float-right text-muted">11:21 AM</span>
-                            <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item small" href="#">View all messages</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-fw fa-bell"></i>
-                        <span class="d-lg-none">Alerts
-                            <span class="badge badge-pill badge-warning">6 New</span>
-                        </span>
-                        <span class="indicator text-warning d-none d-lg-block">
-                            <i class="fa fa-fw fa-circle"></i>
-                        </span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">New Alerts:</h6>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            <span class="text-success">
-                                <strong>
-                                    <i class="fa fa-long-arrow-up fa-fw"></i>Status Update
-                                </strong>
-                            </span>
-                            <span class="small float-right text-muted">11:21 AM</span>
-                            <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item small" href="#">View all alerts</a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out"></i>Logout
@@ -276,22 +222,6 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-sm-6 mb-3">
-                    <div class="card text-white bg-danger o-hidden h-100">
-                        <div class="card-body">
-                            <div class="card-body-icon">
-                                <i class="fa fa-fw fa-support"></i>
-                            </div>
-                            <div class="mr-5">13 New Tickets!</div>
-                        </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
-                            <span class="float-left">Laporan Masuk</span>
-                            <span class="float-right">
-                                <i class="fa fa-angle-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
 
             </div>
             <!-- ./Icon Cards-->

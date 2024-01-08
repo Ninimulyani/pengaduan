@@ -1,37 +1,34 @@
 <?php
- require_once("../private/database.php");
- 
+require_once("../private/database.php");
+
 if (isset($_POST['submit'])) {
     // Set the default status
     $status = "Menunggu";
 
-    // Handle PDF file upload
-    $uploadDir = 'uploads/';
-    $pdfFileName = $_FILES['pdfFile']['name'];
-    $pdfFilePath = $uploadDir . $pdfFileName;
+    // Insert data into the database without handling PDF file
+    $sql = "INSERT INTO `komentar` (`email`, `isi_komentar`) 
+            VALUES (:email, :isi_komentar)";
+    $stmt = $db->prepare($sql);
 
-    // Move the uploaded file to the specified directory
-    if (move_uploaded_file($_FILES['pdfFile']['tmp_name'], $pdfFilePath)) {
-        // Insert data into the database
-        $sql = "INSERT INTO `komentar` (`id_komentar`, `email`, `isi_komentar`) 
-                VALUES ('$max_id','$_POST[email]','$_POST[isi_komentar]')";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        
-        echo "selesai validasi";
-        header("Location: ../public/faq.php");
-    } else {
-        echo 'Failed to upload PDF file.';
-    }
+    // Bind parameters to the statement
+    $stmt->bindParam(':email', $_POST['email']);
+    $stmt->bindParam(':isi_komentar', $_POST['isi_komentar']);
+
+    // Execute the statement
+    $stmt->execute();
+
+    echo "Selesai validasi";
+    header("Location: ../public/faq.php");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>FAQ | Dispendukcapil Bangkalan</title>
+    <title>FAQ | Kantor Kelurahan Tamalanrea</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -73,7 +70,6 @@ if (isset($_POST['submit'])) {
                                     <li class="divider"></li>
                                     <li><a href="profildinas.php">Struktur Organisasi</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="profildinas.php">Motto / Maklumat Pelayanan</a></li>
                                 </ul>
                             </li>
                             <li  class="active"><a href="">FAQ</a></li>
@@ -111,7 +107,7 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
-                                    <input type="text" class="form-control" id="isi_komentar" name="telpon" placeholder="Dimana alamat kantornya ?" value="<?= @$_GET['isi_komentar'] ?>" required>
+                                    <input type="text" class="form-control" id="isi_komentar" name="isi_komentar" placeholder="Dimana alamat kantornya ?" value="<?= @$_GET['isi_komentar'] ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['telponError'] ?></p>
                             </div>
@@ -124,15 +120,15 @@ if (isset($_POST['submit'])) {
                         <br>
                         <br>
 		        <p class="text-justify">
-                    Q: Apakah Aplikasi Pengaduan Masyarakat Dispendukcapil Bangkalan ini?
+                    Q: Apakah Aplikasi Pengaduan Masyarakat Kelurahan Tamalanrea ini?
                     <br />
-		            A: Aplikasi Pengaduan Masyarakat Dispendukcapil Bangkalan adalah aplikasi
+		            A: Aplikasi Pengaduan Masyarakat Kelurahan Tamalanrea adalah aplikasi
                     pengelolaan dan tindak lanjut pengaduan serta pelaporan hasil pengelolaan pengaduan yang
-                    disediakan oleh Dispendukcapil Bangkalan sebagai salah satu sarana bagi
-                    setiap pejabat/pegawai Dispendukcapil Bangkalan sebagai pihak internal
-                    maupun masyarakat luas pengguna layanan Dispendukcapil Bangkalan sebagai
+                    disediakan oleh Kelurahan Tamalanrea sebagai salah satu sarana bagi
+                    setiap pejabat/pegawai Kelurahan Tamalanrea sebagai pihak internal
+                    maupun masyarakat luas pengguna layanan Kelurahan Tamalanrea sebagai
                     pihak eksternal untuk melaporkan dugaan adanya pelanggaran dan/atau ketidakpuasan terhadap
-                    pelayanan yang dilakukan/diberikan oleh pejabat/pegawai Dispendukcapil Bangkalan.
+                    pelayanan yang dilakukan/diberikan oleh pejabat/pegawai Kelurahan Tamalanrea.
                 </p>
                 <hr/>
         		<p class="text-justify">
@@ -228,8 +224,8 @@ if (isset($_POST['submit'])) {
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jalan Soekarno-Hatta No 50
-                            <br>Bangkalan, Jawa Timur
+                            Jl. Bumi Tamalanrea Permai No.1, Tamalanrea,
+                            <br>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -264,9 +260,9 @@ if (isset($_POST['submit'])) {
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                031-3095331 <br>
-                                dispendukcapil@bangkalankab.go.id <br>
-                                dispendukcapil.bangkalan@gmail.com
+                                90245 <br>
+                                kelurahantamalanrea@tamalanrea.go.id <br>
+                                kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
                     </div>
@@ -275,7 +271,7 @@ if (isset($_POST['submit'])) {
 
             <div class="copyright py-4 text-center text-white">
                 <div class="container">
-                    <small>V-3.0 | Copyright &copy; Dispendukcapil Bangkalan 2018</small>
+                    <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
                 </div>
             </div>
             <!-- shadow -->

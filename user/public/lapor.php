@@ -1,42 +1,42 @@
 <?php
- require_once("../private/database.php");
+require_once("../private/database.php");
 
- // Fetch the max id from the 'laporan' table
- $statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
- foreach ($statement as $key) {
-     // get max id from tabel laporan
-     $max_id = $key['id'] + 1;
- }
+// Fetch the max id from the 'laporan' table
+$statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
+foreach ($statement as $key) {
+    // get max id from tabel laporan
+    $max_id = $key['id'] + 1;
+}
 
- if (isset($_POST['submit'])) {
-     // Set the default status
-     $status = "Menunggu";
+if (isset($_POST['submit'])) {
+    // Set the default status
+    $status = "Menunggu";
 
-     // Handle PDF file upload
-     $uploadDir = 'uploads/';
-     $pdfFileName = $_FILES['pdfFile']['name'];
-     $pdfFilePath = $uploadDir . $pdfFileName;
+    // Handle PDF file upload
+    $uploadDir = 'uploads/';
+    $pdfFileName = $_FILES['pdfFile']['name'];
+    $pdfFilePath = $uploadDir . $pdfFileName;
 
-     // Move the uploaded file to the specified directory
-     if (move_uploaded_file($_FILES['pdfFile']['tmp_name'], $pdfFilePath)) {
-         // Insert data into the database
-         $sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`, `komentar`, `pdf_path`) 
-                 VALUES ('$max_id','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status','$_POST[komentar]', '$pdfFilePath')";
-         $stmt = $db->prepare($sql);
-         $stmt->execute();
-         
-         echo "selesai validasi";
-         header("Location: ../public/home.php");
-     } else {
-         echo 'Failed to upload PDF file.';
-     }
- }
- ?>
+    // Move the uploaded file to the specified directory
+    if (move_uploaded_file($_FILES['pdfFile']['tmp_name'], $pdfFilePath)) {
+        // Insert data into the database
+        $sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`, `pdf_path`) 
+                VALUES ('$max_id','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status', '$pdfFilePath')";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+    } else {
+        echo 'Failed to upload PDF file.';
+    }
+}
+?>
+
+<!-- ... (potongan kode setelahnya) ... -->
+
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lapor | Dispendukcapil Bangkalan</title>
+    <title>Lapor | Kantor Kelurahan Tamalanrea</title>
     <link rel="shortcut icon" href="images/logo.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -82,7 +82,6 @@
                                 <li class="divider"></li>
                                 <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Motto / Maklumat Pelayanan</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>
@@ -161,10 +160,17 @@
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span></div>
                                     <select class="form-control" name="tujuan">
-                                        <option value="1">Pelayanan Pendaftaran Penduduk</option>
-                                        <option value="2">Pelayanan Pencatatan Sipil</option>
-                                        <option value="3">Pengelolaan Informasi Administrasi Kependudukan</option>
-                                        <option value="4">Pemanfaatan Data Dan Inovasi Pelayanan</option>
+                                                                <?php
+                                            // Kode PHP untuk mengambil dan menampilkan pilihan dari tabel "divisi"
+                                            $queryTujuan = "SELECT id_divisi, nama_divisi FROM divisi";
+                                            $resultTujuan = $db->query($queryTujuan);
+
+                                            foreach ($resultTujuan as $rowTujuan) {
+                                                $idTujuan = $rowTujuan['id_divisi'];
+                                                $namaTujuan = $rowTujuan['nama_divisi'];
+                                                echo "<option value='$idTujuan'>$namaTujuan</option>";
+                                            }
+                                            ?>
                                     </select>
                                 </div>
                             </div>
@@ -177,16 +183,6 @@
                                     <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['pengaduanError'] ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="komentar" class="col-sm-3 control-label">Komentar</label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                                    <textarea class="form-control" rows="4" name="komentar" placeholder="Tuliskan Isi Komentar" required><?= @$_GET['komentar'] ?></textarea>
-                                </div>
-                                <p class="error"><?= @$_GET['komentarError'] ?></p>
                             </div>
                         </div>
                         <div class="form-group">
