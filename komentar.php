@@ -29,6 +29,18 @@
         }
         
     }
+    if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+        $deleteId = $_GET['id'];
+        // Perform the deletion query using the correct column name
+        $koneksi->query("DELETE FROM komentar WHERE id_komentar = $deleteId");
+        // Redirect to the same page after deletion
+        echo "<script>
+        alert('Hapus data sukses!');
+        document.location='komentar.php';
+        </script>";
+        exit();
+    }
+    
 
  ?>
 <!DOCTYPE html>
@@ -223,7 +235,8 @@
                                     <td><?php echo $key['email']; ?></td>
                                     <td><?php echo $key['isi_komentar']; ?></td>
                                     <td>
-                                        <a class="btn btn-danger">Hapus</a>
+                                    <a class="btn btn-danger" href="?action=delete&id=<?= $key['id_komentar'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+
                                     </td>
                                 </tr>
                                 <?php
