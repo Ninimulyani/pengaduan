@@ -135,6 +135,12 @@
                         <span class="nav-link-text">Data Kategori</span>
                     </a>
                 </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="komentar.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Komentar</span>
+                    </a>
+                </li>
 
             </ul>
 
@@ -229,10 +235,10 @@
             <!-- Example DataTables Card-->
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Edit Kategori
+                    <i class="fa fa-table"></i> Edit User
                 </div>
                 <div class="card-body mx-2 col-8">
-                    <a href="kategori.php" class="btn btn-primary mb-3">Kembali</a>
+                    <a href="user.php" class="btn btn-primary mb-3">Kembali</a>
                     <form class="form-horizontal" role="form" method="post">
 
                         <div class="form-group">
