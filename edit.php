@@ -30,7 +30,7 @@
     }
     
     if(isset($_GET['edit'])){
-            $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = 1 AND laporan.id = '$_GET[id]'");
+            $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.id = '$_GET[id]'");
             $data = mysqli_fetch_array($tampil);
             if($data){
                 $id = $data['id'];

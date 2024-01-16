@@ -2,7 +2,7 @@
 require_once("../private/database.php");
 
 // Fetch the max id from the 'laporan' table
-$statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
+$statement = $db->query("SELECT id FROM laporan ORDER BY id DESC LIMIT 1");
 foreach ($statement as $key) {
     // get max id from tabel laporan
     $max_id = $key['id'] + 1;
@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     // Move the uploaded file to the specified directory
     if (move_uploaded_file($_FILES['pdfFile']['tmp_name'], $pdfFilePath)) {
         // Insert data into the database
-        $sql = "INSERT INTO `laporan` (`id`, `nama`, `email`, `telpon`, `alamat`, `tujuan`, `isi`, `tanggal`, `status`, `pdf_path`) 
+        $sql = "INSERT INTO laporan (id, nama, email, telpon, alamat, tujuan, isi, tanggal, status, pdf_path) 
                 VALUES ('$max_id','$_POST[nama]','$_POST[email]','$_POST[telpon]','$_POST[alamat]','$_POST[tujuan]','$_POST[pengaduan]',CURRENT_TIMESTAMP,'$status', '$pdfFilePath')";
         $stmt = $db->prepare($sql);
         $stmt->execute();
@@ -186,11 +186,11 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="pdfFile" class="col-sm-3 control-label">Upload PDF File</label>
+                            <label for="pdfFile" class="col-sm-3 control-label">Upload Bukti</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="bi bi-file-pdf"></i></div>
-                                    <input type="file" class="form-control" id="pdfFile" name="pdfFile" accept=".pdf" required>
+                                    <input type="file" class="form-control" id="pdfFile" name="pdfFile" required>
                                 </div>
                             </div>
                         </div>

@@ -30,7 +30,7 @@
     }
     
     if(isset($_GET['edit'])){
-        $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.tujuan = 1 AND laporan.id = '$_GET[id]'");
+        $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.id = '$_GET[id]'");
         $data = mysqli_fetch_array($tampil);
         if($data){
             $id = $data['id'];
@@ -51,7 +51,7 @@
         // Perintah Mengubah Data
         if(isset($_POST['submit'])){
             $tanggal_sekarang = date("Y-m-d");
-            $simpan = mysqli_query($koneksi, "UPDATE laporan SET
+            $simpan = mysqli_query($koneksi, "UPDATE laporan SET 
                                                 nama = '$_POST[nama]',
                                                 email = '$_POST[email]',
                                                 telpon = '$_POST[telpon]',
