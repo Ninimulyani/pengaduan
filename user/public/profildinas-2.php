@@ -190,7 +190,7 @@
                       <!-- Struktur -->
                       <div class="tab-pane" id="struktur">
                           <h4>Struktur Organisasi</h4>
-                          <img src="images/struktur.jpg" class="img-responsive card-shadow" alt="">
+                          <img src="images/strukturorganisasi.jpg" class="img-responsive card-shadow" alt="">
                       </div>
                       <!-- End Struktur -->
 

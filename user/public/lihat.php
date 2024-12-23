@@ -40,7 +40,7 @@ if(isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lihat Pengaduan | Ke</title>
+    <title>STATUS | Ke</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -109,7 +109,7 @@ if(isset($_POST['submit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="home.php">HOME</a></li>
                         <li><a href="lapor.php">LAPOR</a></li>
-                        <li class="active"><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li class="active"><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -133,7 +133,7 @@ if(isset($_POST['submit'])) {
 
         <!-- content -->
         <div class="main-content">
-            <h3>Lihat Pengaduan</h3>
+            <h3>STATUS</h3>
             <hr/>
             <div class="row">
                 <div class="col-md-6 card-shadow-2 form-custom">

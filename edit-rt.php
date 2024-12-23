@@ -284,7 +284,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="pengaduan" class="col-sm-3 control-label">Isi Pengaduan</label>
+                            <label for="pen gaduan" class="col-sm-3 control-label">Isi Pengaduan</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>

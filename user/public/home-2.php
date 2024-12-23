@@ -18,7 +18,7 @@ function RandomAvatar(){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Kantor Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logo.ico" width="20" >
+    <link rel="shortcut icon" href="images/logomaros.png" width="20" >
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -53,7 +53,7 @@ function RandomAvatar(){
                 <div class="modal-body">
                     <p class="text-center">Pengaduan Berhasil Di Kirim</p>
                     <p class="text-center">Untuk Mengetahui Status Pengaduan</p>
-                    <p class="text-center">Silahkan Buka Menu <a href="lihat.php">Lihat Pengaduan</a> </p>
+                    <p class="text-center">Silahkan Buka Menu <a href="lihat.php">STATUS</a> </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn button-green" onclick="location.href='home';" data-dismiss="modal">Tutup</button>
@@ -85,7 +85,7 @@ function RandomAvatar(){
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="">
-                        <img alt="Brand" src="images/logo.png" width="40">
+                        <img alt="Brand" src="images/logomaros.png" width="50">
                     </a>
                 </div>
 
@@ -94,7 +94,7 @@ function RandomAvatar(){
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="home-2.php">HOME</a></li>
                         <li><a href="lapor.php">LAPOR</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -137,7 +137,7 @@ function RandomAvatar(){
                 <img src="images/header_02.jpg" alt="...">
                 <div class="carousel-caption welcome">
                     <h2 class="animated bounceInRight">Selamat Datang</h2>
-                    <h3 class="animated bounceInLeft">Website Pengaduan Masyarakat Kelurahan Tamalanrea</h3>
+                    <h3 class="animated bounceInLeft">Website Pelayanan Administrasi Kependudukan Kecamatan Tanralili</h3>
                 </div>
             </div>
             <div class="item">
@@ -171,46 +171,6 @@ function RandomAvatar(){
         <!-- section -->
         <div class="section">
             <div class="row">
-                <!-- laporan Terbaru -->
-                <div class="col-md-8">
-                    <br>
-                    <h3 class="text-center h3-custom">Pengaduan Terbaru</h3>
-                    <hr class="custom-line"/>
-                    <hr>
-                    <!-- scroll-laporan -->
-                    <div class="scroll-laporan">
-                        <?php
-                        // Ambil semua record dari tabel laporan
-                        $statement = $db->query("SELECT * FROM `laporan` ORDER BY id DESC");
-                        foreach ($statement as $key ) {
-                            $mysqldate = $key['tanggal'];
-                            $phpdate = strtotime($mysqldate);
-                            $tanggal = date( 'd F Y, H:i:s', $phpdate);
-                            ?>
-                            <div class="panel-body card-shadow-2">
-                                <a class="media-left" href="#"><img class="img-circle img-sm form-shadow" src="images/avatar/<?php RandomAvatar(); ?>"></a>
-                                <div class="media-body">
-                                    <div>
-                                        <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $key['nama']; ?></h4>
-                                        <p class="text-muted text-sm"><i class="fa fa-th fa-fw"></i>  -  <?php echo $tanggal; ?></p>
-                                    </div>
-                                    <hr class="hr-nama">
-                                    <p>
-                                        <?php echo $key['isi']; ?>
-                                    </p>
-                                </div>
-                                <!-- media body -->
-                            </div>
-                            <!-- panel body -->
-
-                            <?php
-                        }
-                        ?>
-
-                    </div>
-                    <!-- end scroll-laporan -->
-                </div>
-                <!-- End Laporan Terbaru -->
 
                 <!-- Social Media Feed -->
                 <div class="col-md-4">
