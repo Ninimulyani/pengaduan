@@ -51,8 +51,8 @@ function RandomAvatar(){
                     <h4 class="modal-title text-center text-green">Sukses</h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">Pengaduan Berhasil Di Kirim</p>
-                    <p class="text-center">Untuk Mengetahui Status Pengaduan</p>
+                    <p class="text-center">Pengajuan Berhasil Di Kirim</p>
+                    <p class="text-center">Untuk Mengetahui Status Pengajuan</p>
                     <p class="text-center">Silahkan Buka Menu <a href="lihat.php">STATUS</a> </p>
                 </div>
                 <div class="modal-footer">
@@ -93,7 +93,7 @@ function RandomAvatar(){
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="home-2.php">HOME</a></li>
-                        <li><a href="lapor.php">LAPOR</a></li>
+                        <li><a href="layanan.php">LAYANAN</a></li>
                         <li><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
@@ -186,7 +186,7 @@ function RandomAvatar(){
                         </div>
                         <div class="info">
                             <h3 class="text-center">twitter</h3>
-                            <a class="twitter-timeline" href="https://x.com/Kel_Tamalanrea?s=20" data-width="500" data-height="300">Tweets by kelurahantamalanrea</a>
+                            <a class="twitter-timeline" href="https://x.com/Kel_Tamalanrea?s=20" data-width="500" data-height="300">Tweets by kecamatan tanralili</a>
                             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         </div>
                     </div>
@@ -201,7 +201,7 @@ function RandomAvatar(){
                             <h3 class="text-center">facebook</h3>
                             <div class="fb-page" data-height="300" data-width="500" data-href="https://web.facebook.com/profile.php?id=100072110929327" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
                                 <blockquote cite="https://web.facebook.com/profile.php?id=100072110929327" class="fb-xfbml-parse-ignore">
-                                    <a href="https://web.facebook.com/profile.php?id=100072110929327">Kantor Kelurahan Tamalanrea</a>
+                                    <a href="https://web.facebook.com/profile.php?id=100072110929327">Kantor Kecamatan Tanralili</a>
                                 </blockquote>
                             </div>
                         </div>
@@ -303,7 +303,7 @@ function RandomAvatar(){
 
     <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea  </small>
+                <small> | Copyright &copy; Kantor Kecamatan Tanralili  </small>
             </div>
         </div>
     <!-- shadow -->

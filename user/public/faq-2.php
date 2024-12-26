@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>FAQ | Kantor Kelurahan Tamalanrea</title>
+    <title>FAQ | Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -37,7 +37,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
-                        <li><a href="lapor.php">LAPOR</a></li>
+                        <li><a href="laayanan.php">LAYANAN</a></li>
                         <li class="active"><a href="lihat.php">LIHAT PENGADUAN</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
@@ -221,7 +221,7 @@
 
             <div class="copyright py-4 text-center text-white">
                 <div class="container">
-                    <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
+                    <small> | Copyright &copy; Kantor Kecamatan Tanralili</small>
                 </div>
             </div>
             <!-- shadow -->

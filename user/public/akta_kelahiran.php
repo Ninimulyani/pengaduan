@@ -48,11 +48,20 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lapor | Kantor Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logo.png">
+    <title>Kantor Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="images/logomaros.png" width="20" >
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- font Awesome CSS -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Main Styles CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="js/bootstrap.js"></script>
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
 </head>
 
 <body>
@@ -68,7 +77,7 @@ if (isset($_POST['submit'])) {
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logo.png" style="width: 40px;">
+                        <img alt="Brand" src="images/logomaros.png" style="width: 50px;">
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -313,7 +322,7 @@ if (isset($_POST['submit'])) {
 
                         <!-- Upload PDF -->
                         <div class="form-group">
-                            <label for="pdfFile" class="col-sm-3 control-label">Unggah PDF</label>
+                            <label for="pdfFile" class="col-sm-3 control-label">Unggah Dokumen Persyaratan</label>
                             <div class="col-sm-9">
                                 <input type="file" class="form-control" id="pdfFile" name="pdfFile" required>
                             </div>

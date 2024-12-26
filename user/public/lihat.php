@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>STATUS | Ke</title>
-    <link rel="shortcut icon" href="images/logo.ico" width="20">
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -100,7 +100,7 @@ if(isset($_POST['submit'])) {
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logo.png" width="40">
+                        <img alt="Brand" src="images/logomaros.png" width="50">
                     </a>
                 </div>
 
@@ -108,7 +108,7 @@ if(isset($_POST['submit'])) {
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home.php">HOME</a></li>
-                        <li><a href="lapor.php">LAPOR</a></li>
+                        <li><a href="layanan.php">LAYANAN</a></li>
                         <li class="active"><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
@@ -356,7 +356,7 @@ if(isset($_POST['submit'])) {
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small>V-3.0 | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
+                <small>V-3.0 | Copyright &copy; Kantor Kecamatan Tanralili</small>
             </div>
         </div>
 

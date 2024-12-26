@@ -5,14 +5,20 @@ require_once("../private/database.php");
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Layanan Administrasi | Kantor Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logo.png">
+    <title>Kantor Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="images/logomaros.png" width="20" >
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="js/bootstrap.js"></script>
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
 </head>
 
 <body>
@@ -28,7 +34,7 @@ require_once("../private/database.php");
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logo.png" style="width: 40px;">
+                        <img alt="Brand" src="images/logomaros.png" style="width: 50px;">
                     </a>
                 </div>
 

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Profil Dinas | Kantor Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logo.ico" width="20">
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -30,7 +30,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="home.php">
-                            <img alt="Brand" src="images/logo.png" width="40">
+                            <img alt="Brand" src="images/logomaros.png" width="50">
                         </a>
                     </div>
 
@@ -288,7 +288,7 @@
 
                 <div class="copyright py-4 text-center text-white">
                     <!-- <div class="container"> -->
-                        <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
+                        <small> | Copyright &copy; Kantor Kecamatan Tanralili</small>
                     <!-- </div> -->
                 </div>
                 <!-- shadow -->
