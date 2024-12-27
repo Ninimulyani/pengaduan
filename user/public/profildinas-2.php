@@ -44,12 +44,9 @@
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="profildinas-2.php">Profil Dinas</a></li>
-                                <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Visi dan Misi</a></li>
-                                <li class="divider"></li>
-                                <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
-                                <li class="divider"></li>
+                            <li class="active"><a href="#profil" data-toggle="tab">Profil Dinas</a></li> <!-- Untuk Tab pertama berikan li class=”active” agar pertama kali halaman di load tab langsung active-->
+                      <li><a href="#visi" data-toggle="tab">Visi dan Misi</a></li>
+                      <li><a href="#struktur" data-toggle="tab">Struktur Organisasi</a></li>
                             </ul>
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>

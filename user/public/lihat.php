@@ -107,7 +107,7 @@ if(isset($_POST['submit'])) {
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.php">HOME</a></li>
+                        <li><a href="home-2.php">HOME</a></li>
                         <li><a href="layanan.php">LAYANAN</a></li>
                         <li class="active"><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>

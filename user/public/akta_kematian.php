@@ -96,8 +96,8 @@ if (isset($_POST['submit'])) {
         </nav>
 
         <div class="main-content">
-        <h3>Formulir Pelaporan Pencatatatn Sipil Di Dalam Wilayah NKRI</h3>
-        <h4>Jenis Laporan Pencatatan Sipil Kelahiran</h4>
+            <h3>Formulir Pelaporan Pencatatatn Sipil Di Dalam Wilayah NKRI</h3>
+            <h4>Jenis Laporan Pencatatan Sipil Kematian</h4>
             <hr/>
             <div class="row">
                 <div class="col-md-13 card-shadow-2 form-custom">
@@ -239,88 +239,60 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <!-- Data Anak -->
-                        <h4>Data Anak</h4>
+                        <h4>Kematia</h4>
                         <div class="form-group">
-                            <label for="nama_anak" class="col-sm-3 control-label">Nama Anak</label>
+                            <label for="nik" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_anak" name="nama_anak" placeholder="Masukkan nama anak" required>
+                                <input type="number" class="form-control" id="nama_anak" name="nama_anak" placeholder="Masukkan NIK" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="jenis_kelamin_anak" class="col-sm-3 control-label">Jenis Kelamin</label>
+                            <label for="nik" class="col-sm-3 control-label">Nama Lengkap</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="jenis_kelamin_anak" name="jenis_kelamin_anak" required>
-                                    <option value="Laki-laki">Laki-laki</option>
-                                    <option value="Perempuan">Perempuan</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tempat_dilahirkan_anak" class="col-sm-3 control-label">Tempat Dilahirkan</label>
-                            <div class="col-sm-9">
-                                <select class="form-control" id="tempat_dilahirkan_anak" name="tempat_dilahirkan_anak" required>
-                                    <option value="RS/RB">RS/RB</option>
-                                    <option value="Puskesmas">Puskesmas</option>
-                                    <option value="Polindes">Polindes</option>
-                                    <option value="Rumah">Rumah</option>
-                                    <option value="Lainnya">Lainnya</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggal_lahir_anak" class="col-sm-3 control-label">Hari dan Tanggal Lahir</label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" id="tanggal_lahir_anak" name="tanggal_lahir_anak" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="pukul_lahir_anak" class="col-sm-3 control-label">Pukul</label>
-                            <div class="col-sm-9">
-                                <input type="time" class="form-control" id="pukul_lahir_anak" name="pukul_lahir_anak" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="jenis_kelahiran_anak" class="col-sm-3 control-label">Jenis Kelahiran</label>
-                            <div class="col-sm-9">
-                                <select class="form-control" id="jenis_kelahiran_anak" name="jenis_kelahiran_anak" required>
-                                    <option value="Tunggal">Tunggal</option>
-                                    <option value="Kembar 2">Kembar 2</option>
-                                    <option value="Kembar 3">Kembar 3</option>
-                                    <option value="Kembar 4">Kembar 4</option>
-                                    <option value="Lainnya">Lainnya</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="kelahiran_ke_anak" class="col-sm-3 control-label">Kelahiran Ke-</label>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control" id="kelahiran_ke_anak" name="kelahiran_ke_anak" placeholder="Masukkan urutan kelahiran anak" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="penolong_kelahiran_anak" class="col-sm-3 control-label">Penolong Kelahiran</label>
-                            <div class="col-sm-9">
-                                <select class="form-control" id="penolong_kelahiran_anak" name="penolong_kelahiran_anak" required>
-                                    <option value="Dokter">Dokter</option>
-                                    <option value="Bidan/Perawat">Bidan/Perawat</option>
-                                    <option value="Dukun">Dukun</option>
-                                    <option value="Lainnya">Lainnya</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="berat_bayi" class="col-sm-3 control-label">Berat Bayi (kg)</label>
-                            <div class="col-sm-9">
-                                <input type="number" step="0.01" class="form-control" id="berat_bayi" name="berat_bayi" placeholder="Masukkan berat bayi dalam kilogram" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="panjang_bayi" class="col-sm-3 control-label">Panjang Bayi (cm)</label>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control" id="panjang_bayi" name="panjang_bayi" placeholder="Masukkan panjang bayi dalam sentimeter" required>
+                                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama lengkap" required>
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="tanggal_kematian" class="col-sm-3 control-label">Hari dan Tanggal Kematian</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="tanggal_kematian" name="tanggal_kematian" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pukul_kematian" class="col-sm-3 control-label">Pukul</label>
+                            <div class="col-sm-9">
+                                <input type="time" class="form-control" id="pukul_kematian" name="pukul_kematian" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sebab_kematian" class="col-sm-3 control-label">Sebab Kematian</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="sebab_kematian" name="sebab_kematian" required>
+                                    <option value="Laki-laki">Sakit Biasa/Tua</option>
+                                    <option value="Perempuan">Wabah Penyakit</option>
+                                    <option value="Laki-laki">Kecelakaan</option>
+                                    <option value="Perempuan">Kriminalitas</option>
+                                    <option value="Laki-laki">Bunuh Diri</option>
+                                    <option value="Perempuan">Lain nya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tempat_kematian" class="col-sm-3 control-label">Tempat Kematian</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="tempat_kematian" name="tempat_kematian" placeholder="Masukkan Tempat Kematian" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="yang_menerangkan" class="col-sm-3 control-label">Yang Menerangkan</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="yang_menerangkan" name="yang_menerangkan" placeholder="Masukkan Yang Menerangkan" required>
+                            </div>
+                        </div>
                         <!-- Upload PDF -->
                         <div class="form-group">
                             <label for="pdfFile" class="col-sm-3 control-label">Unggah Dokumen Persyaratan</label>
