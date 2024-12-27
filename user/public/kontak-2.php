@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Kontak | Pelayanan Admnistrasi Kependudukan Kecamatan Tanralili</title>
-    <link rel="shortcut icon" href="images/logo.ico" width="20">
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -30,7 +30,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="home.php">
-                            <img alt="Brand" src="images/logo.png" width="40">
+                            <img alt="Brand" src="images/logomaros.png" width="50">
                         </a>
                     </div>
 
@@ -39,7 +39,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li><a href="layanan.php">LAYANAN</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -92,13 +92,13 @@
                 </div>
                 <hr>
                 <h4>Kantor</h4>
-                <p>Jl. Bumi Tamalanrea Permai No.1, Tamalanrea </p>
-                <p>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan</p>
+                <p>Jl. Poros Ammarrang, Kelurahan Borong, 
+                </p>
+                <p>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan</p>
                 <hr>
                 <h4>Contact Info:</h4>
-                <p>90245</p>
-                <p>kelurahantamalanrea@tamalanrea.go.id</p>
-                <p>kelurahan.tamalanrea@gmail.com</p>
+                <p>90553</p>
+                <p>kecamatan.tanralili1@gmail.com</p>
                 <p>&nbsp;</p>
 
                 <!-- link to top -->
@@ -143,8 +143,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                        Jl. Bumi Tamalanrea Permai No.1, Tamalanrea, 
-                    <br>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan
+                        Jl. Poros Ammarrang, Kelurahan Borong, 
+                    <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -179,8 +179,7 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                            90245 <br>
-                            kelurahantamalanrea@tamalanrea.go.id <br>
+                            90553 <br>
                             kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
@@ -190,7 +189,7 @@
 
                 <div class="copyright py-4 text-center text-white">
                     <!-- <div class="container"> -->
-                        <small> Copyright &copy; Kecamatan Tanralili 2023</small>
+                        <small> Copyright &copy; Kecamatan Tanralili 2024</small>
                     <!-- </div> -->
                 </div>
                 <!-- shadow -->

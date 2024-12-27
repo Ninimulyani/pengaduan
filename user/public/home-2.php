@@ -17,7 +17,7 @@ function RandomAvatar(){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kantor Kelurahan Tamalanrea</title>
+    <title>Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logomaros.png" width="20" >
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -39,7 +39,7 @@ function RandomAvatar(){
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.11';
+        js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 
@@ -134,14 +134,14 @@ function RandomAvatar(){
 
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="images/header_02.jpg" alt="...">
+                <img src="images/kantor.jpg" alt="...">
                 <div class="carousel-caption welcome">
                     <h2 class="animated bounceInRight">Selamat Datang</h2>
                     <h3 class="animated bounceInLeft">Website Pelayanan Administrasi Kependudukan Kecamatan Tanralili</h3>
                 </div>
             </div>
             <div class="item">
-                <img src="images/header_01.jpg" alt="...">
+                <img src="images/pejabat.jpg" alt="...">
                 <div class="carousel-caption">
                     <h2 class="animated bounceInDown">Pejabat</h2>
                 </div>
@@ -179,18 +179,20 @@ function RandomAvatar(){
                     <h3 class="text-center h3-custom">Social Feed</h3>
                     <hr class="custom-line"/>
                     <!-- end header text social-feed -->
-                    <!-- Twitter Feed -->
+                    <!-- Instagram Feed -->
                     <div class="box">
                         <div class="box-icon shadow">
-                            <span class="fa fa-2x fa-twitter"></span>
+                            <span class="fa fa-2x fa-instagram"></span>
                         </div>
                         <div class="info">
-                            <h3 class="text-center">twitter</h3>
-                            <a class="twitter-timeline" href="https://x.com/Kel_Tamalanrea?s=20" data-width="500" data-height="300">Tweets by kecamatan tanralili</a>
-                            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                            <h3 class="text-center">instagram</h3>
+                            <a class="instagram-timeline" data-height="300" data-width="500" href="https://www.instagram.com/kecamatantanralili/" ddata-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                            <blockquote cite="https://www.instagram.com/kecamatantanralili/" class="fb-xfbml-parse-ignore">
+                                <a href="https://www.instagram.com/kecamatantanralili/">Kecamatan Tanralili</a>
+                            </blockquote>
                         </div>
                     </div>
-                    <!-- End Twitter Feed -->
+                    <!-- End Instagram Feed -->
                     <hr>
                     <!-- Facebook Feed -->
                     <div class="box">
@@ -201,7 +203,7 @@ function RandomAvatar(){
                             <h3 class="text-center">facebook</h3>
                             <div class="fb-page" data-height="300" data-width="500" data-href="https://web.facebook.com/profile.php?id=100072110929327" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
                                 <blockquote cite="https://web.facebook.com/profile.php?id=100072110929327" class="fb-xfbml-parse-ignore">
-                                    <a href="https://web.facebook.com/profile.php?id=100072110929327">Kantor Kecamatan Tanralili</a>
+                                    <a href="https://web.facebook.com/profile.php?id=100072110929327">Kecamatan Tanralili</a>
                                 </blockquote>
                             </div>
                         </div>
@@ -256,8 +258,8 @@ function RandomAvatar(){
                     </li>
                 </ul>
                 <p class="mb-0">
-                Jl. Bumi Tamalanrea Permai No.1, Tamalanrea, 
-                    <br>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan
+                Jl. Poros Ammarrang, Kelurahan Borong, 
+                    <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
                 </p>
             </div>
             <div class="col-md-4 mb-5 mb-lg-0">
@@ -292,10 +294,9 @@ function RandomAvatar(){
                     </li>
                 </ul>
                 <p class="mb-0">
-                    90245 <br>
-                    kelurahantamalanrea@tamalanrea.go.id <br>
-                    kelurahan.tamalanrea@gmail.com
-                </p>
+                            90553 <br>
+                            kelurahan.tamalanrea@gmail.com
+                            </p>
             </div>
         </div>
     </footer>

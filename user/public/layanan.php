@@ -43,7 +43,7 @@ require_once("../private/database.php");
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="active"><a href="layanan">LAYANAN</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -130,8 +130,8 @@ require_once("../private/database.php");
                         </li>
                     </ul>
                     <p class="mb-0">
-                    Jl. Bumi Tamalanrea Permai No.1, Tamalanrea, Kec. Tamalanrea
-                        <br>Kota Makassar, Sulawesi Selatan 90245
+                    Jl. Poros Ammarrang, Kelurahan Borong, 
+                    <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
                     </p>
                 </div>
                 <div class="col-md-4 mb-5 mb-lg-0">
@@ -166,10 +166,9 @@ require_once("../private/database.php");
                         </li>
                     </ul>
                     <p class="mb-0">
-                        0411-590753 <br>
-                        kelurahantamalanrea@tamalanrea.go.id <br>
-                        pemda.kelurahantamalanrea@gmail.com
-                    </p>
+                            90553 <br>
+                            kelurahan.tamalanrea@gmail.com
+                            </p>
                 </div>
             </div>
         </footer>

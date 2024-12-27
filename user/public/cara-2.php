@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Cara | Kantor Kecamatan Tanralili</title>
-    <link rel="shortcut icon" href="images/logo.ico" width="20">
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -30,7 +30,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="home">
-                            <img alt="Brand" src="images/logo.png" width="40">
+                            <img alt="Brand" src="images/logomaros.png" width="50">
                         </a>
                     </div>
 
@@ -39,7 +39,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li><a href="layanan.php">LAYANAN</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="lihat.php">STATUS</a></li>
                         <li class="active"><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -154,8 +154,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jl.Bumi Tamalanrea Permai No.1,Tamalanrea 
-                            <br>Kec.Tamalanrea, Kota Makassar, Sulawesi Selatan
+                        Jl. Poros Ammarrang, Kelurahan Borong, 
+                        <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -190,9 +190,8 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                0411-590753 <br>
-                                kelurahantamalanreatamalanrea.go.id <br>
-                                pemda.keluarahantamalanrea@gmail.com
+                            90553 <br>
+                            kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
                     </div>

@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kantor Kelurahan Tamalanrea</title>
+    <title>Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logomaros.png" width="20" >
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">

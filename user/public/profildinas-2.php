@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Profil Dinas | Kantor Kelurahan Tamalanrea</title>
+    <title>Profil Dinas | Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -39,7 +39,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li><a href="lapor.php">LAPOR</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="lihat.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -170,8 +170,7 @@
                               <h4><strong>Visi</strong></h4>
                           </div>
                           <div style="text-align: justify">
-                              Terwujudnya Tertib Administrasi Kependudukan Dalam Rangka Meningkatkan <br>
-                              Kualitas Pelayanan Publik Untuk Mendukung Kinerja Pemerintah Yang Akuntabel
+                          “MAROS SEJAHTERA, RELIGIUS DAN BERDAYA SAING”
                           </div>
                           <div>
                               <br />
@@ -181,8 +180,12 @@
                               <h4><strong>Misi</strong></h4>
                           </div>
                           <div style="text-align: justify">
-                              1. Melaksanakan Tertib Administrasi  Kependudukan <br>
-                              2. Meningkatkan Kualitas Pelayanan Publik
+                        1. Meningkatkan Kualitas Penyelenggaraan Birokrasi dan Pelayanan Publik.<br>
+                        2. Meningkatkan Pembangunan Sumber Daya Manusia.<br>
+                        3. Keterjangkauan Kebutuhan Dasar dan Pelayanan Dasar Secara Inklusif.<br>
+                        4. Ketahanan Ekonomi Daerah Berbasis Potensi Lokal.<br>
+                        5. Memantapkan Pembangunan Infrastruktur Ekonomi dan Pemerataan Wilayah.<br>
+                        6. Meningkatkan Kualitas Lingkungan Hidup dan Ketahanan Berencana
                           </div>
                       </div>
                       <!-- End Visi Misi -->
@@ -241,8 +244,8 @@
                             </li>
                         </ul>
                         <p class="mb-0">
-                            Jl. Bumi Tamalanrea Permai No.1, Tamalanrea,
-                        <br>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan
+                        Jl. Poros Ammarrang, Kelurahan Borong, 
+                        <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
                         </p>
                         </div>
                         <div class="col-md-4 mb-5 mb-lg-0">
@@ -277,9 +280,8 @@
                                 </li>
                             </ul>
                             <p class="mb-0">
-                                90245 <br>
-                                kelurahantamalanrea@tamalanrea.go.id <br>
-                                kelurahan.tamalanrea@gmail.com
+                            90553 <br>
+                            kelurahan.tamalanrea@gmail.com
                             </p>
                         </div>
                     </div>

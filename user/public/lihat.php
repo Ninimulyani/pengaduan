@@ -309,8 +309,8 @@ if(isset($_POST['submit'])) {
                         </li>
                     </ul>
                     <p class="mb-0">
-                    Jl. Bumi Tamalanrea Permai No.1, Tamalanrea, Kec. Tamalanrea
-                        <br>Kota Makassar, Sulawesi Selatan 90245
+                    Jl. Poros Ammarrang, Kelurahan Borong, 
+                    <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
                     </p>
                 </div>
                 <div class="col-md-4 mb-5 mb-lg-0">
@@ -345,10 +345,9 @@ if(isset($_POST['submit'])) {
                         </li>
                     </ul>
                     <p class="mb-0">
-                        0411-590753 <br>
-                        kelurahantamalanreatamalanrea.go.id <br>
-                        pemda.keluarahantamalanrea@gmail.com
-                    </p>
+                            90553 <br>
+                            kelurahan.tamalanrea@gmail.com
+                            </p>
                 </div>
             </div>
         </div>

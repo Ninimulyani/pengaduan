@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kontak | Pengaduan Masyarakat Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logo.ico" width="20">
+    <title>Kontak | Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -30,7 +30,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="home.php">
-                            <img alt="Brand" src="images/logo.png" width="40">
+                            <img alt="Brand" src="images/logomaros.png" width="50">
                         </a>
                     </div>
 
@@ -91,13 +91,12 @@
                 </div>
                 <hr>
                 <h4>Kantor</h4>
-                <p>Jl. Bumi Tamalanrea Permai No.1, Tamalanrea </p>
-                <p>Kec. Tamalanrea, Kota Makassar, Sulawesi Selatan</p>
+                <p>Jl. Poros Ammarrang, Kelurahan Borong,</p>
+                <p>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan</p>
                 <hr>
                 <h4>Contact Info:</h4>
                 <p>90245</p>
-                <p>kelurahantamalanrea@tamalanrea.go.id</p>
-                <p>kelurahan.tamalanrea@gmail.com</p>
+                <p>kecamatantanralili1@gmail.com</p>
                 <p>&nbsp;</p>
 
                 <!-- link to top -->
