@@ -93,7 +93,7 @@ if ($id !== null) {
                     <ul class="nav navbar-nav">
                         <li><a href="home.php">HOME</a></li>
                         <li><a href="lapor.php">LAPOR</a></li>
-                        <li class="active"><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li class="active"><a href="status.php">LIHAT PENGADUAN</a></li>
                         <li><a href="cara.php">CARA</a></li>
                         <!-- Add more navigation items as needed -->
                     </ul>

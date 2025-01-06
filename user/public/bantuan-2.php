@@ -37,8 +37,22 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
-                        <li><a href="lapor.php">LAPOR</a></li>
-                        <li><a href="lihat.php">STATUS</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
+                                <li class="divider"></li>
+                                <li><a href="kartu_identitas_anak.php">Kartu Identitas Anak</a></li>
+                                <li class="divider"></li>
+                                <li><a href="akta_kematian.php">Akta Kematian</a></li>
+                                <li class="divider"></li>
+                                <li><a href="perubahan_data_penduduk.php">Perubahan Data Penduduk</a></li>
+                                <li class="divider"></li>
+                                <li><a href="surat_pindah_penduduk.php">Surat Pindah Penduduk</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                         </li>
+                        <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -72,11 +86,11 @@
                 <h3>Bantuan</h3>
                 <hr/>
 
-                <p>Anda dapat menyampaikan pengaduan Anda melalui tiga cara:</p>
+                <p>Anda dapat menyampaikan pengaduan Anda melalui dua cara:</p>
                 <p><strong>1. Secara Online</strong></p>
                 <ul>
                     <li>
-                        Masukan data pribadi dan pengaduan Anda di <a href="lapor.php">sini</a>
+                        Masukan data pribadi dan pengaduan Anda di <a href="layanan.php">sini</a>
                     </li>
                     <li>
                         Setelah memasukan semua data yang diperlukan Anda akan mendapatkan nomor pengaduan,
@@ -97,26 +111,7 @@
                 </ul>
                 <p>&nbsp;</p>
                 <p>
-                    <strong>2. Melalui Surat</strong>
-                </p>
-                <ul>
-                    <li>
-                        Kirimkan surat pengaduan Anda ke alamat
-                        <a href="kontak.php">ini</a>
-                    </li>
-                    <li>
-                        Untuk mendapatkan nomor pengaduan silakan hubungi
-                        <a href="kontak.php">Bagian Pengaduan Masyarakat</a>
-                        Kelurahan Tamalanrea
-                    </li>
-                    <li>
-                        Untuk mengetahui status pengaduan, masukan nomor pengaduan
-                        Anda pada menu <strong>Lihat Pengaduan</strong>.
-                    </li>
-                </ul>
-                <p>&nbsp;</p>
-                <p>
-                    <strong>3. Datang Langsung</strong>
+                    <strong>2. Datang Langsung</strong>
                 </p>
                 <ul>
                     <li>
@@ -133,6 +128,7 @@
                         pada menu <strong>Lihat Pengaduan</strong>.
                     </li>
                 </ul>
+
 
                 <!-- /.section -->
 
@@ -190,7 +186,7 @@
                             </ul>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                         <i class="fa fa-fw fa-facebook"></i>
                                     </a>
                                 </li>

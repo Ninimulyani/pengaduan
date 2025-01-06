@@ -38,8 +38,22 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
-                        <li><a href="layanan.php">LAYANAN</a></li>
-                        <li><a href="lihat.php">STATUS</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
+                                <li class="divider"></li>
+                                <li><a href="kartu_identitas_anak.php">Kartu Identitas Anak</a></li>
+                                <li class="divider"></li>
+                                <li><a href="akta_kematian.php">Akta Kematian</a></li>
+                                <li class="divider"></li>
+                                <li><a href="perubahan_data_penduduk.php">Perubahan Data Penduduk</a></li>
+                                <li class="divider"></li>
+                                <li><a href="surat_pindah_penduduk.php">Surat Pindah Penduduk</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                         </li>                        
+                        <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>

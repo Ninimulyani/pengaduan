@@ -48,7 +48,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="user/public/home.php">HOME</a></li>
                         <li class="active"><a href="user/public/lapor.php">LAPOR</a></li>
-                        <li><a href="user/public/lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="user/public/status.php">LIHAT PENGADUAN</a></li>
                         <li><a href="user/public/cara.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="user/public/profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -240,7 +240,7 @@
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>

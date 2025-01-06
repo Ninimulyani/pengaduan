@@ -39,9 +39,34 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
-                        <li class="active"><a href="layanan.php">LAYANAN</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
+                                <li class="divider"></li>
+                                <li><a href="kartu_identitas_anak.php">Kartu Identitas Anak</a></li>
+                                <li class="divider"></li>
+                                <li><a href="akta_kematian.php">Akta Kematian</a></li>
+                                <li class="divider"></li>
+                                <li><a href="perubahan_data_penduduk.php">Perubahan Data Penduduk</a></li>
+                                <li class="divider"></li>
+                                <li><a href="surat_pindah_penduduk.php">Surat Pindah Penduduk</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
+                        <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="profildinas-2.php">Profil Dinas</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Visi dan Misi</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
                         <li><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
@@ -53,7 +78,7 @@
 
         <div class="main-content">
             <h3>Form Surat Keterangan Kependudukan</h3>
-            <hr/>
+            <hr />
             <div class="row">
                 <div class="col-md-13 card-shadow-2 form-custom">
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
@@ -102,7 +127,7 @@
                             <div class="col-sm-3">
                                 <input class="form-control" id="kecamatan" name="kecamatan" required></input>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="form-group">
                             <label for="kabupaten" class="col-sm-3 control-label">Kabupaten/Kota</label>
@@ -113,17 +138,17 @@
                             <div class="col-sm-3">
                                 <input class="form-control" id="provinsi" name="provinsi" required></input>
                             </div>
-                        </div>  
+                        </div>
 
                         <div class="form-group">
                             <label for="kodepos" class="col-sm-3 control-label">Kode Pos</label>
                             <div class="col-sm-3">
                                 <input type="number" class="form-control" id="kodepos" name="kodepos" required></input>
                             </div>
-                        </div>  
+                        </div>
 
                         <div class="form-group">
-                        <label for="jenis_permohonan" class="col-sm-3 control-label">Jenis Pindah</label>
+                            <label for="jenis_permohonan" class="col-sm-3 control-label">Jenis Pindah</label>
                             <div class="col-sm-5">
                                 <select class="form-control" id="jenis_permohonan" name="jenis_permohonan" required>
                                     <option value="">-- Pilih Jenis Pindah --</option>
@@ -134,7 +159,7 @@
                                     <option value="sktt">Antar provinsi</option>
                                 </select>
                             </div>
-                        </div>  
+                        </div>
 
                         <div class="form-group">
                             <label for="alamat_pindah" class="col-sm-2 control-label">Alamat Pindah</label>
@@ -152,7 +177,7 @@
                             <div class="col-sm-3">
                                 <input class="form-control" id="kecamatan" name="kecamatan" required></input>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="form-group">
                             <label for="kabupaten" class="col-sm-3 control-label">Kabupaten/Kota</label>
@@ -163,15 +188,15 @@
                             <div class="col-sm-3">
                                 <input class="form-control" id="provinsi" name="provinsi" required></input>
                             </div>
-                        </div>  
+                        </div>
 
                         <div class="form-group">
                             <label for="kodepos" class="col-sm-3 control-label">Kode Pos</label>
                             <div class="col-sm-3">
                                 <input type="number" class="form-control" id="kodepos" name="kodepos" required></input>
                             </div>
-                        </div>  
-                        
+                        </div>
+
                         <div class="form-group">
                             <label for="alasan_pindah" class="col-sm-2 control-label">Alasan Pindah</label>
                             <div class="col-sm-10">
@@ -184,8 +209,8 @@
                             </div>
                         </div>
 
-                                                
-                        
+
+
                         <div class="form-group">
                             <label for="jenis_kepindahan" class="col-sm-2 control-label">Jenis Kepindahan</label>
                             <div class="col-sm-10">
@@ -244,8 +269,8 @@
                         </div>
 
                         <div mb-2>
-                        <label mb-10>Diisi oleh penduduk (Orang Asing) Pemegang ITAS yang Mengajukan SKTT dan OA Pemegang SKTT dan OA pemengang ITAP yang Mengajukan Surat Keterangan Kependudukan Lain nya
-                        </label>
+                            <label mb-10>Diisi oleh penduduk (Orang Asing) Pemegang ITAS yang Mengajukan SKTT dan OA Pemegang SKTT dan OA pemengang ITAP yang Mengajukan Surat Keterangan Kependudukan Lain nya
+                            </label>
                         </div>
 
                         <div class="form-group">
@@ -269,7 +294,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group">
                             <label for="nama_pemohon" class="col-sm-2 control-label">Alamat Sponsor</label>
                             <div class="col-sm-10">
@@ -288,7 +313,7 @@
                         </div>
 
                         <div mb-2>
-                        <label class="control-label" >Diisi oleh Penduduk yang Mengajukan Surat Keterangan Pindah Luar Negeri</label>
+                            <label class="control-label">Diisi oleh Penduduk yang Mengajukan Surat Keterangan Pindah Luar Negeri</label>
                         </div>
 
                         <div class="form-group">
@@ -324,14 +349,14 @@
                                 <input type="tel" class="form-control" id="telepon" name="telepon" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="email" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" name="submit" class="btn btn-primary">Submit</button>

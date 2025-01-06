@@ -40,8 +40,8 @@ if(isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>STATUS | Ke</title>
-    <link rel="shortcut icon" href="images/logomaros.png" width="20">
+    <title>Kantor Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="images/logomaros.png" width="20" >
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -52,64 +52,47 @@ if(isset($_POST['submit'])) {
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="js/bootstrap.js"></script>
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
 </head>
-<style>
-    .wrapper-media{
-        display: grid;
-        grid-template-columns: repeat(2, 100px);
-    }
-
-</style>
 <body>
-    <!--Success Modal Saved-->
-    <div class="modal fade" id="failedmodal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm " role="document">
-            <div class="modal-content bg-2">
-                <div class="modal-header ">
-                    <h4 class="modal-title text-center text-danger">Gagal</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center">Nomor Pengaduan Tidak Ditemukan</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="location.href='lihat';" data-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php
-    // alert pengaduan tidak ditemukan
-    if(isset($notFound)) {
-        ?>
-        <script type="text/javascript">
-        $("#failedmodal").modal();
-        </script>
-        <?php
-    }
-    ?>
 
-    <div class="shadow">
+        <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logomaros.png" width="50">
-                    </a>
-                </div>
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="home.php">
+                            <img alt="Brand" src="images/logomaros.png" width="50">
+                        </a>
+                    </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
-                        <li><a href="layanan.php">LAYANAN</a></li>
-                        <li class="active"><a href="lihat.php">STATUS</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
+                                <li class="divider"></li>
+                                <li><a href="kartu_identitas_anak.php">Kartu Identitas Anak</a></li>
+                                <li class="divider"></li>
+                                <li><a href="akta_kematian.php">Akta Kematian</a></li>
+                                <li class="divider"></li>
+                                <li><a href="perubahan_data_penduduk.php">Perubahan Data Penduduk</a></li>
+                                <li class="divider"></li>
+                                <li><a href="surat_pindah_penduduk.php">Surat Pindah Penduduk</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                         </li>                        
+                        <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -124,12 +107,18 @@ if(isset($_POST['submit'])) {
                         </li>
                         <li><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
-                        <li><a href="kontak-2.php">KONTAK</a></li>
+                        <li class="active"><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="../../login.php">LOGOUT</a></li>
                     </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav><!-- /.nav -->
+                        <!-- <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">LOGIN</a></li>
+                            <li><a href="#">REGISTER</a></li>
+                        </ul> -->
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+    <!-- end navbar -->
+
 
         <!-- content -->
         <div class="main-content">
@@ -324,7 +313,7 @@ if(isset($_POST['submit'])) {
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>

@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="active"><a href="layanan">LAYANAN</a></li>
-                        <li><a href="lihat.php">LIHAT PENGADUAN</a></li>
+                        <li><a href="status.php">LIHAT PENGADUAN</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
         <div class="main-content">
 
             <h3>Buat Laporan</h3>
-            <hr/>
+            <hr />
             <div class="row">
                 <div class="col-md-8 card-shadow-2 form-custom">
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
                                 <div class="input-group">
                                     <div class="input-group-addon">
 
-                                    <i class="bi bi-123"></i>
+                                        <i class="bi bi-123"></i>
                                     </div>
                                     <input type="text" class="form-control" id="nomor" name="id" value="<?php echo $max_id; ?>" readonly>
                                 </div>
@@ -160,17 +160,17 @@ if (isset($_POST['submit'])) {
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span></div>
                                     <select class="form-control" name="tujuan">
-                                                                <?php
-                                            // Kode PHP untuk mengambil dan menampilkan pilihan dari tabel "divisi"
-                                            $queryTujuan = "SELECT id_divisi, nama_divisi FROM divisi";
-                                            $resultTujuan = $db->query($queryTujuan);
+                                        <?php
+                                        // Kode PHP untuk mengambil dan menampilkan pilihan dari tabel "divisi"
+                                        $queryTujuan = "SELECT id_divisi, nama_divisi FROM divisi";
+                                        $resultTujuan = $db->query($queryTujuan);
 
-                                            foreach ($resultTujuan as $rowTujuan) {
-                                                $idTujuan = $rowTujuan['id_divisi'];
-                                                $namaTujuan = $rowTujuan['nama_divisi'];
-                                                echo "<option value='$idTujuan'>$namaTujuan</option>";
-                                            }
-                                            ?>
+                                        foreach ($resultTujuan as $rowTujuan) {
+                                            $idTujuan = $rowTujuan['id_divisi'];
+                                            $namaTujuan = $rowTujuan['nama_divisi'];
+                                            echo "<option value='$idTujuan'>$namaTujuan</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -214,20 +214,23 @@ if (isset($_POST['submit'])) {
                 <i class="fa fa-arrow-circle-up"></i>
             </a>
             <script>
-            // When the user scrolls down 100px from the top of the document, show the button
-            window.onscroll = function() {scrollFunction()};
-            function scrollFunction() {
-                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    document.getElementById("top").style.display = "block";
-                } else {
-                    document.getElementById("top").style.display = "none";
+                // When the user scrolls down 100px from the top of the document, show the button
+                window.onscroll = function() {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                        document.getElementById("top").style.display = "block";
+                    } else {
+                        document.getElementById("top").style.display = "none";
+                    }
                 }
-            }
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                }
             </script>
             <!-- link to top -->
 
@@ -249,7 +252,7 @@ if (isset($_POST['submit'])) {
                         </li>
                     </ul>
                     <p class="mb-0">
-                    Jl. Bumi Tamalanrea Permai No.1, Tamalanrea, Kec. Tamalanrea
+                        Jl. Bumi Tamalanrea Permai No.1, Tamalanrea, Kec. Tamalanrea
                         <br>Kota Makassar, Sulawesi Selatan 90245
                     </p>
                 </div>
@@ -264,7 +267,7 @@ if (isset($_POST['submit'])) {
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>
@@ -296,7 +299,7 @@ if (isset($_POST['submit'])) {
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea  </small>
+                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea </small>
             </div>
         </div>
         <!-- shadow -->

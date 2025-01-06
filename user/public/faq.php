@@ -62,16 +62,16 @@ if (isset($_POST['submit'])) {
                             <li><a href="home.php">HOME</a></li>
                             <li><a href="cara.php">CARA</a></li>
                             <li class="dropdown">
-                                <a href="profildinas.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="profildinas.php">Profil Dinas</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="profildinas.php">Visi dan Misi</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="profildinas.php">Struktur Organisasi</a></li>
-                                    <li class="divider"></li>
-                                </ul>
-                            </li>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="profildinas-2.php">Profil Dinas</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Visi dan Misi</a></li>
+                                <li class="divider"></li>
+                                <li><a href="profildinas-2.php">Struktur Organisasi</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
                             <li  class="active"><a href="">FAQ</a></li>
                             <li><a href="bantuan.php">BANTUAN</a></li>
                             <li><a href="kontak.php">KONTAK</a></li>
@@ -239,7 +239,7 @@ if (isset($_POST['submit'])) {
                             </ul>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                         <i class="fa fa-fw fa-facebook"></i>
                                     </a>
                                 </li>

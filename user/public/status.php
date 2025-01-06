@@ -1,11 +1,10 @@
-<?php
-require_once("../private/database.php");
-?>
+<!DOCTYPE html>
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kantor Kelurahan Tamalanrea</title>
+    <title>Cara | Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -13,15 +12,13 @@ require_once("../private/database.php");
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
     <link href="css/style.css" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="js/bootstrap.js"></script>
-    <!-- Animate CSS -->
-    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 </head>
 
 <body>
+
     <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
             <div class="container-fluid">
@@ -33,13 +30,13 @@ require_once("../private/database.php");
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logomaros.png" style="width: 50px;">
+                    <a class="navbar-brand" href="home">
+                        <img alt="Brand" src="images/logomaros.png" width="50">
                     </a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collase navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
@@ -57,7 +54,7 @@ require_once("../private/database.php");
                                 <li class="divider"></li>
                             </ul>
                         </li>
-                        <li><a href="status.php">STATUS</a></li>
+                        <li class="active"><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -75,35 +72,65 @@ require_once("../private/database.php");
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="../../login.php">LOGOUT</a></li>
                     </ul>
+                    <!-- <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">LOGIN</a></li>
+                            <li><a href="#">REGISTER</a></li>
+                        </ul> -->
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
 
         <!-- content -->
         <div class="main-content">
-            <h3>Pilihan Layanan Administrasi</h3>
+
+            <h3>Cara Melapor</h3>
             <hr />
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="list-group">
-                        <a href="akta_kelahiran.php" class="list-group-item list-group-item-action">
-                            <i class="bi bi-file-earmark-person"></i> Akta Kelahiran
-                        </a>
-                        <a href="kartu_identitas_anak.php" class="list-group-item list-group-item-action">
-                            <i class="bi bi-card-text"></i> Kartu Identitas Anak
-                        </a>
-                        <a href="akta_kematian.php" class="list-group-item list-group-item-action">
-                            <i class="bi bi-file-earmark-excel"></i> Akta Kematian
-                        </a>
-                        <a href="perubahan_data_penduduk.php" class="list-group-item list-group-item-action">
-                            <i class="bi bi-person-lines-fill"></i> Perubahan Data Penduduk
-                        </a>
-                        <a href="surat_pindah_penduduk.php" class="list-group-item list-group-item-action">
-                            <i class="bi bi-arrow-left-right"></i> Surat Pindah Penduduk
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <img class="img-cara img-responsive card-shadow-2" src="images/caramaros.png" alt="">
+            <br>
+            <ol>
+                <li>
+                    <p>Klik menu &quot;Lapor&quot; untuk merekam pengaduan baru.</p>
+                </li>
+                <li>
+                    <p>Isi form Tambah Pengaduan sesuai informasi yang Anda ketahui.</p>
+                </li>
+                <li>
+                    <p>Perhatikan beberapa hal di bawah ini:
+                        <br />Semua kotak yang ada wajib diisi.
+                        <br />Pastikan informasi yang diberikan sedapat mungkin memenuhi unsur 4W 1H.
+                    </p>
+                </li>
+                <li>
+                    <p>Jika Anda memiliki bukti dalam bentuk file seperti foto, silakan dilengkapi di halaman pengaduan, caranya:
+                        <br />Setelah membaca petunjuk untuk menyertakan lampiran, klik kotak kecil di bawah petunjuk tersebut,
+                        dan lanjutkan prosesnya.
+                    </p>
+                </li>
+                <li>
+                    <p>Setelah selesai mengisi, silakan klik tombol &quot;Kirim Pengaduan&quot;
+                        untuk melanjutkan atau klik tombol &quot;Hapus&quot; untuk membatalkan proses pelaporan Anda.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Catat dan Simpan dengan baik nomor pengaduan yang Anda peroleh saat membuat
+                        pengaduan untuk mengetahui status/tindak lanjut pengaduan yang Anda sampaikan.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Untuk Bantuan mengenai cara melaporkan pengaduan, bisa dilihat di menu Bantuan
+                        yang telah tersedia di aplikasi.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Kelurahan Tamalanrea akan menghubungi Anda melalui saluran yang telah Anda
+                        cantumkan dalam form pengaduan apabila pengaduan yang Anda sampaikan belum
+                        memenuhi kriteria untuk ditindaklanjuti.
+                    </p>
+                </li>
+            </ol>
 
             <!-- link to top -->
             <a id="top" href="#" onclick="topFunction()">
@@ -122,6 +149,7 @@ require_once("../private/database.php");
                         document.getElementById("top").style.display = "none";
                     }
                 }
+
                 // When the user clicks on the button, scroll to the top of the document
                 function topFunction() {
                     document.body.scrollTop = 0;
@@ -130,9 +158,11 @@ require_once("../private/database.php");
             </script>
             <!-- link to top -->
 
-            <!-- /.section -->
-            <hr>
+
+            <!-- end main-content -->
         </div>
+
+        <hr>
 
         <!-- Footer -->
         <footer class="footer text-center">
@@ -168,7 +198,7 @@ require_once("../private/database.php");
                         </li>
                         <li class="list-inline-item">
                             <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/disdukcapilbkl">
-                                <i class="fa fa-fw fa-twitter"></i>
+                                <i class="fa fa-fw fa-instagram"></i>
                             </a>
                         </li>
                     </ul>
@@ -192,9 +222,9 @@ require_once("../private/database.php");
         <!-- /footer -->
 
         <div class="copyright py-4 text-center text-white">
-            <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea </small>
-            </div>
+            <!-- <div class="container"> -->
+            <small>V-3.0 | Copyright &copy; Kantor Kecamatan Tanralili</small>
+            <!-- </div> -->
         </div>
         <!-- shadow -->
     </div>

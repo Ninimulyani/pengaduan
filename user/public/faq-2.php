@@ -37,8 +37,22 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
-                        <li><a href="laayanan.php">LAYANAN</a></li>
-                        <li class="active"><a href="lihat.php">STATUS</a></li>
+                        <li class="dropdown">
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
+                                <li class="divider"></li>
+                                <li><a href="kartu_identitas_anak.php">Kartu Identitas Anak</a></li>
+                                <li class="divider"></li>
+                                <li><a href="akta_kematian.php">Akta Kematian</a></li>
+                                <li class="divider"></li>
+                                <li><a href="perubahan_data_penduduk.php">Perubahan Data Penduduk</a></li>
+                                <li class="divider"></li>
+                                <li><a href="surat_pindah_penduduk.php">Surat Pindah Penduduk</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                         </li>
+                        <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
                             <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
@@ -51,7 +65,7 @@
                                 <li class="divider"></li>
                             </ul>
                         </li>
-                        <li><a href="faq-2.php">FAQ</a></li>
+                        <li class="active"><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="../../login.php">LOGOUT</a></li>
@@ -189,7 +203,7 @@
                             </ul>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                         <i class="fa fa-fw fa-facebook"></i>
                                     </a>
                                 </li>

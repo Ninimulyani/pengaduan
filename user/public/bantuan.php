@@ -189,7 +189,7 @@
                             </ul>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/dispendukcapilbkl/">
+                                    <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
                                         <i class="fa fa-fw fa-facebook"></i>
                                     </a>
                                 </li>
