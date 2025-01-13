@@ -20,7 +20,16 @@
     <link rel="stylesheet" href="css/animate.min.css">
 </head>
 
-<body>
+
+<style>
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<body style="width:100%; margin:0;">
 
     <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
@@ -70,7 +79,7 @@
                         <li><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
-                        <li><a href="../../login.php">LOGOUT</a></li>
+                        <li><a href="login-user.php">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -152,7 +161,7 @@
                             <div class="col-sm-5">
                                 <select class="form-control" id="jenis_permohonan" name="jenis_permohonan" required>
                                     <option value="">-- Pilih Jenis Pindah --</option>
-                                    <option value="surat_pindah">ADalam satu desa/kelurahan atau yang disebut dengan nama lain</option>
+                                    <option value="surat_pindah">Dalam satu desa/kelurahan atau yang disebut dengan nama lain</option>
                                     <option value="surat_pindah">Antar desa/kelurahan atau yang disebut dengan nama lain dalam satu kecamatan</option>
                                     <option value="skpln">Antar kecamatan atau yang disebut dengan nama lain dalam satu kabupaten/kota</option>
                                     <option value="sktt">Antar kabupaten/kota dalam satu provinsi</option>

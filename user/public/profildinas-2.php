@@ -15,7 +15,16 @@
 
 </head>
 
-<body>
+
+<style>
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<body style="width:100%; margin:0;">
 
     <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
@@ -65,7 +74,7 @@
                         <li><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
-                        <li><a href="../../login.php">LOGOUT</a></li>
+                        <li><a href="login-user.php">LOGOUT</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

@@ -1,55 +1,55 @@
 <?php
-    require_once("database.php"); // koneksi DB
+require_once("database.php"); // koneksi DB
 
-    logged_admin ();
-    global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-    if ($id_admin > 0) {
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi>query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-    } else {
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-    }
-    
-    if(isset($_GET['edit'])){
-            $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.id = '$_GET[id]'");
-            $data = mysqli_fetch_array($tampil);
-            if($data){
-                $id = $data['id'];
-                $nama = $data['nama'];
-                $email = $data['email'];
-                $telpon = $data['telpon'];
-                $alamat = $data['alamat'];
-                $tujuan = $data['nama_divisi'];
-                $id_tujuan = $data['tujuan'];
-                $isi = $data['isi'];
-                $tanggal = $data['tanggal'];
-                $status = $data['status'];
-            }
+logged_admin();
+global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
+if ($id_admin > 0) {
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
     }
 
-            //Perintah Mengubah Data
-            if(isset($_POST['submit'])){
-                $tanggal_sekarang = date("Y-m-d");
-                $simpan = mysqli_query($koneksi, "UPDATE laporan SET
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+} else {
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+}
+
+if (isset($_GET['edit'])) {
+    $tampil = mysqli_query($koneksi, "SELECT * FROM laporan, divisi WHERE laporan.tujuan = divisi.id_divisi AND laporan.id = '$_GET[id]'");
+    $data = mysqli_fetch_array($tampil);
+    if ($data) {
+        $id = $data['id'];
+        $nama = $data['nama'];
+        $email = $data['email'];
+        $telpon = $data['telpon'];
+        $alamat = $data['alamat'];
+        $tujuan = $data['nama_divisi'];
+        $id_tujuan = $data['tujuan'];
+        $isi = $data['isi'];
+        $tanggal = $data['tanggal'];
+        $status = $data['status'];
+    }
+}
+
+//Perintah Mengubah Data
+if (isset($_POST['submit'])) {
+    $tanggal_sekarang = date("Y-m-d");
+    $simpan = mysqli_query($koneksi, "UPDATE laporan SET
                                                     nama = '$_POST[nama]',
                                                     email = '$_POST[email]',
                                                     telpon = '$_POST[telpon]',
@@ -58,21 +58,23 @@
                                                     isi = '$_POST[pengaduan]', 
                                                     tanggal = $tanggal_sekarang
                                                     WHERE id = '$_GET[id]'");
-                
-            if($simpan){
-                echo "<script>
+
+    if ($simpan) {
+        echo "<script>
                         alert('Edit data sukses!');
                         document.location='index.php';
                     </script>";
-            } else {
-                echo "<script>
+    } else {
+        echo "<script>
                         alert('Edit data Gagal!');
                         document.location='index.php';
                     </script>";
-            }
-            }
+    }
+}
 
- ?>
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -240,7 +242,7 @@
                                 <div class="input-group">
                                     <div class="input-group-addon">
 
-                                    <i class="bi bi-123"></i>
+                                        <i class="bi bi-123"></i>
                                     </div>
                                     <input type="text" class="form-control" id="nomor" name="id" value="<?= $id ?>" readonly>
                                 </div>
@@ -309,7 +311,7 @@
                                 <p class="error"><?= @$_GET['pengaduanError'] ?></p>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="col-sm-10 col-sm-offset-3">
                                 <input id="submit" name="submit" type="submit" value="Ubah" class="btn btn-primary-custom form-shadow">

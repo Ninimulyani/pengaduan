@@ -22,6 +22,7 @@ function RandomAvatar()
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <!-- font Awesome CSS -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
@@ -33,12 +34,57 @@ function RandomAvatar()
     <!-- Animate CSS -->
     <link rel="stylesheet" href="css/animate.min.css">
     <!-- Tambahkan link ke Font Awesome di dalam tag <head> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
-<body>
+<style>
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .carousel-inner .item img {
+        width: 100%;
+        /* Memastikan gambar memenuhi lebar kontainer carousel */
+        height: 500px;
+        /* Atur tinggi tetap agar seragam */
+        object-fit: cover;
+        /* Memastikan gambar tetap proporsional dan mengisi area */
+    }
+
+    .carousel-control {
+        display: flex;
+        align-items: center;
+        /* Pusatkan secara vertikal */
+        justify-content: center;
+        /* Pusatkan secara horizontal */
+        top: 50%;
+        /* Atur posisi di tengah secara vertikal */
+        transform: translateY(-50%);
+        /* Geser ke atas 50% dari ukurannya untuk pusatkan */
+        width: 50px;
+        /* Ukuran lebar tombol navigasi */
+        height: 50px;
+        /* Tinggi tombol navigasi */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Latar belakang semi transparan */
+        border-radius: 50%;
+        /* Buat tombol berbentuk bulat */
+    }
+
+    .carousel-control .bi {
+        font-size: 24px;
+        /* Ukuran ikon */
+        color: #fff;
+        /* Warna ikon */
+    }
+</style>
+
+<body style="width:100%; margin:0; overflow-x: hidden;">
     <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
@@ -82,7 +128,6 @@ function RandomAvatar()
     <div class="shadow">
         <!-- navbar -->
         <nav class="navbar navbar-inverse navbar-fixed form-shadow">
-            <!-- container-fluid -->
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -132,15 +177,14 @@ function RandomAvatar()
                         <li><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
-                        <li><a href="../../login.php">LOGOUT</a></li>
+                        <li><a href="login-user.php">LOGOUT</a></li>
                     </ul>
-                    <!-- <ul class="nav navbar-nav navbar-right nav-link">
-                    <li><a href="#">LOGIN</a></li>
-                    <li><a href="#">REGISTER</a></li>
-                </ul> -->
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
         </nav>
+
         <!-- end navbar -->
 
         <!-- start slider -->
@@ -178,12 +222,12 @@ function RandomAvatar()
 
             <!-- Controls -->
             <!-- Controls -->
-            <a class="left carousel-control" href="#mainCarousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
+            <a class="left carousel-control" style="margin-left:2%;" href="#mainCarousel" role="button" data-slide="prev">
+                <i class="fi fi-br-angle-left"></i>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="right carousel-control" href="#mainCarousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
+            <a class="right carousel-control" href="#mainCarousel" style="margin-right:2%;" role="button" data-slide="next">
+                <i class="fi fi-br-angle-right"></i>
                 <span class="sr-only">Next</span>
             </a>
 

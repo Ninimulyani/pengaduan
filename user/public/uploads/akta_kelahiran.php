@@ -2,77 +2,82 @@
 require_once("../private/database.php");
 
 if (isset($_POST['submit'])) {
-    // Get the next ID based on auto_increment
-    $statement = $db->query("SELECT id FROM akta_kematian ORDER BY id DESC LIMIT 1");
-    $max_id = 1;  // default to 1 if no records exist
-    foreach ($statement as $key) {
-        $max_id = $key['id'] + 1;
-    }
+    try {
+        // Pastikan `id` diatur sebagai auto-increment di tabel database
+        $sql = "INSERT INTO akta_kelahiran (
+            nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, kewarganegaraan_pelapor,
+            nomor_handphone, email, nama_saksi_1, nik_saksi_1, nomor_kartu_keluarga_saksi_1, kewarganegaraan_saksi_1,
+            nama_ayah, nik_ayah, tempat_lahir_ayah, tanggal_lahir_ayah, kewarganegaraan_ayah,
+            nama_ibu, nik_ibu, tempat_lahir_ibu, tanggal_lahir_ibu, kewarganegaraan_ibu,
+            nama_anak, jk_anak, tempat_lahir, tanggal_lahir_anak, pukul, jenis_kelahiran, kelahiran_ke,
+            penolong_kelahiran, bb_bayi, pb, dokumen
+        ) VALUES (
+            :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, :kewarganegaraan_pelapor,
+            :nomor_handphone, :email, :nama_saksi_1, :nik_saksi_1, :nomor_kartu_keluarga_saksi_1, :kewarganegaraan_saksi_1,
+            :nama_ayah, :nik_ayah, :tempat_lahir_ayah, :tanggal_lahir_ayah, :kewarganegaraan_ayah,
+            :nama_ibu, :nik_ibu, :tempat_lahir_ibu, :tanggal_lahir_ibu, :kewarganegaraan_ibu,
+            :nama_anak, :jk_anak, :tempat_lahir, :tanggal_lahir_anak, :pukul, :jenis_kelahiran, :kelahiran_ke,
+            :penolong_kelahiran, :bb_bayi, :pb, :dokumen
+        )";
 
-    // Set default status
-    $status = "Menunggu";
+        // Siapkan pernyataan
+        $stmt = $db->prepare($sql);
 
-    // Prepare the SQL query
-    $sql = "INSERT INTO akta_kematian (
-        id, nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, kewarganegaraan_pelapor,
-        nomor_handphone, email, nama_saksi_1, nik_saksi_1, nomor_kartu_keluarga_saksi_1, kewarganegaraan_saksi_1,
-        nama_ayah, nik_ayah, tempat_lahir_ayah, tanggal_lahir_ayah, kewarganegaraan_ayah,
-        nama_ibu, nik_ibu, tempat_lahir_ibu, tanggal_lahir_ibu, kewarganegaraan_ibu,
-        nik_alm, nama_lengkap_alm, hari_tanggal_kematian, pukul, sebab_kematian, tempat_kematian,
-        yang_menerangkan, dokumen_persyaratan, tanggal_input, status
-    ) VALUES (
-        :id, :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, :kewarganegaraan_pelapor,
-        :nomor_handphone, :email, :nama_saksi_1, :nik_saksi_1, :nomor_kartu_keluarga_saksi_1, :kewarganegaraan_saksi_1,
-        :nama_ayah, :nik_ayah, :tempat_lahir_ayah, :tanggal_lahir_ayah, :kewarganegaraan_ayah,
-        :nama_ibu, :nik_ibu, :tempat_lahir_ibu, :tanggal_lahir_ibu, :kewarganegaraan_ibu,
-        :nik_alm, :nama_lengkap_alm, :hari_tanggal_kematian, :pukul, :sebab_kematian, :tempat_kematian,
-        :yang_menerangkan, :dokumen_persyaratan, CURRENT_TIMESTAMP, :status
-    )";
+        // Upload dokumen
+        $uploadDir = 'uploads/';
+        $fileName = basename($_FILES['dokumen']['name']);
+        $uploadFile = $uploadDir . $fileName;
 
-    // Prepare the statement
-    $stmt = $db->prepare($sql);
+        if (move_uploaded_file($_FILES['dokumen']['tmp_name'], $uploadFile)) {
+            // Bind parameter dengan data POST
+            $stmt->bindParam(':nama_pelapor', $_POST['nama_pelapor']);
+            $stmt->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
+            $stmt->bindParam(':nomor_dokumen_perjalanan', $_POST['nomor_dokumen_perjalanan']);
+            $stmt->bindParam(':nomor_kartu_keluarga_pelapor', $_POST['nomor_kartu_keluarga_pelapor']);
+            $stmt->bindParam(':kewarganegaraan_pelapor', $_POST['kewarganegaraan_pelapor']);
+            $stmt->bindParam(':nomor_handphone', $_POST['nomor_handphone']);
+            $stmt->bindParam(':email', $_POST['email']);
+            $stmt->bindParam(':nama_saksi_1', $_POST['nama_saksi_1']);
+            $stmt->bindParam(':nik_saksi_1', $_POST['nik_saksi_1']);
+            $stmt->bindParam(':nomor_kartu_keluarga_saksi_1', $_POST['nomor_kartu_keluarga_saksi_1']);
+            $stmt->bindParam(':kewarganegaraan_saksi_1', $_POST['kewarganegaraan_saksi_1']);
+            $stmt->bindParam(':nama_ayah', $_POST['nama_ayah']);
+            $stmt->bindParam(':nik_ayah', $_POST['nik_ayah']);
+            $stmt->bindParam(':tempat_lahir_ayah', $_POST['tempat_lahir_ayah']);
+            $stmt->bindParam(':tanggal_lahir_ayah', $_POST['tanggal_lahir_ayah']);
+            $stmt->bindParam(':kewarganegaraan_ayah', $_POST['kewarganegaraan_ayah']);
+            $stmt->bindParam(':nama_ibu', $_POST['nama_ibu']);
+            $stmt->bindParam(':nik_ibu', $_POST['nik_ibu']);
+            $stmt->bindParam(':tempat_lahir_ibu', $_POST['tempat_lahir_ibu']);
+            $stmt->bindParam(':tanggal_lahir_ibu', $_POST['tanggal_lahir_ibu']);
+            $stmt->bindParam(':kewarganegaraan_ibu', $_POST['kewarganegaraan_ibu']);
+            $stmt->bindParam(':nama_anak', $_POST['nama_anak']);
+            $stmt->bindParam(':jk_anak', $_POST['jk_anak']);
+            $stmt->bindParam(':tempat_lahir', $_POST['tempat_lahir']);
+            $stmt->bindParam(':tanggal_lahir_anak', $_POST['tanggal_lahir_anak']);
+            $stmt->bindParam(':pukul', $_POST['pukul']);
+            $stmt->bindParam(':jenis_kelahiran', $_POST['jenis_kelahiran']);
+            $stmt->bindParam(':kelahiran_ke', $_POST['kelahiran_ke']);
+            $stmt->bindParam(':penolong_kelahiran', $_POST['penolong_kelahiran']);
+            $stmt->bindParam(':bb_bayi', $_POST['bb_bayi']);
+            $stmt->bindParam(':pb', $_POST['pb']);
+            $stmt->bindParam(':dokumen', $fileName);
 
-    // Bind the form data to the query
-    $stmt->bindParam(':id', $max_id);
-    $stmt->bindParam(':nama_pelapor', $_POST['nama_pelapor']);
-    $stmt->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
-    $stmt->bindParam(':nomor_dokumen_perjalanan', $_POST['nomor_dokumen_perjalanan']);
-    $stmt->bindParam(':nomor_kartu_keluarga_pelapor', $_POST['nomor_kartu_keluarga_pelapor']);
-    $stmt->bindParam(':kewarganegaraan_pelapor', $_POST['kewarganegaraan_pelapor']);
-    $stmt->bindParam(':nomor_handphone', $_POST['nomor_handphone']);
-    $stmt->bindParam(':email', $_POST['email']);
-    $stmt->bindParam(':nama_saksi_1', $_POST['nama_saksi_1']);
-    $stmt->bindParam(':nik_saksi_1', $_POST['nik_saksi_1']);
-    $stmt->bindParam(':nomor_kartu_keluarga_saksi_1', $_POST['nomor_kartu_keluarga_saksi_1']);
-    $stmt->bindParam(':kewarganegaraan_saksi_1', $_POST['kewarganegaraan_saksi_1']);
-    $stmt->bindParam(':nama_ayah', $_POST['nama_ayah']);
-    $stmt->bindParam(':nik_ayah', $_POST['nik_ayah']);
-    $stmt->bindParam(':tempat_lahir_ayah', $_POST['tempat_lahir_ayah']);
-    $stmt->bindParam(':tanggal_lahir_ayah', $_POST['tanggal_lahir_ayah']);
-    $stmt->bindParam(':kewarganegaraan_ayah', $_POST['kewarganegaraan_ayah']);
-    $stmt->bindParam(':nama_ibu', $_POST['nama_ibu']);
-    $stmt->bindParam(':nik_ibu', $_POST['nik_ibu']);
-    $stmt->bindParam(':tempat_lahir_ibu', $_POST['tempat_lahir_ibu']);
-    $stmt->bindParam(':tanggal_lahir_ibu', $_POST['tanggal_lahir_ibu']);
-    $stmt->bindParam(':kewarganegaraan_ibu', $_POST['kewarganegaraan_ibu']);
-    $stmt->bindParam(':nik_alm', $_POST['nik_alm']);
-    $stmt->bindParam(':nama_lengkap_alm', $_POST['nama_lengkap_alm']);
-    $stmt->bindParam(':hari_tanggal_kematian', $_POST['hari_tanggal_kematian']);
-    $stmt->bindParam(':pukul', $_POST['pukul']);
-    $stmt->bindParam(':sebab_kematian', $_POST['sebab_kematian']);
-    $stmt->bindParam(':tempat_kematian', $_POST['tempat_kematian']);
-    $stmt->bindParam(':yang_menerangkan', $_POST['yang_menerangkan']);
-    $stmt->bindParam(':dokumen_persyaratan', $_FILES['dokumen_persyaratan']['name']);
-    $stmt->bindParam(':status', $status);
-
-    // Execute the statement
-    if ($stmt->execute()) {
-        echo 'Data submitted successfully';
-    } else {
-        echo 'Failed to submit data';
+            // Eksekusi pernyataan
+            if ($stmt->execute()) {
+                echo "Data berhasil disimpan.";
+            } else {
+                echo "Terjadi kesalahan saat menyimpan data.";
+            }
+        } else {
+            echo "Gagal mengunggah dokumen.";
+        }
+    } catch (PDOException $e) {
+        echo "Kesalahan: " . $e->getMessage();
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -97,16 +102,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="css/animate.min.css">
 </head>
 
-
-<style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-</style>
-
-<body style="width:100%; margin:0;">
+<body>
 
     <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
@@ -156,15 +152,15 @@ if (isset($_POST['submit'])) {
                         <li><a href="faq-2.php">FAQ</a></li>
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
-                        <li><a href="login-user.php">LOGOUT</a></li>
+                        <li><a href="../../login.php">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
 
         <div class="main-content">
-            <h3>Formulir Pelaporan Pencatatatn Sipil Di Dalam Wilayah NKRI</h3>
-            <h4>Jenis Laporan Pencatatan Sipil Kematian</h4>
+            <h3>Formulir Pelaporan Pencatatan Sipil Di Dalam Wilayah NKRI</h3>
+            <h4>Jenis Laporan Pencatatan Sipil Kelahiran</h4>
             <hr />
             <div class="row">
                 <div class="col-md-13 card-shadow-2 form-custom">
@@ -220,19 +216,19 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="nama_saksi1" class="col-sm-3 control-label">Nama</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_saksi_1" name="nama_saksi_1" placeholder="Masukkan nama saksi 1" required>
+                                <input type="text" class="form-control" id="nama_saksi1" name="nama_saksi_1" placeholder="Masukkan nama saksi 1" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nik_saksi1" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nik_saksi_1" name="nik_saksi_1" placeholder="Masukkan NIK saksi 1" required>
+                                <input type="text" class="form-control" id="nik_saksi1" name="nik_saksi_1" placeholder="Masukkan NIK saksi 1" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="no_kartu_keluarga_saksi1" class="col-sm-3 control-label">Nomor Kartu Keluarga</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nomor_kartu_keluarga_saksi_1" name="nomor_kartu_keluarga_saksi_1" placeholder="Masukkan nomor kartu keluarga saksi 1" required>
+                                <input type="text" class="form-control" id="no_kartu_keluarga_saksi1" name="nomor_kartu_keluarga_saksi_1" placeholder="Masukkan nomor kartu keluarga saksi 1" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -306,65 +302,93 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <!-- Data Anak -->
-                        <h4>Kematia</h4>
+                        <h4>Data Anak</h4>
                         <div class="form-group">
-                            <label for="nik" class="col-sm-3 control-label">NIK</label>
+                            <label for="nama_anak" class="col-sm-3 control-label">Nama Anak</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="nama_" name="nik_alm" placeholder="Masukkan NIK" required>
+                                <input type="text" class="form-control" id="nama_anak" name="nama_anak" placeholder="Masukkan nama anak" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nik" class="col-sm-3 control-label">Nama Lengkap</label>
+                            <label for="jenis_kelamin_anak" class="col-sm-3 control-label">Jenis Kelamin</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap_alm" placeholder="Masukkan Nama lengkap" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tanggal_kematian" class="col-sm-3 control-label">Hari dan Tanggal Kematian</label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" id="tanggal_kematian" name="hari_tanggal_kematian" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="pukul_kematian" class="col-sm-3 control-label">Pukul</label>
-                            <div class="col-sm-9">
-                                <input type="time" class="form-control" id="pukul_kematian" name="pukul" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="sebab_kematian" class="col-sm-3 control-label">Sebab Kematian</label>
-                            <div class="col-sm-9">
-                                <select class="form-control" id="sebab_kematian" name="sebab_kematian" required>
-                                    <option value="Laki-laki">Sakit Biasa/Tua</option>
-                                    <option value="Perempuan">Wabah Penyakit</option>
-                                    <option value="Laki-laki">Kecelakaan</option>
-                                    <option value="Perempuan">Kriminalitas</option>
-                                    <option value="Laki-laki">Bunuh Diri</option>
-                                    <option value="Perempuan">Lain nya</option>
+                                <select class="form-control" id="jk_anak" name="jk_anak" required>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label for="tempat_kematian" class="col-sm-3 control-label">Tempat Kematian</label>
+                            <label for="tempat_dilahirkan_anak" class="col-sm-3 control-label">Tempat Dilahirkan</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="tempat_kematian" name="tempat_kematian" placeholder="Masukkan Tempat Kematian" required>
+                                <select class="form-control" id="tempat_lahir" name="tempat_lahir" required>
+                                    <option value="RS/RB">RS/RB</option>
+                                    <option value="Puskesmas">Puskesmas</option>
+                                    <option value="Polindes">Polindes</option>
+                                    <option value="Rumah">Rumah</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal_lahir_anak" class="col-sm-3 control-label">Hari dan Tanggal Lahir</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="tanggal_lahir_anak" name="tanggal_lahir_anak" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pukul_lahir_anak" class="col-sm-3 control-label">Pukul</label>
+                            <div class="col-sm-9">
+                                <input type="time" class="form-control" id="pukul_lahir_anak" name="pukul_lahir_anak" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="jenis_kelahiran_anak" class="col-sm-3 control-label">Jenis Kelahiran</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="jenis_kelahiran" name="jenis_kelahiran" required>
+                                    <option value="Tunggal">Tunggal</option>
+                                    <option value="Kembar 2">Kembar 2</option>
+                                    <option value="Kembar 3">Kembar 3</option>
+                                    <option value="Kembar 4">Kembar 4</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="kelahiran_ke_anak" class="col-sm-3 control-label">Kelahiran Ke-</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="kelahiran_ke" name="kelahiran_ke" placeholder="Masukkan urutan kelahiran anak" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="penolong_kelahiran_anak" class="col-sm-3 control-label">Penolong Kelahiran</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="penolong_kelahiran" name="penolong_kelahiran" required>
+                                    <option value="Dokter">Dokter</option>
+                                    <option value="Bidan/Perawat">Bidan/Perawat</option>
+                                    <option value="Dukun">Dukun</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="berat_bayi" class="col-sm-3 control-label">Berat Bayi (kg)</label>
+                            <div class="col-sm-9">
+                                <input type="number" step="0.01" class="form-control" id="bb_bayi" name="bb_bayi" placeholder="Masukkan berat bayi dalam kilogram" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="panjang_bayi" class="col-sm-3 control-label">Panjang Bayi (cm)</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="pb" name="pb" placeholder="Masukkan panjang bayi dalam sentimeter" required>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="yang_menerangkan" class="col-sm-3 control-label">Yang Menerangkan</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="yang_menerangkan" name="yang_menerangkan" placeholder="Masukkan Yang Menerangkan" required>
-                            </div>
-                        </div>
                         <!-- Upload PDF -->
                         <div class="form-group">
                             <label for="pdfFile" class="col-sm-3 control-label">Unggah Dokumen Persyaratan</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control" id="pdfFile" name="dokumen_persyaratan" required>
+                                <input type="file" class="form-control" id="dokumen" name="dokumen" required>
                             </div>
                         </div>
 
