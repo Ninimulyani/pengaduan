@@ -88,7 +88,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="../index.php">
+                    <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Data User</span>
                     </a>

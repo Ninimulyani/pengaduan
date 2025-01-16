@@ -1,3 +1,26 @@
+<?php
+session_start();  // Start the session to access user data
+
+// Ensure the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login-user.php");
+    exit();
+}
+
+require_once("../private/database.php"); // Ensure the database connection file is correct
+
+// Fetch the logged-in user's ID from session
+$user_id = $_SESSION['user_id']; // Assuming user_id is stored in session
+
+// Query to get the report statuses for the logged-in user
+$statement = $db->prepare("SELECT status FROM laporan WHERE user_id = :user_id AND status IS NOT NULL");
+$statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$statement->execute();
+
+// Fetch all statuses for the user
+$statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -8,14 +31,13 @@
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <!-- font Awesome CSS -->
+    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 </head>
+
 <style>
     .navbar {
         width: 100%;
@@ -29,7 +51,6 @@
     <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -42,8 +63,7 @@
                     </a>
                 </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collase navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
@@ -79,94 +99,34 @@
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="login-user.php">LOGOUT</a></li>
                     </ul>
-                    <!-- <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">LOGIN</a></li>
-                            <li><a href="#">REGISTER</a></li>
-                        </ul> -->
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+                </div>
+            </div>
         </nav>
 
         <!-- content -->
         <div class="main-content">
+            <h2 class="text-center mb-4">Tampilan Status Laporan</h2>
 
-            <h3>Cara Melapor</h3>
-            <hr />
-            <img class="img-cara img-responsive card-shadow-2" src="images/caramaros.png" alt="">
-            <br>
-            <ol>
-                <li>
-                    <p>Klik menu &quot;Lapor&quot; untuk merekam pengaduan baru.</p>
-                </li>
-                <li>
-                    <p>Isi form Tambah Pengaduan sesuai informasi yang Anda ketahui.</p>
-                </li>
-                <li>
-                    <p>Perhatikan beberapa hal di bawah ini:
-                        <br />Semua kotak yang ada wajib diisi.
-                        <br />Pastikan informasi yang diberikan sedapat mungkin memenuhi unsur 4W 1H.
-                    </p>
-                </li>
-                <li>
-                    <p>Jika Anda memiliki bukti dalam bentuk file seperti foto, silakan dilengkapi di halaman pengaduan, caranya:
-                        <br />Setelah membaca petunjuk untuk menyertakan lampiran, klik kotak kecil di bawah petunjuk tersebut,
-                        dan lanjutkan prosesnya.
-                    </p>
-                </li>
-                <li>
-                    <p>Setelah selesai mengisi, silakan klik tombol &quot;Kirim Pengaduan&quot;
-                        untuk melanjutkan atau klik tombol &quot;Hapus&quot; untuk membatalkan proses pelaporan Anda.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        Catat dan Simpan dengan baik nomor pengaduan yang Anda peroleh saat membuat
-                        pengaduan untuk mengetahui status/tindak lanjut pengaduan yang Anda sampaikan.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        Untuk Bantuan mengenai cara melaporkan pengaduan, bisa dilihat di menu Bantuan
-                        yang telah tersedia di aplikasi.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        Kelurahan Tamalanrea akan menghubungi Anda melalui saluran yang telah Anda
-                        cantumkan dalam form pengaduan apabila pengaduan yang Anda sampaikan belum
-                        memenuhi kriteria untuk ditindaklanjuti.
-                    </p>
-                </li>
-            </ol>
-
-            <!-- link to top -->
-            <a id="top" href="#" onclick="topFunction()">
-                <i class="fa fa-arrow-circle-up"></i>
-            </a>
-            <script>
-                // When the user scrolls down 100px from the top of the document, show the button
-                window.onscroll = function() {
-                    scrollFunction()
-                };
-
-                function scrollFunction() {
-                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                        document.getElementById("top").style.display = "block";
-                    } else {
-                        document.getElementById("top").style.display = "none";
-                    }
-                }
-
-                // When the user clicks on the button, scroll to the top of the document
-                function topFunction() {
-                    document.body.scrollTop = 0;
-                    document.documentElement.scrollTop = 0;
-                }
-            </script>
-            <!-- link to top -->
-
-
-            <!-- end main-content -->
+            <div class="row">
+                <?php if (!empty($statuses)): ?>
+                    <?php foreach ($statuses as $status): ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">Status</h5>
+                                    <p class="card-text text-center text-muted">
+                                        <?php echo htmlspecialchars($status['status']); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12">
+                        <p class="text-center text-muted">Tidak ada laporan yang tersedia untuk Anda atau status laporan belum dimasukkan.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
 
         <hr>
@@ -226,14 +186,10 @@
                 </div>
             </div>
         </footer>
-        <!-- /footer -->
-
         <div class="copyright py-4 text-center text-white">
-            <!-- <div class="container"> -->
             <small>V-3.0 | Copyright &copy; Kantor Kecamatan Tanralili</small>
-            <!-- </div> -->
         </div>
-        <!-- shadow -->
+
     </div>
 
     <!-- jQuery -->
