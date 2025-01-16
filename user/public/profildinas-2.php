@@ -17,11 +17,11 @@
 
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -31,7 +31,8 @@
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -47,7 +48,8 @@
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
                                 <li class="divider"></li>
@@ -64,9 +66,11 @@
                         <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="active"><a href="#profil" data-toggle="tab">Profil Dinas</a></li> <!-- Untuk Tab pertama berikan li class=”active” agar pertama kali halaman di load tab langsung active-->
+                                <li class="active"><a href="#profil" data-toggle="tab">Profil Dinas</a></li>
+                                <!-- Untuk Tab pertama berikan li class=”active” agar pertama kali halaman di load tab langsung active-->
                                 <li><a href="#visi" data-toggle="tab">Visi dan Misi</a></li>
                                 <li><a href="#struktur" data-toggle="tab">Struktur Organisasi</a></li>
                             </ul>
@@ -95,16 +99,21 @@
                         <h4><strong>Kedudukan</strong></h4>
                     </div>
                     <div style="text-align: justify">
-                        Kantor Kecamatan Tanralili merupakan unsur pelaksana Pemerintah Daerah di tingkat kecamatan yang dipimpin oleh Camat dan <br>
-                        bertanggung jawab kepada Bupati Maros melalui Sekretaris Daerah. Dalam menjalankan tugasnya, Kantor Kecamatan Tanralili <br>
-                        juga berkoordinasi dengan Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil) Kabupaten Maros dalam hal pelayanan <br> administrasi kependudukan guna mendukung tertib administrasi kependudukan dan pelayanan publik yang optimal.
+                        Kantor Kecamatan Tanralili merupakan unsur pelaksana Pemerintah Daerah di tingkat kecamatan yang
+                        dipimpin oleh Camat dan <br>
+                        bertanggung jawab kepada Bupati Maros melalui Sekretaris Daerah. Dalam menjalankan tugasnya,
+                        Kantor Kecamatan Tanralili <br>
+                        juga berkoordinasi dengan Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil) Kabupaten Maros
+                        dalam hal pelayanan <br> administrasi kependudukan guna mendukung tertib administrasi
+                        kependudukan dan pelayanan publik yang optimal.
                     </div>
                     <hr>
                     <div>
                         <h4><strong>Tugas Pokok</strong></h4>
                     </div>
                     <div style="text-align: justify">
-                        Kantor Kecamatan Tanralili mempunyai tugas melaksanakan urusan pemerintahan umum, pelayanan publik, dan tugas-tugas lainnya <br>
+                        Kantor Kecamatan Tanralili mempunyai tugas melaksanakan urusan pemerintahan umum, pelayanan
+                        publik, dan tugas-tugas lainnya <br>
                         sesuai dengan peraturan perundang-undangan yang berlaku.
                     </div>
                     <hr>
@@ -112,9 +121,11 @@
                         <h4><strong>Fungsi</strong></h4>
                         <div style="text-align: start">
                             <span style="text-align: justify">
-                                a. Perumusan kebijakan teknis di bidang pemerintahan umum, pembangunan, dan pelayanan masyarakat di wilayah Kecamatan Tanralili; <br> </span>
+                                a. Perumusan kebijakan teknis di bidang pemerintahan umum, pembangunan, dan pelayanan
+                                masyarakat di wilayah Kecamatan Tanralili; <br> </span>
                             <span style="text-align: justify">
-                                b. Penyelenggaraan urusan pemerintahan umum dan pelayanan publik di wilayah kecamatan; <br> </span>
+                                b. Penyelenggaraan urusan pemerintahan umum dan pelayanan publik di wilayah kecamatan;
+                                <br> </span>
                         </div>
                         <div style="text-align: start">
                             <span style="text-align: justify">
@@ -124,7 +135,8 @@
                         </div>
                         <div style="text-align: start">
                             <span style="text-align: justify">
-                                e. Pelaksanaan tugas lain yang diberikan oleh Bupati Maros sesuai dengan tugas dan fungsinya. </span>
+                                e. Pelaksanaan tugas lain yang diberikan oleh Bupati Maros sesuai dengan tugas dan
+                                fungsinya. </span>
                         </div>
                     </div>
                     <hr>
@@ -132,16 +144,20 @@
                         <h4><strong>Tujuan</strong></h4>
                     </div>
                     <div style="text-align: justify">
-                        Kantor Kecamatan Tanralili bertujuan untuk mendukung penyelenggaraan pemerintahan yang efektif, efisien, dan akuntabel, <br>
-                        serta memberikan pelayanan prima kepada masyarakat sesuai dengan sumber daya dan kebijakan yang dimiliki. </div>
+                        Kantor Kecamatan Tanralili bertujuan untuk mendukung penyelenggaraan pemerintahan yang efektif,
+                        efisien, dan akuntabel, <br>
+                        serta memberikan pelayanan prima kepada masyarakat sesuai dengan sumber daya dan kebijakan yang
+                        dimiliki. </div>
                     <hr>
                     <div>
                         <h4><strong>Sasaran</strong></h4>
                         <div style="text-align: justify">
-                            1. Meningkatkan kualitas pelayanan kepada masyarakat dalam bidang administrasi pemerintahan, pembangunan, dan pelayanan sosial;<br />
+                            1. Meningkatkan kualitas pelayanan kepada masyarakat dalam bidang administrasi pemerintahan,
+                            pembangunan, dan pelayanan sosial;<br />
                             2. Meningkatkan kesadaran hukum masyarakat dalam menjalankan peraturan yang berlaku; <br />
                             3. Mewujudkan tertib administrasi pemerintahan di tingkat kecamatan; <br />
-                            4. Menyediakan data dan informasi yang akurat untuk mendukung kebijakan publik dan pembangunan; <br />
+                            4. Menyediakan data dan informasi yang akurat untuk mendukung kebijakan publik dan
+                            pembangunan; <br />
                             5. Memenuhi sarana dan prasarana kerja yang mendukung kinerja Kantor Kecamatan Tanralili.
                         </div>
                     </div>
@@ -150,7 +166,8 @@
                         <h4><strong>Program</strong></h4>
                     </div>
                     <div style="text-align: justify">
-                        Program kegiatan yang dilaksanakan oleh Kantor Kecamatan Tanralili Kabupaten Maros meliputi:<br />
+                        Program kegiatan yang dilaksanakan oleh Kantor Kecamatan Tanralili Kabupaten Maros
+                        meliputi:<br />
                         1. Penataan administrasi pemerintahan kecamatan; <br />
                         2. Peningkatan kualitas pelayanan publik; <br />
                         3. Pemberdayaan masyarakat melalui berbagai kegiatan pembangunan; <br />
@@ -205,24 +222,24 @@
                 <i class="fa fa-arrow-circle-up"></i>
             </a>
             <script>
-                // When the user scrolls down 100px from the top of the document, show the button
-                window.onscroll = function() {
-                    scrollFunction()
-                };
+            // When the user scrolls down 100px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
 
-                function scrollFunction() {
-                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                        document.getElementById("top").style.display = "block";
-                    } else {
-                        document.getElementById("top").style.display = "none";
-                    }
+            function scrollFunction() {
+                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                    document.getElementById("top").style.display = "block";
+                } else {
+                    document.getElementById("top").style.display = "none";
                 }
+            }
 
-                // When the user clicks on the button, scroll to the top of the document
-                function topFunction() {
-                    document.body.scrollTop = 0;
-                    document.documentElement.scrollTop = 0;
-                }
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
             </script>
             <!-- link to top -->
 
@@ -260,12 +277,14 @@
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/1607792839472522?ref=embed_page">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://www.facebook.com/1607792839472522?ref=embed_page">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/disdukcapilbkl">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://twitter.com/disdukcapilbkl">
                                 <i class="fa fa-fw fa-twitter"></i>
                             </a>
                         </li>

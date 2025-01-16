@@ -48,60 +48,60 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-    .carousel-inner .item img {
-        width: 100%;
-        /* Memastikan gambar memenuhi lebar kontainer carousel */
-        height: 500px;
-        /* Atur tinggi tetap agar seragam */
-        object-fit: cover;
-        /* Memastikan gambar tetap proporsional dan mengisi area */
-    }
+.carousel-inner .item img {
+    width: 100%;
+    /* Memastikan gambar memenuhi lebar kontainer carousel */
+    height: 500px;
+    /* Atur tinggi tetap agar seragam */
+    object-fit: cover;
+    /* Memastikan gambar tetap proporsional dan mengisi area */
+}
 
-    .carousel-control {
-        display: flex;
-        align-items: center;
-        /* Pusatkan secara vertikal */
-        justify-content: center;
-        /* Pusatkan secara horizontal */
-        top: 50%;
-        /* Atur posisi di tengah secara vertikal */
-        transform: translateY(-50%);
-        /* Geser ke atas 50% dari ukurannya untuk pusatkan */
-        width: 50px;
-        /* Ukuran lebar tombol navigasi */
-        height: 50px;
-        /* Tinggi tombol navigasi */
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Latar belakang semi transparan */
-        border-radius: 50%;
-        /* Buat tombol berbentuk bulat */
-    }
+.carousel-control {
+    display: flex;
+    align-items: center;
+    /* Pusatkan secara vertikal */
+    justify-content: center;
+    /* Pusatkan secara horizontal */
+    top: 50%;
+    /* Atur posisi di tengah secara vertikal */
+    transform: translateY(-50%);
+    /* Geser ke atas 50% dari ukurannya untuk pusatkan */
+    width: 50px;
+    /* Ukuran lebar tombol navigasi */
+    height: 50px;
+    /* Tinggi tombol navigasi */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Latar belakang semi transparan */
+    border-radius: 50%;
+    /* Buat tombol berbentuk bulat */
+}
 
-    .carousel-control .bi {
-        font-size: 24px;
-        /* Ukuran ikon */
-        color: #fff;
-        /* Warna ikon */
-    }
+.carousel-control .bi {
+    font-size: 24px;
+    /* Ukuran ikon */
+    color: #fff;
+    /* Warna ikon */
+}
 </style>
 
 <body style="width:100%; margin:0; overflow-x: hidden;">
     <div id="fb-root"></div>
     <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
     </script>
 
     <!--Success Modal Saved-->
@@ -117,7 +117,8 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                     <p class="text-center">Silahkan Buka Menu <a href="status.php">STATUS</a> </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn button-green" onclick="location.href='home';" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn button-green" onclick="location.href='home';"
+                        data-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -125,9 +126,9 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
     <?php
     if (isset($_GET['status'])) {
     ?>
-        <script type="text/javascript">
-            $("#successmodalclear").modal();
-        </script>
+    <script type="text/javascript">
+    $("#successmodalclear").modal();
+    </script>
     <?php
     }
     ?>
@@ -138,7 +139,8 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -154,7 +156,8 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
                                 <li class="divider"></li>
@@ -171,7 +174,8 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                         <li class="active"><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="profildinas-2.php">Profil Dinas</a></li>
                                 <li class="divider"></li>
@@ -215,23 +219,27 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <div class="info">
                                 <h3 class="text-center"></h3>
-                                    <!-- Loop through the akta_kelahiran_data array to display statuses -->
+                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
                                 <?php if ($akta_kelahiran_data): ?>
-                                    <?php foreach ($akta_kelahiran_data as $data): ?>
-                                        <div class="card mb-3">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Laporan Akta Kelahiran ID: <?php echo htmlspecialchars($data['id']); ?></h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <h6 class="card-subtitle mb-2 text-muted">Nama Anak: <?php echo htmlspecialchars($data['nama_anak']); ?></h6>
-                                                <p class="card-text">Tanggal Lahir: <?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?></p>
-                                                <p class="card-text">Status: <?php echo htmlspecialchars($data['status']); ?></p>
-                                                <a href="#" class="btn btn-primary">Lihat Detail</a>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
+                                <?php foreach ($akta_kelahiran_data as $data): ?>
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
+                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">Tanggal Lahir:
+                                            <?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?></p>
+                                        <p class="card-text">Status: <?php echo htmlspecialchars($data['status']); ?>
+                                        </p>
+                                        <a href="lihat_akta_kelahiran.php?id=<?php echo $data['id']; ?>"
+                                            class="btn btn-primary">Lihat Detail</a>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
                                 <?php else: ?>
-                                    <p class="text-center">Belum ada status laporan akta kelahiran.</p>
+                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -244,9 +252,14 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <div class="info">
                                 <h3 class="text-center">facebook</h3>
-                                <div class="fb-page" data-height="300" data-width="500" data-href="https://www.facebook.com/profile.php?id=61555707727963&" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                    <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963&" class="fb-xfbml-parse-ignore">
-                                        <a href="https://www.facebook.com/profile.php?id=61555707727963&">Kecamatan Tanralili</a>
+                                <div class="fb-page" data-height="300" data-width="500"
+                                    data-href="https://www.facebook.com/profile.php?id=61555707727963&"
+                                    data-tabs="timeline" data-small-header="false" data-adapt-container-width="true"
+                                    data-hide-cover="false" data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963&"
+                                        class="fb-xfbml-parse-ignore">
+                                        <a href="https://www.facebook.com/profile.php?id=61555707727963&">Kecamatan
+                                            Tanralili</a>
                                     </blockquote>
                                 </div>
                             </div>
@@ -268,23 +281,23 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <i class="fa fa-arrow-circle-up"></i>
             </a>
             <script>
-                // When the user scrolls down 100px from the top of the document, show the button
-                window.onscroll = function() {
-                    scrollFunction()
-                };
+            // When the user scrolls down 100px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
 
-                function scrollFunction() {
-                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                        document.getElementById("top").style.display = "block";
-                    } else {
-                        document.getElementById("top").style.display = "none";
-                    }
+            function scrollFunction() {
+                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                    document.getElementById("top").style.display = "block";
+                } else {
+                    document.getElementById("top").style.display = "none";
                 }
-                // When the user clicks on the button, scroll to the top of the document
-                function topFunction() {
-                    document.body.scrollTop = 0;
-                    document.documentElement.scrollTop = 0;
-                }
+            }
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
             </script>
             <!-- link to top -->
 
@@ -319,12 +332,14 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/1607792839472522?ref=embed_page">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://www.facebook.com/1607792839472522?ref=embed_page">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://x.com/Kel_Tamalanrea?s=20">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://x.com/Kel_Tamalanrea?s=20">
                                 <i class="fa fa-fw fa-twitter"></i>
                             </a>
                         </li>

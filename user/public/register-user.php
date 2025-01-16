@@ -58,29 +58,36 @@ if (isset($_POST['register'])) {
                 <form method="post" action="register-user.php">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input class="form-control" id="nama" type="text" name="nama" placeholder="Masukkan Nama" required>
+                        <input class="form-control" id="nama" type="text" name="nama" placeholder="Masukkan Nama"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input class="form-control" id="username" type="text" name="username" placeholder="Masukkan Username" required>
+                        <input class="form-control" id="username" type="text" name="username"
+                            placeholder="Masukkan Username" required>
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <input class="form-control" id="alamat" type="text" name="alamat" placeholder="Masukkan Alamat" required>
+                        <input class="form-control" id="alamat" type="text" name="alamat" placeholder="Masukkan Alamat"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input class="form-control" id="email" type="email" name="email" placeholder="Masukkan Email" required>
+                        <input class="form-control" id="email" type="email" name="email" placeholder="Masukkan Email"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Password"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="confirm">Konfirmasi Password</label>
-                        <input class="form-control" id="confirm" name="Confirm" type="password" placeholder="Konfirmasi Password" required>
+                        <input class="form-control" id="confirm" name="Confirm" type="password"
+                            placeholder="Konfirmasi Password" required>
                     </div>
-                    <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Register">
+                    <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register"
+                        value="Register">
                 </form>
             </div>
         </div>
@@ -89,15 +96,15 @@ if (isset($_POST['register'])) {
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const password = document.getElementById('password').value;
-            const confirm = document.getElementById('confirm').value;
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirm = document.getElementById('confirm').value;
 
-            if (password !== confirm) {
-                e.preventDefault();
-                alert('Konfirmasi password tidak cocok!');
-            }
-        });
+        if (password !== confirm) {
+            e.preventDefault();
+            alert('Konfirmasi password tidak cocok!');
+        }
+    });
     </script>
 </body>
 

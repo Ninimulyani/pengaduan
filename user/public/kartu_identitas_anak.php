@@ -77,11 +77,11 @@ if (isset($_POST['submit'])) {
 </head>
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -90,7 +90,8 @@ if (isset($_POST['submit'])) {
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -104,7 +105,8 @@ if (isset($_POST['submit'])) {
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
                                 <li class="divider"></li>
@@ -140,32 +142,38 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="nik_anak" class="col-sm-3 control-label">NIK Anak</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nik_anak" name="nik_anak" placeholder="Masukkan NIK Anak" required>
+                                <input type="text" class="form-control" id="nik_anak" name="nik_anak"
+                                    placeholder="Masukkan NIK Anak" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nomor_akta_kelahiran" class="col-sm-3 control-label">Nomor Akta Kelahiran</label>
+                            <label for="nomor_akta_kelahiran" class="col-sm-3 control-label">Nomor Akta
+                                Kelahiran</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nomor_akta_kelahiran" name="nomor_akta_kelahiran" placeholder="Masukkan Nomor Akta Kelahiran" required>
+                                <input type="text" class="form-control" id="nomor_akta_kelahiran"
+                                    name="nomor_akta_kelahiran" placeholder="Masukkan Nomor Akta Kelahiran" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nama_anak" class="col-sm-3 control-label"> Nama Anak</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_anak" name="nama_anak" placeholder="Masukkan Nama Anak" required>
+                                <input type="text" class="form-control" id="nama_anak" name="nama_anak"
+                                    placeholder="Masukkan Nama Anak" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="tempat_lahir" class="col-sm-3 control-label">Tempat Lahir</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" placeholder="Masukkan Tempat Lahir" required>
+                                <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
+                                    placeholder="Masukkan Tempat Lahir" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="tanggal_lahir" class="col-sm-3 control-label">Hari dan Tanggal Lahir</label>
                             <div class="col-sm-3">
-                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
+                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
+                                    required>
                             </div>
                             <label for="anakke" class="col-sm-2 control-label">Anak ke</label>
                             <div class="col-sm-4">
@@ -176,21 +184,24 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="nama_ayah" class="col-sm-3 control-label">Nama Ayah</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" placeholder="Masukkan Nama Ayah" required>
+                                <input type="text" class="form-control" id="nama_ayah" name="nama_ayah"
+                                    placeholder="Masukkan Nama Ayah" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="nama_ibu" class="col-sm-3 control-label">Nama Ibu</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" placeholder="Masukkan Nama Ibu" required>
+                                <input type="text" class="form-control" id="nama_ibu" name="nama_ibu"
+                                    placeholder="Masukkan Nama Ibu" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="alamat_pemohon" class="col-sm-3 control-label">Alamat Pemohon</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="alamat_pemohon" name="alamat_pemohon" placeholder="Masukkan Alamat Pemohon" required>
+                                <input type="text" class="form-control" id="alamat_pemohon" name="alamat_pemohon"
+                                    placeholder="Masukkan Alamat Pemohon" required>
                             </div>
                         </div>
 

@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body>

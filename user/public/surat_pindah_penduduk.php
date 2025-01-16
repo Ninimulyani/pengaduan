@@ -22,11 +22,11 @@
 
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -35,7 +35,8 @@
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -49,7 +50,8 @@
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
                                 <li class="divider"></li>
@@ -66,7 +68,8 @@
                         <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="profildinas-2.php">Profil Dinas</a></li>
                                 <li class="divider"></li>
@@ -123,7 +126,8 @@
                         <div class="form-group">
                             <label for="alamat_jelas" class="col-sm-2 control-label">Alamat Jelas</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="alamat_jelas" name="alamat_jelas" required></textarea>
+                                <textarea class="form-control" id="alamat_jelas" name="alamat_jelas"
+                                    required></textarea>
                             </div>
                         </div>
 
@@ -161,9 +165,12 @@
                             <div class="col-sm-5">
                                 <select class="form-control" id="jenis_permohonan" name="jenis_permohonan" required>
                                     <option value="">-- Pilih Jenis Pindah --</option>
-                                    <option value="surat_pindah">Dalam satu desa/kelurahan atau yang disebut dengan nama lain</option>
-                                    <option value="surat_pindah">Antar desa/kelurahan atau yang disebut dengan nama lain dalam satu kecamatan</option>
-                                    <option value="skpln">Antar kecamatan atau yang disebut dengan nama lain dalam satu kabupaten/kota</option>
+                                    <option value="surat_pindah">Dalam satu desa/kelurahan atau yang disebut dengan nama
+                                        lain</option>
+                                    <option value="surat_pindah">Antar desa/kelurahan atau yang disebut dengan nama lain
+                                        dalam satu kecamatan</option>
+                                    <option value="skpln">Antar kecamatan atau yang disebut dengan nama lain dalam satu
+                                        kabupaten/kota</option>
                                     <option value="sktt">Antar kabupaten/kota dalam satu provinsi</option>
                                     <option value="sktt">Antar provinsi</option>
                                 </select>
@@ -173,7 +180,8 @@
                         <div class="form-group">
                             <label for="alamat_pindah" class="col-sm-2 control-label">Alamat Pindah</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="alamat_pindah" name="alamat_pindah" required></textarea>
+                                <textarea class="form-control" id="alamat_pindah" name="alamat_pindah"
+                                    required></textarea>
                             </div>
                         </div>
 
@@ -234,7 +242,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="jenis_kepindahan" class="col-sm-2 control-label">Anggota Keluarga Tidak Pindah</label>
+                            <label for="jenis_kepindahan" class="col-sm-2 control-label">Anggota Keluarga Tidak
+                                Pindah</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="jenis_kepindahan" name="jenis_kepindahan" required>
                                     <option value="">-- Pilih Anggota Keluarga Tidak Pindah --</option>
@@ -245,7 +254,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="jenis_kepindahan" class="col-sm-2 control-label">Anggota Keluarga yang Pindah</label>
+                            <label for="jenis_kepindahan" class="col-sm-2 control-label">Anggota Keluarga yang
+                                Pindah</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="jenis_kepindahan" name="jenis_kepindahan" required>
                                     <option value="">-- Pilih Anggota Keluarga yang Pindah --</option>
@@ -256,7 +266,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="nama_pemohon" class="col-sm-2 control-label">Daftar Anggota Keluarga yang Pindah</label>
+                            <label for="nama_pemohon" class="col-sm-2 control-label">Daftar Anggota Keluarga yang
+                                Pindah</label>
                         </div>
 
                         <div class="form-group">
@@ -278,7 +289,9 @@
                         </div>
 
                         <div mb-2>
-                            <label mb-10>Diisi oleh penduduk (Orang Asing) Pemegang ITAS yang Mengajukan SKTT dan OA Pemegang SKTT dan OA pemengang ITAP yang Mengajukan Surat Keterangan Kependudukan Lain nya
+                            <label mb-10>Diisi oleh penduduk (Orang Asing) Pemegang ITAS yang Mengajukan SKTT dan OA
+                                Pemegang SKTT dan OA pemengang ITAP yang Mengajukan Surat Keterangan Kependudukan Lain
+                                nya
                             </label>
                         </div>
 
@@ -307,12 +320,14 @@
                         <div class="form-group">
                             <label for="nama_pemohon" class="col-sm-2 control-label">Alamat Sponsor</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="alamat_sponsor" name="alamat_sponsor" required>
+                                <input type="text" class="form-control" id="alamat_sponsor" name="alamat_sponsor"
+                                    required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="nama_pemohon" class="col-sm-2 control-label">Nomor dan Tanggal ITAS & ITAP</label>
+                            <label for="nama_pemohon" class="col-sm-2 control-label">Nomor dan Tanggal ITAS &
+                                ITAP</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" id="nomotitap" name="nomotitap" required>
                             </div>
@@ -322,33 +337,38 @@
                         </div>
 
                         <div mb-2>
-                            <label class="control-label">Diisi oleh Penduduk yang Mengajukan Surat Keterangan Pindah Luar Negeri</label>
+                            <label class="control-label">Diisi oleh Penduduk yang Mengajukan Surat Keterangan Pindah
+                                Luar Negeri</label>
                         </div>
 
                         <div class="form-group">
                             <label for="nama_pemohon" class="col-sm-2 control-label">Negara Tujuan</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="negara_tujuan" name="negara_tujuan" required>
+                                <input type="text" class="form-control" id="negara_tujuan" name="negara_tujuan"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nama_pemohon" class="col-sm-2 control-label">Alamat Tujuan</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="alamat_tujuan" name="alamat_tujuan" required>
+                                <input type="text" class="form-control" id="alamat_tujuan" name="alamat_tujuan"
+                                    required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="nama_pemohon" class="col-sm-2 control-label">Penanggung Jawab</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab" required>
+                                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab"
+                                    required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="tanggal_pindah" class="col-sm-2 control-label">Rencana Tanggal Pindah</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="tanggal_pindah" name="tanggal_pindah" required>
+                                <input type="date" class="form-control" id="tanggal_pindah" name="tanggal_pindah"
+                                    required>
                             </div>
                         </div>
 
