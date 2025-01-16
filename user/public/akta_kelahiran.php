@@ -1,17 +1,26 @@
 <?php
+session_start(); // Memulai session
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login-user.php");
+    exit();
+}
+
 require_once("../private/database.php");
 
 if (isset($_POST['submit'])) {
     try {
         $sql = "INSERT INTO akta_kelahiran (
-            nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, kewarganegaraan_pelapor,
+            user_id, nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, kewarganegaraan_pelapor,
             nomor_handphone, email, nama_saksi_1, nik_saksi_1, nomor_kartu_keluarga_saksi_1, kewarganegaraan_saksi_1,
             nama_ayah, nik_ayah, tempat_lahir_ayah, tanggal_lahir_ayah, kewarganegaraan_ayah,
             nama_ibu, nik_ibu, tempat_lahir_ibu, tanggal_lahir_ibu, kewarganegaraan_ibu,
             nama_anak, jk_anak, tempat_lahir, tanggal_lahir_anak, pukul, jenis_kelahiran, kelahiran_ke,
             penolong_kelahiran, bb_bayi, pb, dokumen
         ) VALUES (
-            :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, :kewarganegaraan_pelapor,
+            :user_id, :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, :kewarganegaraan_pelapor,
             :nomor_handphone, :email, :nama_saksi_1, :nik_saksi_1, :nomor_kartu_keluarga_saksi_1, :kewarganegaraan_saksi_1,
             :nama_ayah, :nik_ayah, :tempat_lahir_ayah, :tanggal_lahir_ayah, :kewarganegaraan_ayah,
             :nama_ibu, :nik_ibu, :tempat_lahir_ibu, :tanggal_lahir_ibu, :kewarganegaraan_ibu,
@@ -41,6 +50,7 @@ if (isset($_POST['submit'])) {
                 }
 
                 if (move_uploaded_file($_FILES['dokumen']['tmp_name'], $uploadFile)) {
+                    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
                     $stmt->bindParam(':nama_pelapor', $_POST['nama_pelapor']);
                     $stmt->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
                     $stmt->bindParam(':nomor_dokumen_perjalanan', $_POST['nomor_dokumen_perjalanan']);
@@ -128,8 +138,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
-
 
 
 <!DOCTYPE html>

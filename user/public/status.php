@@ -1,24 +1,23 @@
 <?php
-session_start();  // Start the session to access user data
+require_once("../private/database.php"); // Sambungkan ke database
+session_start(); // Memulai session
 
-// Ensure the user is logged in, if not, redirect to the login page
+// Pastikan pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login-user.php");
     exit();
 }
 
-require_once("../private/database.php"); // Ensure the database connection file is correct
+$user_id = $_SESSION['user_id']; // Ambil user_id dari session
 
-// Fetch the logged-in user's ID from session
-$user_id = $_SESSION['user_id']; // Assuming user_id is stored in session
-
-// Query to get the report statuses for the logged-in user
-$statement = $db->prepare("SELECT status FROM laporan WHERE user_id = :user_id AND status IS NOT NULL");
-$statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+// Query untuk mendapatkan data laporan akta kelahiran berdasarkan user_id
+$statement = $db->prepare("SELECT * FROM akta_kelahiran WHERE user_id = :user_id");
+$statement->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Bind user_id dengan tipe integer
 $statement->execute();
 
-// Fetch all statuses for the user
-$statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
+// Ambil hasil query
+$akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -27,15 +26,25 @@ $statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Cara | Kantor Kecamatan Tanralili</title>
+    <title>Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <!-- Font Awesome CSS -->
+    <!-- font Awesome CSS -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
     <link href="css/style.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="js/bootstrap.js"></script>
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
+    <!-- Tambahkan link ke Font Awesome di dalam tag <head> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <style>
@@ -44,13 +53,90 @@ $statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
         margin: 0;
         padding: 0;
     }
+
+    .carousel-inner .item img {
+        width: 100%;
+        /* Memastikan gambar memenuhi lebar kontainer carousel */
+        height: 500px;
+        /* Atur tinggi tetap agar seragam */
+        object-fit: cover;
+        /* Memastikan gambar tetap proporsional dan mengisi area */
+    }
+
+    .carousel-control {
+        display: flex;
+        align-items: center;
+        /* Pusatkan secara vertikal */
+        justify-content: center;
+        /* Pusatkan secara horizontal */
+        top: 50%;
+        /* Atur posisi di tengah secara vertikal */
+        transform: translateY(-50%);
+        /* Geser ke atas 50% dari ukurannya untuk pusatkan */
+        width: 50px;
+        /* Ukuran lebar tombol navigasi */
+        height: 50px;
+        /* Tinggi tombol navigasi */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Latar belakang semi transparan */
+        border-radius: 50%;
+        /* Buat tombol berbentuk bulat */
+    }
+
+    .carousel-control .bi {
+        font-size: 24px;
+        /* Ukuran ikon */
+        color: #fff;
+        /* Warna ikon */
+    }
 </style>
 
-<body style="width:100%; margin:0;">
+<body style="width:100%; margin:0; overflow-x: hidden;">
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
+    <!--Success Modal Saved-->
+    <div class="modal fade" id="successmodalclear" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm " role="document">
+            <div class="modal-content bg-2">
+                <div class="modal-header ">
+                    <h4 class="modal-title text-center text-green">Sukses</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Pengajuan Berhasil Di Kirim</p>
+                    <p class="text-center">Untuk Mengetahui Status Pengajuan</p>
+                    <p class="text-center">Silahkan Buka Menu <a href="status.php">STATUS</a> </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn button-green" onclick="location.href='home';" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    if (isset($_GET['status'])) {
+    ?>
+        <script type="text/javascript">
+            $("#successmodalclear").modal();
+        </script>
+    <?php
+    }
+    ?>
+    <!-- body -->
     <div class="shadow">
-        <nav class="navbar navbar-fixed navbar-inverse form-shadow">
+        <!-- navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed form-shadw">
             <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -58,11 +144,12 @@ $statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="home">
+                    <a class="navbar-brand" href="">
                         <img alt="Brand" src="images/logomaros.png" width="50">
                     </a>
                 </div>
 
+                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
@@ -100,36 +187,109 @@ $statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
                         <li><a href="login-user.php">LOGOUT</a></li>
                     </ul>
                 </div>
+                <!-- /.navbar-collapse -->
             </div>
+            <!-- /.container-fluid -->
         </nav>
+
+        <!-- end navbar -->
+
 
         <!-- content -->
         <div class="main-content">
-            <h2 class="text-center mb-4">Tampilan Status Laporan</h2>
+            <!-- section -->
+            <div class="section">
+                <div class="row">
 
-            <div class="row">
-                <?php if (!empty($statuses)): ?>
-                    <?php foreach ($statuses as $status): ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center">Status</h5>
-                                    <p class="card-text text-center text-muted">
-                                        <?php echo htmlspecialchars($status['status']); ?>
-                                    </p>
+                    <!-- Social Media Feed -->
+                    <div class="col-md-4">
+                        <br>
+                        <!-- header text social-feed -->
+                        <h3 class="text-center h3-custom">Status Laporan</h3>
+                        <hr class="custom-line" />
+                        <!-- end header text social-feed -->
+                        <!-- Instagram Feed -->
+                        <div class="box">
+                            <div class="box-icon shadow">
+                                <span class="fa fa-2x fa-instgram"></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="text-center"></h3>
+                                    <!-- Loop through the akta_kelahiran_data array to display statuses -->
+                                <?php if ($akta_kelahiran_data): ?>
+                                    <?php foreach ($akta_kelahiran_data as $data): ?>
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <h5 class="card-title">Laporan Akta Kelahiran ID: <?php echo htmlspecialchars($data['id']); ?></h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <h6 class="card-subtitle mb-2 text-muted">Nama Anak: <?php echo htmlspecialchars($data['nama_anak']); ?></h6>
+                                                <p class="card-text">Tanggal Lahir: <?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?></p>
+                                                <p class="card-text">Status: <?php echo htmlspecialchars($data['status']); ?></p>
+                                                <a href="#" class="btn btn-primary">Lihat Detail</a>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p class="text-center">Belum ada status laporan akta kelahiran.</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <!-- End Instagram Feed -->
+                        <hr>
+                        <!-- Facebook Feed -->
+                        <div class="box">
+                            <div class="box-icon shadow">
+                                <span class="fa fa-2x fa-facebook"></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="text-center">facebook</h3>
+                                <div class="fb-page" data-height="300" data-width="500" data-href="https://www.facebook.com/profile.php?id=61555707727963&" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963&" class="fb-xfbml-parse-ignore">
+                                        <a href="https://www.facebook.com/profile.php?id=61555707727963&">Kecamatan Tanralili</a>
+                                    </blockquote>
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="col-12">
-                        <p class="text-center text-muted">Tidak ada laporan yang tersedia untuk Anda atau status laporan belum dimasukkan.</p>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
+                        <!-- End Facebook Feed -->
+                        <hr>
+                        <!-- Facebook Feed -->
 
-        <hr>
+                        <!-- End Facebook Feed -->
+                    </div>
+                    <!-- End Social Media Feed -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- /.section -->
+
+            <!-- link to top -->
+            <a id="top" href="#" onclick="topFunction()">
+                <i class="fa fa-arrow-circle-up"></i>
+            </a>
+            <script>
+                // When the user scrolls down 100px from the top of the document, show the button
+                window.onscroll = function() {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                        document.getElementById("top").style.display = "block";
+                    } else {
+                        document.getElementById("top").style.display = "none";
+                    }
+                }
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                }
+            </script>
+            <!-- link to top -->
+
+        </div>
+        <!-- end main-content -->
 
         <!-- Footer -->
         <footer class="footer text-center">
@@ -159,13 +319,13 @@ $statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/1607792839472522?ref=embed_page">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/disdukcapilbkl">
-                                <i class="fa fa-fw fa-instagram"></i>
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://x.com/Kel_Tamalanrea?s=20">
+                                <i class="fa fa-fw fa-twitter"></i>
                             </a>
                         </li>
                     </ul>
@@ -186,16 +346,15 @@ $statuses = $statement->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </footer>
+        <!-- /footer -->
+
         <div class="copyright py-4 text-center text-white">
-            <small>V-3.0 | Copyright &copy; Kantor Kecamatan Tanralili</small>
+            <div class="container">
+                <small> | Copyright &copy; Kantor Kecamatan Tanralili </small>
+            </div>
         </div>
-
+        <!-- shadow -->
     </div>
-
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="js/bootstrap.js"></script>
 
 </body>
 

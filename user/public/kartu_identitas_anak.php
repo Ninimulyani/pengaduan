@@ -1,4 +1,13 @@
 <?php
+session_start(); // Memulai session
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login-user.php");
+    exit();
+}
+
 require_once("../private/database.php");
 
 // Fetch the max id from the 'data_anak' table

@@ -1,5 +1,14 @@
 <?php
 require_once("../private/database.php");
+session_start(); // Memulai session
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login-user.php");
+    exit();
+}
+
 ?>
 <?php
 // fungsi untuk merandom avatar profil
@@ -22,7 +31,6 @@ function RandomAvatar()
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <!-- font Awesome CSS -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
@@ -127,7 +135,7 @@ function RandomAvatar()
     <!-- body -->
     <div class="shadow">
         <!-- navbar -->
-        <nav class="navbar navbar-inverse navbar-fixed form-shadow">
+        <nav class="navbar navbar-inverse navbar-fixed form-shadw">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">

@@ -9,9 +9,6 @@ if ($id_admin > 0) {
         $total_laporan_masuk = $row['COUNT(*)'];
     }
 
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
 
     foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
         $total_laporan_menunggu = $row['COUNT(*)'];
