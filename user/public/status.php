@@ -298,25 +298,25 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
                             <div class="info">
                                 <h3 class="text-center"></h3>
                                 <!-- Loop through the akta_kelahiran_data array to display statuses -->
-                                <?php if ($data_anak): ?>
-                                <?php foreach ($data_anak as $data): ?>
+                                <?php if ($data_kematian): ?>
+                                <?php foreach ($data_kematian as $data): ?>
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
-                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
+                                        <h5 class="card-subtitle mb-2 text-muted">Nama Lengkap Almarhum:
+                                            <?php echo htmlspecialchars($data['nama_lengkap_alm']); ?>
                                         </h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <p class="card-text mb-1">Tanggal Lahir:
-                                                    <?php echo htmlspecialchars($data['tanggal_lahir']); ?>
+                                                <p class="card-text mb-1">Tanggal Kematian:
+                                                    <?php echo htmlspecialchars($data['hari_tanggal_kematian']); ?>
                                                 </p>
                                                 <p class="card-text mb-1">Status:
                                                     <?php echo htmlspecialchars($data['status']); ?>
                                                 </p>
                                             </div>
-                                            <a href="lihat_kartu_identitas_anak.php?id=<?php echo $data['id']; ?>"
+                                            <a href="lihat_akta_kematian.php?id=<?php echo $data['id']; ?>"
                                                 class="btn btn-primary">Lihat Detail</a>
                                         </div>
                                     </div>
