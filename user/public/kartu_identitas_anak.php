@@ -12,7 +12,7 @@ require_once("../private/database.php");
 
 // Fetch the max id from the 'data_anak' table
 $statement = $db->query("SELECT id FROM data_anak ORDER BY id DESC LIMIT 1");
-$max_id = $statement->fetchColumn() + 1;  // Get the last ID and add 1
+$max_id = $statement->fetchColumn() + 1; // Get the last ID and add 1
 
 // Check if the form is submitted
 if (isset($_POST['submit'])) {
@@ -22,10 +22,10 @@ if (isset($_POST['submit'])) {
     // Prepare the SQL query with placeholders
     $sql = "INSERT INTO data_anak (
         id, nik_anak, nomor_akta_kelahiran, nama_anak, tempat_lahir, tanggal_lahir, anak_ke, 
-        nama_ayah, nama_ibu, alamat_pemohon, tanggal_input, status
+        nama_ayah, nama_ibu, alamat_pemohon, tanggal_input, user_id, status
     ) VALUES (
         :id, :nik_anak, :nomor_akta_kelahiran, :nama_anak, :tempat_lahir, :tanggal_lahir, :anak_ke,
-        :nama_ayah, :nama_ibu, :alamat_pemohon, CURRENT_TIMESTAMP, :status
+        :nama_ayah, :nama_ibu, :alamat_pemohon, CURRENT_TIMESTAMP, :user_id, :status
     )";
 
     // Prepare the statement
@@ -42,14 +42,15 @@ if (isset($_POST['submit'])) {
     $stmt->bindParam(':nama_ayah', $_POST['nama_ayah'], PDO::PARAM_STR);
     $stmt->bindParam(':nama_ibu', $_POST['nama_ibu'], PDO::PARAM_STR);
     $stmt->bindParam(':alamat_pemohon', $_POST['alamat_pemohon'], PDO::PARAM_STR);
-    $stmt->bindParam(':status', $status, PDO::PARAM_STR);  // Default status
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT); // User ID dari session
+    $stmt->bindParam(':status', $status, PDO::PARAM_STR); // Default status
 
     try {
         // Execute the query
         $stmt->execute();
-        echo "Data berhasil disimpan!";
+        echo "<div class='alert alert-success'>Data berhasil disimpan!</div>";
     } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        echo "<div class='alert alert-danger'>Error: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
 }
 ?>

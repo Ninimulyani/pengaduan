@@ -10,14 +10,27 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id']; // Ambil user_id dari session
 
-// Query untuk mendapatkan data laporan akta kelahiran berdasarkan user_id
-$statement = $db->prepare("SELECT * FROM akta_kelahiran WHERE user_id = :user_id");
-$statement->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Bind user_id dengan tipe integer
-$statement->execute();
+// Query untuk mendapatkan data dari tabel data_anak
+$query_data_anak = "SELECT * FROM data_anak WHERE user_id = :user_id";
+$stmt_data_anak = $db->prepare($query_data_anak);
+$stmt_data_anak->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt_data_anak->execute();
+$data_anak = $stmt_data_anak->fetchAll(PDO::FETCH_ASSOC);
 
-// Ambil hasil query
-$akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
+// Query untuk mendapatkan data dari tabel akta_kelahiran
+$query_akta_kelahiran = "SELECT * FROM akta_kelahiran WHERE user_id = :user_id";
+$stmt_akta_kelahiran = $db->prepare($query_akta_kelahiran);
+$stmt_akta_kelahiran->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt_akta_kelahiran->execute();
+$akta_kelahiran = $stmt_akta_kelahiran->fetchAll(PDO::FETCH_ASSOC);
 
+
+// Query untuk mendapatkan data dari tabel akta_kematian
+$query_akta_kematian = "SELECT * FROM akta_kematian WHERE user_id = :user_id";
+$stmt_akta_kematian = $db->prepare($query_akta_kematian);
+$stmt_akta_kematian->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt_akta_kematian->execute();
+$data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +61,20 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <style>
+.card-body {
+    position: relative;
+    /* Menjadikan card-body sebagai konteks untuk posisi absolut */
+}
+
+.card-body .btn {
+    position: absolute;
+    /* Menempatkan tombol di posisi absolut */
+    top: 10px;
+    /* Mengatur jarak dari atas */
+    right: 10px;
+    /* Mengatur jarak dari kanan */
+}
+
 .navbar {
     width: 100%;
     margin: 0;
@@ -215,13 +242,27 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                         <!-- Instagram Feed -->
                         <div class="box">
                             <div class="box-icon shadow">
-                                <span class="fa fa-2x fa-instgram"></span>
+                                <span class="fa fa-2x fa-instagram"></span>
                             </div>
                             <div class="info">
                                 <h3 class="text-center"></h3>
-                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
-                                <?php if ($akta_kelahiran_data): ?>
-                                <?php foreach ($akta_kelahiran_data as $data): ?>
+                                <!-- Loop through the akta_kelahiran array to display statuses -->
+                                <?php if ($akta_kelahiran): ?>
+                                <?php foreach ($akta_kelahiran as $data): ?>
+                                <!-- Logika untuk menentukan apakah data baru -->
+                                <?php 
+                                    $is_new = false;
+                                    if (isset($data['created_at'])) {
+                                        $created_at = new DateTime($data['created_at']);
+                                        $now = new DateTime();
+                                        $interval = $now->diff($created_at);
+                                        // Data dianggap baru jika dibuat dalam 24 jam terakhir
+                                        if ($interval->days == 0 && $interval->h < 24) {
+                                            $is_new = true;
+                                        }
+                                    }
+                                    ?>
+
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
@@ -233,6 +274,9 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                                             <?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?></p>
                                         <p class="card-text">Status: <?php echo htmlspecialchars($data['status']); ?>
                                         </p>
+                                        <?php if ($is_new): ?>
+                                        <p class="text-success"><strong>Laporan data kelahiran</strong></p>
+                                        <?php endif; ?>
                                         <a href="lihat_akta_kelahiran.php?id=<?php echo $data['id']; ?>"
                                             class="btn btn-primary">Lihat Detail</a>
                                     </div>
@@ -243,6 +287,7 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                                 <?php endif; ?>
                             </div>
                         </div>
+
                         <!-- End Instagram Feed -->
                         <hr>
                         <!-- Facebook Feed -->
@@ -251,19 +296,77 @@ $akta_kelahiran_data = $statement->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="fa fa-2x fa-facebook"></span>
                             </div>
                             <div class="info">
-                                <h3 class="text-center">facebook</h3>
-                                <div class="fb-page" data-height="300" data-width="500"
-                                    data-href="https://www.facebook.com/profile.php?id=61555707727963&"
-                                    data-tabs="timeline" data-small-header="false" data-adapt-container-width="true"
-                                    data-hide-cover="false" data-show-facepile="true">
-                                    <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963&"
-                                        class="fb-xfbml-parse-ignore">
-                                        <a href="https://www.facebook.com/profile.php?id=61555707727963&">Kecamatan
-                                            Tanralili</a>
-                                    </blockquote>
+                                <h3 class="text-center"></h3>
+                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
+                                <?php if ($data_anak): ?>
+                                <?php foreach ($data_anak as $data): ?>
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
+                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="card-text mb-1">Tanggal Lahir:
+                                                    <?php echo htmlspecialchars($data['tanggal_lahir']); ?>
+                                                </p>
+                                                <p class="card-text mb-1">Status:
+                                                    <?php echo htmlspecialchars($data['status']); ?>
+                                                </p>
+                                            </div>
+                                            <a href="lihat_kartu_identitas_anak.php?id=<?php echo $data['id']; ?>"
+                                                class="btn btn-primary">Lihat Detail</a>
+                                        </div>
+                                    </div>
                                 </div>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
+
+                        <!-- End Facebook Feed -->
+
+                        <hr>
+                        <!-- Facebook Feed -->
+                        <div class="box">
+                            <div class="box-icon shadow">
+                                <span class="fa fa-2x fa-facebook"></span>
+                            </div>
+                            <div class="info">
+                                <h3 class="text-center"></h3>
+                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
+                                <?php if ($data_anak): ?>
+                                <?php foreach ($data_anak as $data): ?>
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
+                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>
+                                            <p class="card-text mb-1">Tanggal Lahir:
+                                                <?php echo htmlspecialchars($data['tanggal_lahir']); ?>
+                                            </p>
+                                            <p class="card-text mb-1">Status:
+                                                <?php echo htmlspecialchars($data['status']); ?>
+                                            </p>
+                                        </div>
+                                        <a href="lihat_kartu_identitas_anak.php?id=<?php echo $data['id']; ?>"
+                                            class="btn btn-primary">Lihat Detail</a>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
                         <!-- End Facebook Feed -->
                         <hr>
                         <!-- Facebook Feed -->
