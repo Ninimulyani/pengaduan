@@ -22,11 +22,11 @@
 
 
 <style>
-.navbar {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <body style="width:100%; margin:0;">
@@ -245,7 +245,7 @@
                             <label for="jenis_kepindahan" class="col-sm-2 control-label">Anggota Keluarga Tidak
                                 Pindah</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="jenis_kepindahan" name="jenis_kepindahan" required>
+                                <select class="form-control" id="jenis_kepindahan" name="jenis_kepindahan" ` required>
                                     <option value="">-- Pilih Anggota Keluarga Tidak Pindah --</option>
                                     <option value="kk_baru">Membuat KK Baru</option>
                                     <option value="numpang_kk">Numpang KK</option>
@@ -276,17 +276,26 @@
                             <label for="kabupaten" class="col-sm-5 control-label">NAMA LENGKAP</label>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-1">
-                                <input type="text" class="form-control" id="nama_pemohon" name="nama_pemohon" required>
-                            </div>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="nama_pemohon" name="nama_pemohon" required>
-                            </div>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="nama_pemohon" name="nama_pemohon" required>
+                        <div id="form-container">
+                            <!-- Baris pertama form -->
+                            <div class="form-group row">
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" name="nama_pemohon[]" placeholder="Col 1" required>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="nama_pemohon[]" placeholder="Col 2" required>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="nama_pemohon[]" placeholder="Col 3" required>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-danger remove-form">-</button>
+                                </div>
                             </div>
                         </div>
+                        <button type="button" id="add-form" class="btn btn-primary">+ Add Form</button>
+
+
 
                         <div mb-2>
                             <label mb-10>Diisi oleh penduduk (Orang Asing) Pemegang ITAS yang Mengajukan SKTT dan OA
@@ -396,7 +405,35 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk menambah form baru
+            $('#add-form').click(function() {
+                const newForm = `
+                <div class="form-group row">
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" name="nama_pemohon[]" placeholder="Col 1" required>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="nama_pemohon[]" placeholder="Col 2" required>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="nama_pemohon[]" placeholder="Col 3" required>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-danger remove-form">-</button>
+                    </div>
+                </div>`;
+                $('#form-container').append(newForm);
+            });
 
+            // Fungsi untuk menghapus form
+            $('#form-container').on('click', '.remove-form', function() {
+                $(this).closest('.form-group').remove();
+            });
+        });
+    </script>
 </body>
+
 
 </html>

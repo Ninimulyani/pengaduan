@@ -90,70 +90,64 @@
             <h3>Frequently Asked Question (FAQ):</h3>
             <hr />
             <p class="text-justify">
-                Q: Apakah Aplikasi Pengaduan Masyarakat Kelurahan Tamalanrea ini?
+                Q: Apa itu Aplikasi Pelayanan Administrasi Kependudukan Kecamatan Tanralili?
                 <br />
-                A: Aplikasi Pengaduan Masyarakat Kelurahan Tamalanrea adalah aplikasi
-                pengelolaan dan tindak lanjut pengaduan serta pelaporan hasil pengelolaan pengaduan yang
-                disediakan oleh Kelurahan Tamalanrea sebagai salah satu sarana bagi
-                setiap pejabat/pegawai Kelurahan Tamalanrea sebagai pihak internal
-                maupun masyarakat luas pengguna layanan Kelurahan Tamalanrea sebagai
-                pihak eksternal untuk melaporkan dugaan adanya pelanggaran dan/atau ketidakpuasan terhadap
-                pelayanan yang dilakukan/diberikan oleh pejabat/pegawai Kelurahan Tamalanrea.
+                A: Aplikasi Pelayanan administrasi kependudukan Kecamatan Tanralili adalah aplikasi berbasis website
+                yang disediakan oleh Disdukcapil Kecamatan Tanralili untuk memudahkan masyarakat mengajukan permohonan
+                layanan administrasi kependudukan secara online.
             </p>
             <hr />
             <p class="text-justify">
-                Q: Apakah nomor pengaduan itu dan apa yang harus saya lakukan terhadap nomor pengaduan ini?
+                Q: Pada hari dan jam berapakah pelayanan pengurusan dokumen kependudukan dibuka pada Disdukcapil Kecamatan Tanralili?
                 <br />
-                A: Nomor pengaduan adalah nomor yang digunakan sebagai identitas dari sebuah laporan atau pengaduan
-                yang didapatkan ketika pelapor menyampaikan laporan melalui aplikasi ini.
-                Simpan dengan baik nomor pengaduan yang Anda peroleh, jangan sampai tercecer dan
-                diketahui oleh pihak yang tidak berhak karena pelayanan untuk mengetahui status tindak
-                lanjut pengaduan yang disampaikan hanya dapat diberikan melalui nomor pengaduan tersebut.
+                A: Pelayanan pengurusan dokumen kependudukan pada Disdukcapil Kecamatan Tanralili dibuka pada
+                setiap hari kerja (Senin-Jumat) dari pukul 08.00 s/d 14.00 WIB.
             </p>
             <hr />
             <p class="text-justify">
-                Q: Apakah bentuk respon yang diberikan kepada pelapor atas pengaduan yang disampaikan?
+                Q: Layanan Apa Saja yang Tersedia dalam Aplikasi Pelayanan Administrasi Kependudukan Kecamatan Tanralili?
                 <br />
-                A: Respon yang diberikan kepada pelapor berupa respon awal (ucapan terima kasih telah melakukan pengaduan)
-                dan status/tindak lanjut pengaduan paling akhir sesuai dengan respon yang telah diberikan
-                oleh pihak penerima pengaduan. Respon terkait dengan status/tindak lanjut pengaduan dapat
-                dilihat dalam history pengaduan.
+                A: Berikut adalah layanan yang tersedia: <br>
+                > Akta Kelahiran <br>
+                > Akta Kematian <br>
+                > Kartu Identitas Anak (KIA) <br>
+                > Surat Keterangan Pindah Penduduk <br>
+                > Perubahan Data Penduduk
             </p>
             <hr />
             <p class="text-justify">
-                Q: Berapa lama respon atas pengaduan yang disampaikan diberikan kepada pelapor?
+                Q: Bagaimana cara mengajukan permohonan Layanan di Aplikasi ini?
                 <br />
-                A: Sesuai dengan KMK 149 tahun 2011 jawaban/respon atas pengaduan yang
-                disampaikan wajib diberikan dalam kurun waktu paling lambat 30 (tiga puluh)
-                hari terhitung sejak pengaduan diterima.
+                A: > Masuk ke akun <br>
+                > Pilih jenis layanan yang ingin diajukan. <br>
+                > Isi formular online dan unggah dokumen persyaratan. <br>
+                > Klik "Kirim Permohonan" <br>
+                > Anda akan menerima notifikasi status permohonan melalui aplikasi.
                 <br />
-                Untuk respon yang disampaikan tertulis melalui surat dapat diberikan apabila
-                pelapor mencantumkan identitas secara jelas (nama dan alamat koresponden).
-                Untuk respon dari media pengaduan lainnya akan disampaikan dan diberikan
-                sesuai identitas pelapor yang dicantumkan dalam media pengaduan tersebut.
             </p>
             <hr />
             <p class="text-justify">
-                Q: Apakah pengaduan yang saya berikan akan selalu mendapatkan respon?
+                Q: Bagaimana saya dapat menerima dokumen yang telah selesai diproses?
                 <br />
-                A: Pengaduan yang Anda berikan akan direspon dan tercantum dalam aplikasi
-                ini dan akan terupdate secara otomatis sesuai dengan respon yang telah
-                diberikan oleh pihak penerima pengaduan.
+                A: Setelah permohonan Anda disetujui dan diproses, Anda akan menerima notifikasi untuk
+                mengunduh dokumen digital. Jika diperlukan, Anda dapat datang ke kantor kecamatan untuk mengambil dokumen fisik.
                 <br />
-                Untuk dapat melihat respon yang diberikan, Anda dapat
-                melihat status pengaduan dalam menu Lihat Pengaduan sesuai dengan nomor
-                pengaduan yang didapatkan.
-                <br />
-                Sebagai catatan, pengaduan Anda akan lebih mudah ditindaklanjuti
-                apabila memenuhi unsur pengaduan.
             </p>
             <hr />
             <p class="text-justify">
-                Q: Apakah kerahasiaan identitas saya sebagai pengadu/pelapor terjaga?
+                Q: Bagaimana cara memantau status permohonan layanan yang telah diajukan?
                 <br />
-                A: Kerahasiaan identitas Anda sebagai pelapor akan terjaga seperti yang telah
-                disebutkan dalam KMK 149 tahun 2011. Namun agar kerahasiaan identitas Anda dapat
-                lebih terjaga sebaiknya Anda memperhatikan hal-hal sebagaimana disebutkan di <a href="bantuan.php">sini.</a>
+                A: Status permohonan dapat dipantau secara real-time melalui dashboard aplikasi.
+                Beberapa status yang ditampilkan adalah "Sedang Diproses","Disetujui",dan "Ditolak".
+                Selain itu, pemohon akan menerima notifikasi melalui email atau SMS terkait perubahan status permohonan.</a>
+            </p>
+            <hr>
+            <hr />
+            <p class="text-justify">
+                Q: Apakah layanan administrasi kependudukan melalui aplikasi ini dikenakan biaya?
+                <br />
+                A: Tidak, semua layanan administrasi kependudukan yang disediakan melalui aplikasi ini gratis.
+                Jika ada pihak yang meminta biaya, harap laporkan kepada pihak kecamatan.</a>
             </p>
             <hr>
         </div>

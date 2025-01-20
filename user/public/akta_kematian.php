@@ -125,11 +125,11 @@ if (isset($_POST['submit'])) {
 
 
 <style>
-.navbar {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <body style="width:100%; margin:0;">
@@ -363,7 +363,7 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <!-- Data Anak -->
-                        <h4>Kematia</h4>
+                        <h4>Kematian</h4>
                         <div class="form-group">
                             <label for="nik" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">

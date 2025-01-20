@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 // Ambil ID dari URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    
+
     // Query untuk mendapatkan detail laporan akta kelahiran berdasarkan ID
     $statement = $db->prepare("SELECT * FROM akta_kematian WHERE id = :id");
     $statement->bindParam(':id', $id, PDO::PARAM_INT); // Bind ID dengan tipe integer
@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
 
     // Ambil hasil query
     $data = $statement->fetch(PDO::FETCH_ASSOC);
-    
+
     if (!$data) {
         echo "Data tidak ditemukan.";
         exit();
@@ -56,47 +56,47 @@ if (isset($_GET['id'])) {
 </head>
 
 <style>
-.navbar {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-.carousel-inner .item img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-}
+    .carousel-inner .item img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+    }
 
-.carousel-control {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-}
+    .carousel-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+    }
 
-.carousel-control .bi {
-    font-size: 24px;
-    color: #fff;
-}
+    .carousel-control .bi {
+        font-size: 24px;
+        color: #fff;
+    }
 </style>
 
 <body style="width:100%; margin:0; overflow-x: hidden;">
     <div id="fb-root"></div>
     <script>
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/id_ID/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/id_ID/sdk.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
 
     <!-- Modal -->
@@ -121,9 +121,9 @@ if (isset($_GET['id'])) {
     </div>
 
     <?php if (isset($_GET['status'])): ?>
-    <script type="text/javascript">
-    $("#successmodalclear").modal();
-    </script>
+        <script type="text/javascript">
+            $("#successmodalclear").modal();
+        </script>
     <?php endif; ?>
 
     <!-- Navbar -->
@@ -319,68 +319,48 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
 
-                <!-- Data Informasi Anak -->
+                <!-- Data Informasi Kematian -->
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Nama Anak</label>
+                    <label class="col-sm-3 col-form-label">NIK</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['nama_anak']); ?></p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['nik_alm']); ?></p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Jenis Kelamin Anak</label>
+                    <label class="col-sm-3 col-form-label">Nama Lengkap</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['jk_anak']); ?></p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['nama_lengkap_alm']); ?></p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Tempat Lahir Anak</label>
+                    <label class="col-sm-3 col-form-label">Hari Dan Tanggal Kematian</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['tempat_lahir']); ?></p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['hari_tanggal_kematian']); ?></p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Tanggal Lahir Anak</label>
+                    <label class="col-sm-3 col-form-label">Pukul</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['pukul']); ?>
                         </p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Pukul Kelahiran</label>
+                    <label class="col-sm-3 col-form-label">Sebab Kematian</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['pukul']); ?></p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['sebab_kematian']); ?></p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Jenis Kelahiran</label>
+                    <label class="col-sm-3 col-form-label">Tempat Kematian</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['jenis_kelahiran']); ?></p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['tempat_kematian']); ?></p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Kelahiran Ke</label>
+                    <label class="col-sm-3 col-form-label">Yang Menerangkan</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['kelahiran_ke']); ?></p>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Penolong Kelahiran</label>
-                    <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['penolong_kelahiran']); ?>
-                        </p>
-                    </div>
-                </div>
-                <!-- Data Berat dan Panjang Bayi -->
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Berat Bayi (BB)</label>
-                    <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['bb_bayi']); ?> kg</p>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Panjang Bayi (PB)</label>
-                    <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['pb']); ?> cm</p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['yang_menerangkan']); ?></p>
                     </div>
                 </div>
                 <!-- Data Dokumen & Status -->
@@ -388,7 +368,7 @@ if (isset($_GET['id'])) {
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Dokumen</label>
                     <div class="col-sm-9">
-                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['dokumen']); ?></p>
+                        <p class="form-control-plaintext"><?php echo htmlspecialchars($data['dokumen_persyaratan']); ?></p>
                     </div>
                 </div>
                 <div class="form-group row">

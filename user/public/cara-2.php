@@ -94,45 +94,35 @@
             <br>
             <ol>
                 <li>
-                    <p>Klik menu &quot;Lapor&quot; untuk merekam pengaduan baru.</p>
+                    <p>Klik menu &quot;Layanan&quot; untuk menginput pengajuan layanan administrasi kependudukan.</p>
                 </li>
                 <li>
-                    <p>Isi form Tambah Pengaduan sesuai informasi yang Anda ketahui.</p>
+                    <p>Pilih jenis form yang ingin diajukan yaitu akta kelahiran, kartu identitas anak, akta kematian, perubahan data penduduk, dan surat pindah penduduk.</p>
                 </li>
                 <li>
                     <p>Perhatikan beberapa hal di bawah ini:
-                        <br />Semua kotak yang ada wajib diisi.
-                        <br />Pastikan informasi yang diberikan sedapat mungkin memenuhi unsur 4W 1H.
+                        <br />Semua kolom wajib diisi.
+                        <br />Pastikan semua data yang dimasukkan valid sebelum submit form.
                     </p>
                 </li>
                 <li>
-                    <p>Jika Anda memiliki bukti dalam bentuk file seperti foto, silakan dilengkapi di halaman pengaduan, caranya:
-                        <br />Setelah membaca petunjuk untuk menyertakan lampiran, klik kotak kecil di bawah petunjuk tersebut,
-                        dan lanjutkan prosesnya.
+                    <p>Masukkan berkas persyaratan sesuai form yang ingin diajukan.
+                        <br />Setelah selesai mengisi, silahkan klik tombol "submit" untuk melanjutkan proses pengajuan.
                     </p>
                 </li>
                 <li>
-                    <p>Setelah selesai mengisi, silakan klik tombol &quot;Kirim Pengaduan&quot;
-                        untuk melanjutkan atau klik tombol &quot;Hapus&quot; untuk membatalkan proses pelaporan Anda.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        Catat dan Simpan dengan baik nomor pengaduan yang Anda peroleh saat membuat
-                        pengaduan untuk mengetahui status/tindak lanjut pengaduan yang Anda sampaikan.
+                    <p>Klik menu status untuk mengetahui progress pengajuan.
                     </p>
                 </li>
                 <li>
                     <p>
-                        Untuk Bantuan mengenai cara melaporkan pengaduan, bisa dilihat di menu Bantuan
-                        yang telah tersedia di aplikasi.
+                        Jika status pengajuan sudah selesai, silahkan klik "unduh dokumen"
+                        untuk mendapatkan hasil dokumen yang diajukan.
                     </p>
                 </li>
                 <li>
                     <p>
-                        Kelurahan Tamalanrea akan menghubungi Anda melalui saluran yang telah Anda
-                        cantumkan dalam form pengaduan apabila pengaduan yang Anda sampaikan belum
-                        memenuhi kriteria untuk ditindaklanjuti.
+                        Jika ingin mengambil dokumen asli silahkan datang langsung ke kantor kecamatan tanralili saat status pengajuan telah selesai.
                     </p>
                 </li>
             </ol>
