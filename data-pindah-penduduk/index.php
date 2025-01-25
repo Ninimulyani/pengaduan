@@ -34,7 +34,7 @@ if ($id_admin > 0) {
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $deleteId = $_GET['id'];
     // Perform the deletion query
-    $koneksi->query("DELETE FROM perubahan_data_penduduk WHERE id = $deleteId");
+    $koneksi->query("DELETE FROM akta_kelahiran WHERE id = $deleteId");
     // Redirect to the same page after deletion
     echo "<script>
                 alert('Hapus data sukses!');
@@ -61,7 +61,29 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="../css/admin.css" rel="stylesheet">
+
+
 </head>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="user/public/images/logomaros.png">
+    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="css/admin.css" rel="stylesheet">
+</head>
+
+
 
 <body class="fixed-nav sticky-footer" id="page-top">
 
@@ -114,7 +136,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../data-akta-kelahiran">
+                    <a class="nav-link" href="../data-kartu-indentitas-anak">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kartu Identitas Anak</span>
                     </a>
@@ -145,64 +167,139 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Data Perubahan Penduduk</li>
+                <li class="breadcrumb-item active">Data Kelahiran</li>
             </ol>
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Data Perubahan Penduduk
+                    <i class="fa fa-table"></i> Semua Data Surat Pindah Penduduk
                 </div>
                 <div class="card-body">
-                    <a href="create_user.php" class="btn btn-primary mb-3 mx-2">Tambah Data Perubahan</a>
+                    <a href="create_surat_pindah.php" class="btn btn-primary mb-3 mx-2">Tambah Data Surat Pindah</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
-                                    <th>NIK</th>
-                                    <th>SHDK</th>
-                                    <th>Keterangan</th>
+                                    <th>ID</th>
+                                    <th>No KK</th>
+                                    <th>Nama Lengkap Pemohon</th>
+                                    <th>NIK Pemohon</th>
                                     <th>Jenis Permohonan</th>
-                                    <th>Semula</th>
-                                    <th>Menjadi</th>
-                                    <th>Dasar Perubahan</th>
+                                    <th>Alamat Asal</th>
+                                    <th>Desa/Kelurahan Asal</th>
+                                    <th>Kecamatan Asal</th>
+                                    <th>Kabupaten/Kota Asal</th>
+                                    <th>Provinsi Asal</th>
+                                    <th>Kode Pos Asal</th>
+                                    <th>Jenis Pindah</th>
+                                    <th>Alamat Pindah</th>
+                                    <th>Desa/Kelurahan Pindah</th>
+                                    <th>Kecamatan Pindah</th>
+                                    <th>Kabupaten/Kota Pindah</th>
+                                    <th>Provinsi Pindah</th>
+                                    <th>Kode Pos Pindah</th>
+                                    <th>Alasan Pindah</th>
+                                    <th>Jenis Kepindahan</th>
+                                    <th>Anggota Keluarga Tidak Pindah</th>
+                                    <th>Anggota Keluarga Pindah</th>
+                                    <th>Daftar NIK Anggota Pindah</th>
+                                    <th>Daftar Anggota Pindah</th>
+                                    <th>Nama Sponsor</th>
+                                    <th>Tipe Sponsor</th>
+                                    <th>Alamat Sponsor</th>
+                                    <th>Nomor ITAS/ITAP</th>
+                                    <th>Tanggal ITAS/ITAP</th>
+                                    <th>Negara Tujuan</th>
+                                    <th>Alamat Tujuan</th>
+                                    <th>Penanggung Jawab</th>
+                                    <th>Rencana Tanggal Pindah</th>
+                                    <th>Nomor Handphone</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                // Fetch the data from the perubahan_data_penduduk table
-                                $statement = $koneksi->query("SELECT * FROM perubahan_data_penduduk ORDER BY id DESC");
+                    $statement = $koneksi->query("SELECT * FROM surat_pindah_penduduk ORDER BY id DESC");
 
-                                $no = 1;
-                                foreach ($statement as $key) {
-                                ?>
+                    $no = 1;
+                    foreach ($statement as $key) {
+                    ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['nik']; ?></td>
-                                    <td><?php echo $key['shdk']; ?></td>
-                                    <td><?php echo $key['keterangan']; ?></td>
+                                    <td><?php echo $key['id']; ?></td>
+                                    <td><?php echo $key['no_kk']; ?></td>
+                                    <td><?php echo $key['nama_lengkap_pemohon']; ?></td>
+                                    <td><?php echo $key['nik_pemohon']; ?></td>
                                     <td><?php echo $key['jenis_permohonan']; ?></td>
-                                    <td><?php echo $key['semula']; ?></td>
-                                    <td><?php echo $key['menjadi']; ?></td>
-                                    <td><?php echo $key['dasar_perubahan']; ?></td>
+                                    <td><?php echo $key['alamat_jelas']; ?></td>
+                                    <td><?php echo $key['desa_kelurahan_asal']; ?></td>
+                                    <td><?php echo $key['kecamatan_asal']; ?></td>
+                                    <td><?php echo $key['kabupaten_kota_asal']; ?></td>
+                                    <td><?php echo $key['provinsi_asal']; ?></td>
+                                    <td><?php echo $key['kode_pos_asal']; ?></td>
+                                    <td><?php echo $key['jenis_pindah']; ?></td>
+                                    <td><?php echo $key['alamat_pindah']; ?></td>
+                                    <td><?php echo $key['desa_kelurahan_pindah']; ?></td>
+                                    <td><?php echo $key['kecamatan_pindah']; ?></td>
+                                    <td><?php echo $key['kabupaten_kota_pindah']; ?></td>
+                                    <td><?php echo $key['provinsi_pindah']; ?></td>
+                                    <td><?php echo $key['kode_pos_pindah']; ?></td>
+                                    <td><?php echo $key['alasan_pindah']; ?></td>
+                                    <td><?php echo $key['jenis_kepindahan']; ?></td>
+                                    <td><?php echo $key['anggota_keluarga_tidak_pindah']; ?></td>
+                                    <td><?php echo $key['anggota_keluarga_pindah']; ?></td>
                                     <td>
-                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        <?php
+                                        $nikAnggota = unserialize($key['daftar_nik_anggota_pindah']);
+                                        if (is_array($nikAnggota)) {
+                                            echo implode(", ", $nikAnggota); // Gabungkan NIK menjadi string dengan koma sebagai pemisah
+                                        } else {
+                                            echo "Tidak ada data"; // Jika bukan array, tampilkan pesan default
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $namaAnggota = unserialize($key['daftar_anggota_pindah']);
+                                        if (is_array($namaAnggota)) {
+                                            echo implode(", ", $namaAnggota); // Gabungkan NIK menjadi string dengan koma sebagai pemisah
+                                        } else {
+                                            echo "Tidak ada data"; // Jika bukan array, tampilkan pesan default
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><?php echo $key['nama_sponsor']; ?></td>
+                                    <td><?php echo $key['tipe_sponsor']; ?></td>
+                                    <td><?php echo $key['alamat_sponsor']; ?></td>
+                                    <td><?php echo $key['nomor_itas_itap']; ?></td>
+                                    <td><?php echo $key['tanggal_itas_itap']; ?></td>
+                                    <td><?php echo $key['negara_tujuan']; ?></td>
+                                    <td><?php echo $key['alamat_tujuan']; ?></td>
+                                    <td><?php echo $key['penanggung_jawab']; ?></td>
+                                    <td><?php echo $key['rencana_tanggal_pindah']; ?></td>
+                                    <td><?php echo $key['nomor_handphone']; ?></td>
+                                    <td><?php echo $key['email']; ?></td>
+                                    <td><?php echo $key['status']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning"
+                                            href="edit_surat_pindah.php?edit&id=<?= $key['id'] ?>">Edit</a>
                                         <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
                                             onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
                                     </td>
                                 </tr>
                                 <?php
-                                }
-                                ?>
+                    }
+                    ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
             </div>
+
         </div>
     </div>
 
@@ -237,13 +334,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
         </div>
     </div>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="js/admin.js"></script>
-    <script src="js/admin-datatables.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/admin-datatables.js"></script>
+
 
 </body>
 

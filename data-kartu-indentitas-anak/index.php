@@ -88,17 +88,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav sidebar-menu" id="exampleAccordion">
+
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
+                            <img alt="image" src="user/public/images/logomaros.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
@@ -111,23 +114,33 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="../index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
+                        <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
-
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="index.php">
+                    <a class="nav-link" href="../data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Kelahiran</span>
+                        <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="../perubahan_data/perubahan.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Perubahan Data</span>
+                        <span class="nav-link-text">Data Perubahan</span>
                     </a>
                 </li>
-
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kelahiran">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-kartu-indentitas-anak">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -190,25 +203,26 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                                 $no = 1;
                                 foreach ($statement as $key) {
                                 ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $key['nik_anak']; ?></td>
-                                        <td><?php echo $key['nomor_akta_kelahiran']; ?></td>
-                                        <td><?php echo $key['nama_anak']; ?></td>
-                                        <td><?php echo $key['tempat_lahir']; ?></td>
-                                        <td><?php echo $key['tanggal_lahir']; ?></td>
-                                        <td><?php echo $key['anak_ke']; ?></td>
-                                        <td><?php echo $key['nama_ayah']; ?></td>
-                                        <td><?php echo $key['nama_ibu']; ?></td>
-                                        <td><?php echo $key['alamat_pemohon']; ?></td>
-                                        <td><?php echo $key['pdf_path']; ?></td>
-                                        <td><?php echo $key['tanggal_input']; ?></td>
-                                        <td><?php echo $key['status']; ?></td>
-                                        <td>
-                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                            <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $key['nik_anak']; ?></td>
+                                    <td><?php echo $key['nomor_akta_kelahiran']; ?></td>
+                                    <td><?php echo $key['nama_anak']; ?></td>
+                                    <td><?php echo $key['tempat_lahir']; ?></td>
+                                    <td><?php echo $key['tanggal_lahir']; ?></td>
+                                    <td><?php echo $key['anak_ke']; ?></td>
+                                    <td><?php echo $key['nama_ayah']; ?></td>
+                                    <td><?php echo $key['nama_ibu']; ?></td>
+                                    <td><?php echo $key['alamat_pemohon']; ?></td>
+                                    <td><?php echo $key['pdf_path']; ?></td>
+                                    <td><?php echo $key['tanggal_input']; ?></td>
+                                    <td><?php echo $key['status']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
+                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                    </td>
+                                </tr>
                                 <?php
                                 }
                                 ?>
@@ -233,7 +247,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
         <i class="fa fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

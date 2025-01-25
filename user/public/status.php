@@ -31,6 +31,13 @@ $stmt_akta_kematian = $db->prepare($query_akta_kematian);
 $stmt_akta_kematian->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt_akta_kematian->execute();
 $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
+
+// Query untuk mendapatkan data dari tabel akta_kematian
+$query_surat_pindah_penduduk = "SELECT * FROM surat_pindah_penduduk  WHERE user_id = :user_id";
+$stmt_surat_pindah_penduduk = $db->prepare($query_surat_pindah_penduduk);
+$stmt_surat_pindah_penduduk->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt_surat_pindah_penduduk->execute();
+$data_pindah = $stmt_surat_pindah_penduduk->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -244,6 +251,7 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
                             <div class="box-icon shadow">
                                 <span class="fa fa-2x fa-instagram"></span>
                             </div>
+                            <h3 class="text-center">Data Akta Kelahiran</h3>
                             <div class="info">
                                 <h3 class="text-center"></h3>
                                 <!-- Loop through the akta_kelahiran array to display statuses -->
@@ -295,6 +303,7 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
                             <div class="box-icon shadow">
                                 <span class="fa fa-2x fa-facebook"></span>
                             </div>
+                            <h3 class="text-center">Data Akta Kematian</h3>
                             <div class="info">
                                 <h3 class="text-center"></h3>
                                 <!-- Loop through the akta_kelahiran_data array to display statuses -->
@@ -336,6 +345,7 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
                             <div class="box-icon shadow">
                                 <span class="fa fa-2x fa-facebook"></span>
                             </div>
+                            <h3 class="text-center">Data Kartu Identitas Anak</h3>
                             <div class="info">
                                 <h3 class="text-center"></h3>
                                 <!-- Loop through the akta_kelahiran_data array to display statuses -->
@@ -357,6 +367,46 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
                                             </p>
                                         </div>
                                         <a href="lihat_kartu_identitas_anak.php?id=<?php echo $data['id']; ?>"
+                                            class="btn btn-primary">Lihat Detail</a>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <!-- End Facebook Feed -->
+                        <hr>
+
+
+                        <!-- Facebook Feed -->
+                        <div class="box">
+                            <div class="box-icon shadow">
+                                <span class="fa fa-2x fa-facebook"></span>
+                            </div>
+                            <h3 class="text-center">Data Pindah Penduduk</h3>
+                            <div class="info">
+                                <h3 class="text-center"></h3>
+                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
+                                <?php if ($data_pindah): ?>
+                                <?php foreach ($data_pindah as $data): ?>
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h5 class="card-subtitle mb-2 text-muted">Nama pemohon:
+                                            <?php echo htmlspecialchars($data['nama_lengkap_pemohon']); ?>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>
+                                            <p class="card-text mb-1">Nik Pemohon:
+                                                <?php echo htmlspecialchars($data['nik_pemohon']); ?>
+                                            </p>
+                                            <p class="card-text mb-1">Status:
+                                                <?php echo htmlspecialchars($data['status']); ?>
+                                            </p>
+                                        </div>
+                                        <a href="lihat_surat_pindah_penduduk.php?id=<?php echo $data['id']; ?>"
                                             class="btn btn-primary">Lihat Detail</a>
                                     </div>
                                 </div>
