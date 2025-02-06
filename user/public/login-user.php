@@ -1,51 +1,65 @@
-<?php
+<?php 
 require_once("database.php");
 session_start(); // Memulai session
 
 $message = "";
 
 if (isset($_POST['login'])) {
-    $email = $_POST['email'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    // Fungsi login user
-    function login_user($email, $password) {
-        global $koneksi; // Mengakses koneksi database global
+    if (empty($email) || empty($password)) {
+        $message = "Email dan Password tidak boleh kosong!";
+    } else {
+        // Fungsi login user
+        function login_user($email, $password) {
+            global $koneksi; // Mengakses koneksi database global
 
-        // Query untuk mengambil data user berdasarkan email
-        $sql = "SELECT * FROM user WHERE email = ?";
-        $stmt = $koneksi->prepare($sql);
-        $stmt->bind_param("s", $email); // Bind parameter email
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
+            // Query untuk mengambil data user berdasarkan email
+            $sql = "SELECT * FROM user WHERE email = ?";
+            $stmt = $koneksi->prepare($sql);
+            if (!$stmt) {
+                die("Query gagal: " . $koneksi->error);
+            }
+            $stmt->bind_param("s", $email); // Bind parameter email
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
+
+            if ($user) {
+                // Verifikasi password
+                if (password_verify($password, $user['password'])) {
+                    return $user; // Return data user jika password cocok
+                }
+            }
+            return false; // Return false jika login gagal
+        }
+
+        // Memanggil fungsi login
+        $user = login_user($email, $password);
 
         if ($user) {
-            // Verifikasi password
-            if (password_verify($password, $user['password'])) {
-                return $user; // Return data user jika password cocok
+            // Simpan data user ke dalam session
+            $_SESSION['user_id'] = $user['id']; // Simpan user ID
+            $_SESSION['email'] = $user['email']; // Simpan email
+            $_SESSION['status'] = "login"; // Tandai user sebagai login
+            $_SESSION['login_attempts'] = 0; // Reset percobaan login
+
+            // Redirect ke halaman utama
+            header("Location: home-2.php");
+            exit();
+        } else {
+            $_SESSION['login_attempts'] = ($_SESSION['login_attempts'] ?? 0) + 1;
+            if ($_SESSION['login_attempts'] >= 5) {
+                $message = "Terlalu banyak percobaan login! Coba lagi dalam beberapa menit.";
+            } else {
+                $message = "Email atau Password salah!";
             }
         }
-        return false; // Return false jika login gagal
-    }
-
-    // Memanggil fungsi login
-    $user = login_user($email, $password);
-
-    if ($user) {
-        // Simpan data user ke dalam session
-        $_SESSION['user_id'] = $user['id']; // Simpan user ID
-        $_SESSION['email'] = $user['email']; // Simpan email
-        $_SESSION['status'] = "login"; // Tandai user sebagai login
-
-        // Redirect ke halaman utama
-        header("Location: home-2.php");
-        exit();
-    } else {
-        $message = "Email atau Password salah!";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,11 +83,13 @@ if (isset($_POST['login'])) {
                 <form method="post">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email</label>
-                        <input class="form-control" id="email" type="email" name="email" placeholder="Enter Email" required>
+                        <input class="form-control" id="email" type="email" name="email" placeholder="Enter Email"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Password"
+                            required>
                     </div>
                     <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="login" value="Login">
                     <br>

@@ -1,9 +1,9 @@
 <?php
-session_start(); // Memulai session
+session_start(); // Memulai sesi
 
 // Periksa apakah pengguna sudah login
-if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, arahkan ke halaman login
+if (!isset($_SESSION['user_id'])) { // Ganti 'user_id' dengan nama session yang Anda gunakan
+    // Jika tidak ada session, arahkan ke halaman login
     header("Location: login-user.php");
     exit();
 }
@@ -125,11 +125,11 @@ if (isset($_POST['submit'])) {
 
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">

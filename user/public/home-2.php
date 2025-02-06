@@ -1,23 +1,25 @@
 <?php
-require_once("../private/database.php");
-session_start(); // Memulai session
-
-// Periksa apakah pengguna sudah login
-if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, arahkan ke halaman login
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['status'] !== "login") {
+    // Redirect ke halaman login jika sesi tidak ada
     header("Location: login-user.php");
     exit();
+    // Mengatur header untuk mencegah cache
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+    header("Pragma: no-cache");
 }
 
-?>
-<?php
+require_once("../private/database.php");
+
 // fungsi untuk merandom avatar profil
 function RandomAvatar()
 {
-    $photoAreas = array("avatar1.png", "avatar2.png", "avatar3.png", "avatar4.png", "avatar5.png", "avatar6.png", "avatar7.png", "avatar8.png", "avatar9.png", "avatar10.png", "avatar11.png");
-    $randomNumber = array_rand($photoAreas);
-    $randomImage = $photoAreas[$randomNumber];
-    echo $randomImage;
+$photoAreas = array("avatar1.png", "avatar2.png", "avatar3.png", "avatar4.png", "avatar5.png", "avatar6.png",
+"avatar7.png", "avatar8.png", "avatar9.png", "avatar10.png", "avatar11.png");
+$randomNumber = array_rand($photoAreas);
+$randomImage = $photoAreas[$randomNumber];
+echo $randomImage;
 }
 ?>
 
@@ -49,60 +51,60 @@ function RandomAvatar()
 </head>
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-    .carousel-inner .item img {
-        width: 100%;
-        /* Memastikan gambar memenuhi lebar kontainer carousel */
-        height: 500px;
-        /* Atur tinggi tetap agar seragam */
-        object-fit: cover;
-        /* Memastikan gambar tetap proporsional dan mengisi area */
-    }
+.carousel-inner .item img {
+    width: 100%;
+    /* Memastikan gambar memenuhi lebar kontainer carousel */
+    height: 500px;
+    /* Atur tinggi tetap agar seragam */
+    object-fit: cover;
+    /* Memastikan gambar tetap proporsional dan mengisi area */
+}
 
-    .carousel-control {
-        display: flex;
-        align-items: center;
-        /* Pusatkan secara vertikal */
-        justify-content: center;
-        /* Pusatkan secara horizontal */
-        top: 50%;
-        /* Atur posisi di tengah secara vertikal */
-        transform: translateY(-50%);
-        /* Geser ke atas 50% dari ukurannya untuk pusatkan */
-        width: 50px;
-        /* Ukuran lebar tombol navigasi */
-        height: 50px;
-        /* Tinggi tombol navigasi */
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Latar belakang semi transparan */
-        border-radius: 50%;
-        /* Buat tombol berbentuk bulat */
-    }
+.carousel-control {
+    display: flex;
+    align-items: center;
+    /* Pusatkan secara vertikal */
+    justify-content: center;
+    /* Pusatkan secara horizontal */
+    top: 50%;
+    /* Atur posisi di tengah secara vertikal */
+    transform: translateY(-50%);
+    /* Geser ke atas 50% dari ukurannya untuk pusatkan */
+    width: 50px;
+    /* Ukuran lebar tombol navigasi */
+    height: 50px;
+    /* Tinggi tombol navigasi */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Latar belakang semi transparan */
+    border-radius: 50%;
+    /* Buat tombol berbentuk bulat */
+}
 
-    .carousel-control .bi {
-        font-size: 24px;
-        /* Ukuran ikon */
-        color: #fff;
-        /* Warna ikon */
-    }
+.carousel-control .bi {
+    font-size: 24px;
+    /* Ukuran ikon */
+    color: #fff;
+    /* Warna ikon */
+}
 </style>
 
 <body style="width:100%; margin:0; overflow-x: hidden;">
     <div id="fb-root"></div>
     <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
     </script>
 
     <!--Success Modal Saved-->
@@ -118,7 +120,8 @@ function RandomAvatar()
                     <p class="text-center">Silahkan Buka Menu <a href="status.php">STATUS</a> </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn button-green" onclick="location.href='home';" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn button-green" onclick="location.href='home';"
+                        data-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
@@ -126,9 +129,9 @@ function RandomAvatar()
     <?php
     if (isset($_GET['status'])) {
     ?>
-        <script type="text/javascript">
-            $("#successmodalclear").modal();
-        </script>
+    <script type="text/javascript">
+    $("#successmodalclear").modal();
+    </script>
     <?php
     }
     ?>
@@ -139,7 +142,8 @@ function RandomAvatar()
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -155,7 +159,8 @@ function RandomAvatar()
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">LAYANAN <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="akta_kelahiran.php">Akta Kelahiran</a></li>
                                 <li class="divider"></li>
@@ -172,7 +177,8 @@ function RandomAvatar()
                         <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="profildinas-2.php">Profil Dinas</a></li>
                                 <li class="divider"></li>
@@ -211,7 +217,8 @@ function RandomAvatar()
                     <img src="images/kantor.jpg" alt="...">
                     <div class="carousel-caption welcome">
                         <h2 class="animated bounceInRight">Selamat Datang</h2>
-                        <h3 class="animated bounceInLeft">Website Pelayanan Administrasi Kependudukan Kecamatan Tanralili</h3>
+                        <h3 class="animated bounceInLeft">Website Pelayanan Administrasi Kependudukan Kecamatan
+                            Tanralili</h3>
                     </div>
                 </div>
                 <div class="item">
@@ -230,11 +237,13 @@ function RandomAvatar()
 
             <!-- Controls -->
             <!-- Controls -->
-            <a class="left carousel-control" style="margin-left:2%;" href="#mainCarousel" role="button" data-slide="prev">
+            <a class="left carousel-control" style="margin-left:2%;" href="#mainCarousel" role="button"
+                data-slide="prev">
                 <i class="fi fi-br-angle-left"></i>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="right carousel-control" href="#mainCarousel" style="margin-right:2%;" role="button" data-slide="next">
+            <a class="right carousel-control" href="#mainCarousel" style="margin-right:2%;" role="button"
+                data-slide="next">
                 <i class="fi fi-br-angle-right"></i>
                 <span class="sr-only">Next</span>
             </a>
@@ -262,8 +271,12 @@ function RandomAvatar()
                             </div>
                             <div class="info">
                                 <h3 class="text-center">instagram</h3>
-                                <a class="instagram-timeline" data-height="300" data-width="500" href="https://www.instagram.com/kecamatantanralili/" ddata-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                    <blockquote cite="https://www.instagram.com/kecamatantanralili/" class="fb-xfbml-parse-ignore">
+                                <a class="instagram-timeline" data-height="300" data-width="500"
+                                    href="https://www.instagram.com/kecamatantanralili/" ddata-tabs="timeline"
+                                    data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+                                    data-show-facepile="true">
+                                    <blockquote cite="https://www.instagram.com/kecamatantanralili/"
+                                        class="fb-xfbml-parse-ignore">
                                         <a href="https://www.instagram.com/kecamatantanralili/">Kecamatan Tanralili</a>
                                     </blockquote>
                             </div>
@@ -277,9 +290,14 @@ function RandomAvatar()
                             </div>
                             <div class="info">
                                 <h3 class="text-center">facebook</h3>
-                                <div class="fb-page" data-height="300" data-width="500" data-href="https://www.facebook.com/profile.php?id=61555707727963&" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                    <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963&" class="fb-xfbml-parse-ignore">
-                                        <a href="https://www.facebook.com/profile.php?id=61555707727963&">Kecamatan Tanralili</a>
+                                <div class="fb-page" data-height="300" data-width="500"
+                                    data-href="https://www.facebook.com/profile.php?id=61555707727963&"
+                                    data-tabs="timeline" data-small-header="false" data-adapt-container-width="true"
+                                    data-hide-cover="false" data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963&"
+                                        class="fb-xfbml-parse-ignore">
+                                        <a href="https://www.facebook.com/profile.php?id=61555707727963&">Kecamatan
+                                            Tanralili</a>
                                     </blockquote>
                                 </div>
                             </div>
@@ -301,23 +319,23 @@ function RandomAvatar()
                 <i class="fa fa-arrow-circle-up"></i>
             </a>
             <script>
-                // When the user scrolls down 100px from the top of the document, show the button
-                window.onscroll = function() {
-                    scrollFunction()
-                };
+            // When the user scrolls down 100px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
 
-                function scrollFunction() {
-                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                        document.getElementById("top").style.display = "block";
-                    } else {
-                        document.getElementById("top").style.display = "none";
-                    }
+            function scrollFunction() {
+                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                    document.getElementById("top").style.display = "block";
+                } else {
+                    document.getElementById("top").style.display = "none";
                 }
-                // When the user clicks on the button, scroll to the top of the document
-                function topFunction() {
-                    document.body.scrollTop = 0;
-                    document.documentElement.scrollTop = 0;
-                }
+            }
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
             </script>
             <!-- link to top -->
 
@@ -352,12 +370,14 @@ function RandomAvatar()
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/1607792839472522?ref=embed_page">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://www.facebook.com/1607792839472522?ref=embed_page">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://x.com/Kel_Tamalanrea?s=20">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://x.com/Kel_Tamalanrea?s=20">
                                 <i class="fa fa-fw fa-twitter"></i>
                             </a>
                         </li>
