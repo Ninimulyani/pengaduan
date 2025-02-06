@@ -91,19 +91,37 @@ if (isset($_POST['submit'])) {
                         <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
+
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="../data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="perubahan.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
                 </li>
-
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kelahiran/index.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-kartu-indentitas-anak/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
+                    </a>
+                </li>
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">

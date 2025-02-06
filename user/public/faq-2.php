@@ -1,3 +1,27 @@
+<?php
+
+session_start(); // Memulai session
+require_once("../private/database.php");
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, arahkan ke halaman login
+    header("Location: login-user.php");
+    exit();
+}
+
+// Ambil nik dari session pengguna yang login
+$nik = $_SESSION['nik'];  // Menyimpan nik pengguna yang login
+
+
+// Ambil status berdasarkan nik pengguna yang login
+$sql = "SELECT status FROM perubahan_data_penduduk WHERE nik = :nik ORDER BY id DESC LIMIT 5"; // Menampilkan 5 status terbaru
+$stmt = $db->prepare($sql);
+$stmt->execute(['nik' => $nik]);  // Bind nilai nik pada parameter :nik
+$notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -12,6 +36,13 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Tambahkan link ke Font Awesome di dalam tag <head> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <style>
     .navbar {
@@ -75,6 +106,47 @@
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="login-user.php">LOGOUT</a></li>
+
+                        <li class="dropdown pull-right relative">
+                            <a href="#" class="dropdown-toggle flex items-center gap-2 text-gray-700 hover:text-gray-900" data-toggle="dropdown">
+                                <i class="fa fa-bell text-xl"></i>
+                                <span class="badge bg-red-500 text-white rounded-full text-xs px-2 py-1">
+                                    <?php echo count($notifications); ?>
+                                </span> <!-- Menampilkan jumlah notifikasi -->
+                            </a>
+                            <ul class="dropdown-menu absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-2 w-72" role="menu" id="notificationDropdown">
+                                <?php if (!empty($notifications)): ?>
+                                    <?php foreach ($notifications as $notification): ?>
+                                        <li class="border-b last:border-none">
+                                            <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md">
+                                                <!-- Icon berdasarkan status -->
+                                                <span class="bg-blue-500 text-white rounded-full p-2">
+                                                    <?php if ($notification['status'] == 'Selesai'): ?>
+                                                        <i class="fa fa-check-circle"></i>
+                                                    <?php elseif ($notification['status'] == 'Pending'): ?>
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                    <?php else: ?>
+                                                        <i class="fa fa-info-circle"></i>
+                                                    <?php endif; ?>
+                                                </span>
+                                                <!-- Isi notifikasi -->
+                                                <div>
+                                                    <p class="font-medium text-gray-800">
+                                                        Perubahan Data "<span class="font-semibold text-blue-600"><?= htmlspecialchars($notification['status']) ?></span>"
+                                                    </p>
+                                                    <!-- <span class="text-sm text-gray-500">Klik untuk melihat detail</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <hr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li class="p-2 text-center text-gray-500">
+                                        <i class="fa fa-info-circle text-lg"></i> Tidak ada notifikasi baru.
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </li>
                     </ul>
                     <!-- <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">LOGIN</a></li>

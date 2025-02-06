@@ -1,43 +1,83 @@
 <?php
-// Koneksi ke database
-$conn = new mysqli("localhost", "root", "", "kp");
+require_once("../private/database.php");
 
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    try {
+        $db->beginTransaction();
 
-if (isset($_POST['submit'])) {
-    // Ambil data dari form
-    $nama_array = $_POST['nama']; // Array nama
-    $nik_array = $_POST['nik']; // Array NIK
-    $shdk_array = $_POST['shdk']; // Array SHDK
-    $keterangan_array = $_POST['keterangan']; // Array Keterangan
-    $jenis_permohonan_array = $_POST['jenis_permohonan']; // Array Jenis Permohonan
-    $semula_array = $_POST['semula']; // Array Semula
-    $menjadi_array = $_POST['menjadi']; // Array Menjadi
-    $dasar_perubahan_array = $_POST['dasar_perubahan']; // Array Dasar Perubahan
+        // Data Pemohon
+        $nama_pemohon = $_POST['nama_lengkap'];
+        $nik_pemohon = $_POST['nik_pemohon'];
+        $no_kk_pemohon = $_POST['no_kk_pemohon'];
+        $alamat_rumah = $_POST['alamat_rumah'];
 
-    // Loop untuk menyimpan data ke database
-    for ($i = 0; $i < count($nama_array); $i++) {
-        $nama = $conn->real_escape_string($nama_array[$i]);
-        $nik = $conn->real_escape_string($nik_array[$i]);
-        $shdk = $conn->real_escape_string($shdk_array[$i]);
-        $keterangan = $conn->real_escape_string($keterangan_array[$i]);
-        $jenis_permohonan = $conn->real_escape_string($jenis_permohonan_array[$i]);
-        $semula = $conn->real_escape_string($semula_array[$i]);
-        $menjadi = $conn->real_escape_string($menjadi_array[$i]);
-        $dasar_perubahan = $conn->real_escape_string($dasar_perubahan_array[$i]);
+        // Simpan Data Pemohon
+        $sql_pemohon = "INSERT INTO pemohon (nama_lengkap, nik, no_kk, alamat_rumah) 
+                        VALUES (:nama_lengkap, :nik, :no_kk, :alamat_rumah)";
+        $stmt_pemohon = $db->prepare($sql_pemohon);
+        $stmt_pemohon->execute([
+            ':nama_lengkap' => $nama_pemohon,
+            ':nik' => $nik_pemohon,
+            ':no_kk' => $no_kk_pemohon,
+            ':alamat_rumah' => $alamat_rumah
+        ]);
 
-        // Query insert ke tabel perubahan_data_penduduk
-        $sql = "INSERT INTO perubahan_data_penduduk (nama, nik, shdk, keterangan, jenis_permohonan, semula, menjadi, dasar_perubahan)
-                VALUES ('$nama', '$nik', '$shdk', '$keterangan', '$jenis_permohonan', '$semula', '$menjadi', '$dasar_perubahan')";
+        // Ambil ID Pemohon yang baru disimpan
+        $pemohon_id = $db->lastInsertId();
 
-        if (!$conn->query($sql)) {
-            echo "Error: " . $conn->error;
+        // Simpan Data Anggota Keluarga yang ingin diubah
+        $totalAnggota = count($_POST['nama']);
+        for ($i = 0; $i < $totalAnggota; $i++) {
+            $nama = $_POST['nama'][$i];
+            $no_kk = $_POST['no_kk'][$i];
+            $nik = $_POST['nik'][$i];
+            $shdk = $_POST['shdk'][$i];
+            $keterangan = $_POST['keterangan'][$i];
+
+            // Simpan ke tabel penduduk
+            $sql_penduduk = "INSERT INTO penduduk (nama, no_kk, nik, shdk, keterangan, input_id) 
+                             VALUES (:nama, :no_kk, :nik, :shdk, :keterangan, :input_id)";
+            $stmt_penduduk = $db->prepare($sql_penduduk);
+            $stmt_penduduk->execute([
+                ':nama' => $nama,
+                ':no_kk' => $no_kk,
+                ':nik' => $nik,
+                ':shdk' => $shdk,
+                ':keterangan' => $keterangan,
+                ':input_id' => $pemohon_id
+            ]);
+
+            // Simpan perubahan data untuk setiap anggota
+            if (!empty($_POST['jenis_permohonan'][$i])) {
+                $jumlahPermohonan = count($_POST['jenis_permohonan'][$i]);
+                for ($j = 0; $j < $jumlahPermohonan; $j++) {
+                    $jenis_permohonan = $_POST['jenis_permohonan'][$i][$j];
+                    $jenis_lainnya = $_POST['jenis_permohonan_lainnya'][$i][$j];
+                    $semula = $_POST['semula'][$i][$j];
+                    $menjadi = $_POST['menjadi'][$i][$j];
+                    $dasar_perubahan = $_POST['dasar_perubahan'][$i][$j];
+
+                    $sql_permohonan = "INSERT INTO permohonan_perubahan (nik, jenis_permohonan, jenis_lainnya, semula, menjadi, dasar_perubahan, input_id)
+                                       VALUES (:nik, :jenis_permohonan, :jenis_lainnya, :semula, :menjadi, :dasar_perubahan, :input_id)";
+                    $stmt_permohonan = $db->prepare($sql_permohonan);
+                    $stmt_permohonan->execute([
+                        ':nik' => $nik,
+                        ':jenis_permohonan' => $jenis_permohonan,
+                        ':jenis_lainnya' => $jenis_lainnya,
+                        ':semula' => $semula,
+                        ':menjadi' => $menjadi,
+                        ':dasar_perubahan' => $dasar_perubahan,
+                        ':input_id' => $pemohon_id
+                    ]);
+                }
+            }
         }
+
+        $db->commit();
+        header("Location: status.php?status=sukses");
+        exit();
+    } catch (Exception $e) {
+        $db->rollBack();
+        die("Terjadi kesalahan: " . $e->getMessage());
     }
-
-    echo "Data berhasil ditambahkan.";
 }
-
-$conn->close();

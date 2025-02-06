@@ -1,75 +1,78 @@
 <?php
-    require_once("database.php"); // koneksi DB
+require_once("database.php"); // koneksi DB
 
-    logged_admin ();
-    global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-    if ($id_admin > 0) {
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi>query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-    } else {
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
+logged_admin();
+global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
+if ($id_admin > 0) {
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
     }
 
-    require_once("database.php");
-    
-    if(isset($_GET['edit'])){
-            $tampil = mysqli_query($koneksi, "SELECT * FROM user WHERE id = '$_GET[id]'");
-            $data = mysqli_fetch_array($tampil);
-            if($data){
-                $id = $data['id'];
-                $nama = $data['nama'];
-                $username = $data['username'];
-                $email = $data['email'];
-                $alamat = $data['alamat'];
-                $telepon = $data['telpon'];
-
-            }
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
     }
 
-            //Perintah Mengubah Data
-            if(isset($_POST['submit'])){
-                $tanggal_sekarang = date("Y-m-d");
-                $simpan = mysqli_query($koneksi, "UPDATE user SET
+    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+} else {
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+}
+
+require_once("database.php");
+
+if (isset($_GET['edit'])) {
+    $tampil = mysqli_query($koneksi, "SELECT * FROM user WHERE id = '$_GET[id]'");
+    $data = mysqli_fetch_array($tampil);
+    if ($data) {
+        $id = $data['id'];
+        $no_kk = $data['no_kk'];
+        $nik = $data['nik'];
+        $nama = $data['nama'];
+        $username = $data['username'];
+        $email = $data['email'];
+        $alamat = $data['alamat'];
+        $telepon = $data['telpon'];
+    }
+}
+
+//Perintah Mengubah Data
+if (isset($_POST['submit'])) {
+    $tanggal_sekarang = date("Y-m-d");
+    $simpan = mysqli_query($koneksi, "UPDATE user SET
+                                                    no_kk = '$_POST[no_kk]',
+                                                    nik = '$_POST[nik]',
                                                     nama = '$_POST[nama]',
                                                     username = '$_POST[username]',
                                                     email = '$_POST[email]',
                                                     alamat = '$_POST[alamat]',
                                                     telpon = '$_POST[telepon]'
                                                     WHERE id = '$_GET[id]'");
-                
-            if($simpan){
-                echo "<script>
+
+    if ($simpan) {
+        echo "<script>
                         alert('Edit data sukses!');
                         document.location='user.php';
                     </script>";
-            } else {
-                echo "<script>
+    } else {
+        echo "<script>
                         alert('Edit data Gagal!');
                         document.location='kategori.php';
                     </script>";
-            }
-            }
+    }
+}
 
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,30 +118,40 @@
                     </div>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
-                    </a>
-                </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="user.php">
-                        <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
-
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="kategori.php">
+                    <a class="nav-link" href="data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Kategori</span>
+                        <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="komentar.php">
+                    <a class="nav-link" href="perubahan_data/perubahan.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Komentar</span>
+                        <span class="nav-link-text">Data Perubahan</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="data-kartu-indentitas-anak/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
 
@@ -242,11 +255,31 @@
                     <form class="form-horizontal" role="form" method="post">
 
                         <div class="form-group">
+                            <label for="no_kk" class="col-sm-3 control-label">Nomor Kartu Keluarga</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" name="no_kk" placeholder="Nomor Kartu Keluarga" value="<?= $no_kk ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nik" class="col-sm-3 control-label">Nik</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" name="nik" placeholder="Nik" value="<?= $nik ?>" required>
+                                </div>
+                                <p class="error"><?= @$_GET['namaError'] ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="nama" class="col-sm-3 control-label">Nama</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control"  name="nama" placeholder="Nama User" value="<?= $nama ?>" required>
+                                    <input type="text" class="form-control" name="nama" placeholder="Nama User" value="<?= $nama ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
@@ -256,7 +289,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control"  name="username" placeholder="Username" value="<?= $username ?>" required>
+                                    <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $username ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
@@ -266,7 +299,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="email" class="form-control"  name="email" placeholder="Email" value="<?= $email ?>" required>
+                                    <input type="email" class="form-control" name="email" placeholder="Email" value="<?= $email ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
@@ -276,7 +309,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control"  name="alamat" placeholder="Telepon" value="<?= $alamat ?>" required>
+                                    <input type="text" class="form-control" name="alamat" placeholder="Telepon" value="<?= $alamat ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
@@ -286,70 +319,70 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control"  name="telepon" placeholder="Telepon" value="<?= $telepon ?>" required>
+                                    <input type="text" class="form-control" name="telepon" placeholder="Telepon" value="<?= $telepon ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
                         </div>
-                        
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-3">
-                                <input id="submit" name="submit" type="submit" value="Ubah" class="btn btn-primary-custom form-shadow">
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
-                <div class="card-footer small text-muted"></div>
-            </div>
-        </div>
-        <!-- /.container-fluid-->
-
-        <!-- /.content-wrapper-->
-        <footer class="sticky-footer">
-            <div class="container">
-                <div class="text-center">
-                    <small>Copyright © Andi Sri Mulyani</small>
-                </div>
-            </div>
-        </footer>
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Yakin Ingin Keluar?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Pilih "Logout" jika anda ingin mengakhiri sesi.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-close card-shadow-2 btn-sm" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-primary btn-sm card-shadow-2" href="login.php">Logout</a>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-3">
+                        <input id="submit" name="submit" type="submit" value="Ubah" class="btn btn-primary-custom form-shadow">
                     </div>
                 </div>
+                </form>
+            </div>
+            <div class="card-footer small text-muted"></div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Andi Sri Mulyani</small>
             </div>
         </div>
+    </footer>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <!-- Page level plugin JavaScript-->
-        <script src="vendor/datatables/jquery.dataTables.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="js/admin.js"></script>
-        <!-- Custom scripts for this page-->
-        <script src="js/admin-datatables.js"></script>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Yakin Ingin Keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Pilih "Logout" jika anda ingin mengakhiri sesi.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-close card-shadow-2 btn-sm" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary btn-sm card-shadow-2" href="login.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/admin.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/admin-datatables.js"></script>
 
     </div>
 

@@ -30,17 +30,149 @@ if ($id_admin > 0) {
     }
 }
 
+
+
+if (isset($_GET['action']) && $_GET['action'] == 'accept' && isset($_GET['id'])) {
+    // Ambil ID dari URL
+    $id = $_GET['id'];
+
+    // Update status menjadi "Sedang diProses"
+    $queryUpdateStatus = "UPDATE data_anak SET status = 'Sedang diProses' WHERE id = '$id'";
+
+    if ($koneksi->query($queryUpdateStatus)) {
+        echo "<script>
+                alert('Diterima');
+                document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
+              </script>";
+    } else {
+        echo "Error: " . $koneksi->error;
+    }
+}
+
+
+if (isset($_GET['action']) && $_GET['action'] == 'reject' && isset($_GET['id'])) {
+    // Ambil ID dari URL
+    $id = $_GET['id'];
+
+    // Update status menjadi "Sedang diProses"
+    $queryUpdateStatus = "UPDATE data_anak SET status = 'Ditolak' WHERE id = '$id'";
+
+    if ($koneksi->query($queryUpdateStatus)) {
+        echo "<script>
+                alert('Ditolak');
+                document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
+              </script>";
+    } else {
+        echo "Error: " . $koneksi->error;
+    }
+}
 // Logic to handle delete action
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $deleteId = $_GET['id'];
     // Perform the deletion query
-    $koneksi->query("DELETE FROM akta_kelahiran WHERE id = $deleteId");
+    $koneksi->query("DELETE FROM data_anak WHERE id = $deleteId");
     // Redirect to the same page after deletion
     echo "<script>
                 alert('Hapus data sukses!');
-                document.location='index.php';
+                document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
                 </script>";
     exit();
+}
+
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php'; // Memuat PHPMailer jika menggunakan Composer
+
+if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
+    // Ambil ID dari URL
+    $id = $_GET['id'];
+
+    // Update status menjadi "Selesai"
+    $queryUpdateStatus = "UPDATE data_anak SET status = 'Selesai' WHERE id = '$id'";
+
+    if ($koneksi->query($queryUpdateStatus)) {
+        // Ambil NIK dari tabel data_anak berdasarkan ID
+        $queryId = "SELECT user_id FROM data_anak WHERE id = '$id'";
+        $resultId = $koneksi->query($queryId);
+
+        if ($resultId->num_rows > 0) {
+            $rowId = $resultId->fetch_assoc();
+            $id_ayah = $rowId['user_id'];
+
+            // Cari email di tabel user berdasarkan NIK
+            $queryUser = "SELECT email FROM user WHERE id = '$id_ayah'";
+            $resultUser = $koneksi->query($queryUser);
+
+            if ($resultUser->num_rows > 0) {
+                $rowUser = $resultUser->fetch_assoc();
+                $userEmail = $rowUser['email'];
+
+                // Inisialisasi PHPMailer
+                $mail = new PHPMailer(true);
+
+                try {
+                    // Pengaturan SMTP
+                    $mail->isSMTP();
+                    $mail->Host       = 'smtp.gmail.com';         // Server SMTP Gmail
+                    $mail->SMTPAuth   = true;
+                    $mail->Username   = 'surawalawal094@gmail.com';   // Email pengirim
+                    $mail->Password   = 'xudi dsnm nysy krqi';     // App Password Gmail
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Gunakan STARTTLS
+                    $mail->Port       = 587;
+
+                    // Informasi pengirim dan penerima
+                    $mail->setFrom('surawalawal094@gmail.com', 'Pengaduan System');
+                    $mail->addAddress($userEmail); // Email penerima
+
+                    // Konten email
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Pemberitahuan: Perubahan Data Telah Selesai';
+                    $mail->Body    = "
+                        <html>
+                        <head>
+                            <title>Perubahan Data Selesai</title>
+                        </head>
+                        <body>
+                            <p>Yth. Pengguna,</p>
+                            <p>Dengan ini kami memberitahukan bahwa data kartu identitas anak anda telah selesai diproses.</p>
+                            <p>Silakan periksa detail data kartu identitas anak Anda di sistem kami.</p>
+                            <br>
+                            <p>Hormat kami,</p>
+                            <p>Tim Administrasi</p>
+                        </body>
+                        </html>
+                    ";
+
+                    // Kirim email
+                    $mail->send();
+                    echo "<script>
+                            alert('Status diperbarui menjadi Selesai dan email telah dikirim.');
+                            document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
+                          </script>";
+                } catch (Exception $e) {
+                    echo "<script>
+                            alert('Status diperbarui menjadi Selesai, namun email gagal dikirim. Error: {$mail->ErrorInfo}');
+                            document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
+                          </script>";
+                }
+            } else {
+                echo "<script>
+                        alert('Email pengguna tidak ditemukan di tabel user.');
+                        document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
+                      </script>";
+            }
+        } else {
+            echo "<script>
+                    alert('NIK tidak ditemukan di tabel data_anak.');
+                    document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
+                  </script>";
+        }
+    } else {
+        echo "Error: " . $koneksi->error;
+    }
 }
 ?>
 
@@ -61,6 +193,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="../css/admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 
 </head>
@@ -111,20 +244,38 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="../index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
+                        <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="index.php">
+                    <a class="nav-link" href="../data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data Kelahiran</span>
+                        <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="../perubahan_data/perubahan.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Perubahan Data</span>
+                        <span class="nav-link-text">Data Perubahan</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kelahiran/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="index.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
 
@@ -177,8 +328,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                                     <th>Nama Ayah</th>
                                     <th>Nama Ibu</th>
                                     <th>Alamat Pemohon</th>
-                                    <th>PDF Path</th>
+                                    <!-- <th>PDF Path</th> -->
                                     <th>Tanggal Input</th>
+                                    <th>Dokumen</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -201,9 +353,44 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                                         <td><?php echo $key['nama_ayah']; ?></td>
                                         <td><?php echo $key['nama_ibu']; ?></td>
                                         <td><?php echo $key['alamat_pemohon']; ?></td>
-                                        <td><?php echo $key['pdf_path']; ?></td>
+                                        <!-- <td><?php echo $key['pdf_path']; ?></td> -->
                                         <td><?php echo $key['tanggal_input']; ?></td>
-                                        <td><?php echo $key['status']; ?></td>
+                                        <td>
+                                            <?php if (!empty($key['pdf_path'])): ?>
+                                                <span class="text-success"><i class="fas fa-check-circle"></i> Done</span>
+
+                                            <?php else: ?>
+                                                <a class="btn btn-primary" href="upload_dokumen.php?edit&id=<?= $key['id'] ?>">
+                                                    <i class="fas fa-upload"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            // Fetch status dari database
+                                            $status = $key['status'];
+
+                                            if ($status == 'Sedang diProses') {
+                                                // Tampilkan tombol "Diproses" dengan ikon
+                                                echo '<a class="btn btn-warning" href="?action=done&id=' . $key['id'] . '">
+                <i class="fas fa-spinner"></i> Diproses
+              </a>';
+                                            } elseif ($status == 'Menunggu') {
+                                                // Tampilkan tombol "Accept" dan "Reject" dengan ikon
+                                                echo '<a class="btn btn-success" href="?action=accept&id=' . $key['id'] . '">
+                <i class="fas fa-check"></i> 
+              </a> ';
+                                                echo '<a class="btn btn-danger" href="?action=reject&id=' . $key['id'] . '" onclick="return confirm(\'Are you sure you want to reject this item?\')">
+                <i class="fas fa-times"></i> 
+              </a>';
+                                            } elseif ($status == 'Selesai') {
+                                                // Tampilkan status "Selesai" dalam bentuk ikon disabled
+                                                echo '<span class="btn btn-success disabled">
+                <i class="fas fa-check-circle"></i> Selesai
+              </span>';
+                                            }
+                                            ?>
+                                        </td>
                                         <td>
                                             <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
                                             <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>

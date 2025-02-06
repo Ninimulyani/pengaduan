@@ -1,78 +1,80 @@
 <?php
-    require_once("database.php"); // koneksi DB
+require_once("database.php"); // koneksi DB
 
-    logged_admin ();
-    global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-    if ($id_admin > 0) {
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi>query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-    } else {
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
+logged_admin();
+global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
+if ($id_admin > 0) {
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
     }
 
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
 
-    if (isset($_POST['register'])) {
-        $nama = $_POST['nama'];
-        $username = $_POST['username'];
-        $alamat = $_POST['alamat'];
-        $email = $_POST['email'];
-        $password = md5($_POST['password']); // Menggunakan password_hash() untuk mengenkripsi kata sandi
-    
-        // Periksa apakah semua field yang diperlukan diisi
-        if (!empty($nama) && !empty($alamat) && !empty($email) && !empty($_POST['password'])) {
-            $sql = "INSERT INTO user (nama,username, alamat, email, password) VALUES (?, ?, ?, ?, ?)";
-            $stmt = $koneksi->prepare($sql);
-    
-            if ($stmt) {
-                $stmt->bind_param("sssss", $nama, $username, $alamat, $email, $password);
-    
-                if ($stmt->execute()) {
-                    session_start();
-                    $_SESSION['email'] = $email;
-                    $_SESSION['status'] = "register";
-                    header('location:user.php');
-                } else {
-                    echo "<script>
+    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+} else {
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+}
+
+
+if (isset($_POST['register'])) {
+    $no_kk = $_POST['no_kk'];
+    $nik = $_POST['nik'];
+    $nama = $_POST['nama'];
+    $username = $_POST['username'];
+    $alamat = $_POST['alamat'];
+    $email = $_POST['email'];
+    $password = md5($_POST['password']); // Menggunakan password_hash() untuk mengenkripsi kata sandi
+
+    // Periksa apakah semua field yang diperlukan diisi
+    if (!empty($nama) && !empty($alamat) && !empty($email) && !empty($_POST['password'])) {
+        $sql = "INSERT INTO user (no_kk, nik, nama,username, alamat, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $koneksi->prepare($sql);
+
+        if ($stmt) {
+            $stmt->bind_param("sssssss", $no_kk, $nik, $nama, $username, $alamat, $email, $password);
+
+            if ($stmt->execute()) {
+                session_start();
+                $_SESSION['email'] = $email;
+                $_SESSION['status'] = "register";
+                header('location:user.php');
+            } else {
+                echo "<script>
                     alert('Register Gagal, Periksa Email dan Password Anda!');
                     window.location.href = '../user/';
                     </script>";
-                }
-    
-                $stmt->close();
-            } else {
-                echo "<script>
+            }
+
+            $stmt->close();
+        } else {
+            echo "<script>
                 alert('Gagal menyiapkan pernyataan SQL.');
                 window.location.href = '../user/';
                 </script>";
-            }
-        } else {
-            echo "<script>
+        }
+    } else {
+        echo "<script>
             alert('Pendaftaran Gagal, Harap Isi Semua Informasi.');
             window.location.href = '../user/';
             </script>";
-        }
     }
+}
 
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,17 +120,40 @@
                     </div>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
+                        <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
-
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="user.php">
+                    <a class="nav-link" href="data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Data User</span>
+                        <span class="nav-link-text">Data Kematian</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Perubahan</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="data-kartu-indentitas-anak/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
 
@@ -300,32 +325,40 @@
                 <div class="card-body mx-2 col-8">
                     <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
                     <form class="form-horizontal" role="form" method="post">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Nama</label>
-                        <input class="form-control" id="nama" type="text" name="nama" aria-describedby="userlHelp" placeholder="Masukkan Nama" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input class="form-control" id="username" type="text" name="username" aria-describedby="userlHelp" placeholder="Masukkan Username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Alamat</label>
-                        <input class="form-control" id="alamat" type="text" name="alamat" aria-describedby="userlHelp" placeholder="Masukkan Alamat" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input class="form-control" id="email" type="text" name="email" aria-describedby="userlHelp" placeholder="Masukkan Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Konfirmasi Password</label>
-                        <input type="password" class="form-control form-control-user" id="confirm" placeholder="Konfirmasi Password Anda" name="Confirm" required />
-                     </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">No KK</label>
+                            <input class="form-control" id="no_kk" type="text" name="no_kk" aria-describedby="userlHelp" placeholder="Masukkan No KK" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nik</label>
+                            <input class="form-control" id="nik" type="text" name="nik" aria-describedby="userlHelp" placeholder="Masukkan Nik" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama</label>
+                            <input class="form-control" id="nama" type="text" name="nama" aria-describedby="userlHelp" placeholder="Masukkan Nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Username</label>
+                            <input class="form-control" id="username" type="text" name="username" aria-describedby="userlHelp" placeholder="Masukkan Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Alamat</label>
+                            <input class="form-control" id="alamat" type="text" name="alamat" aria-describedby="userlHelp" placeholder="Masukkan Alamat" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input class="form-control" id="email" type="text" name="email" aria-describedby="userlHelp" placeholder="Masukkan Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Konfirmasi Password</label>
+                            <input type="password" class="form-control form-control-user" id="confirm" placeholder="Konfirmasi Password Anda" name="Confirm" required />
+                        </div>
 
-                    <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Tambah">
+                        <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Tambah">
                     </form>
                 </div>
                 <div class="card-footer small text-muted"></div>

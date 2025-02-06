@@ -9,7 +9,8 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Fungsi login user
-    function login_user($email, $password) {
+    function login_user($email, $password)
+    {
         global $koneksi; // Mengakses koneksi database global
 
         // Query untuk mengambil data user berdasarkan email
@@ -36,6 +37,7 @@ if (isset($_POST['login'])) {
         // Simpan data user ke dalam session
         $_SESSION['user_id'] = $user['id']; // Simpan user ID
         $_SESSION['email'] = $user['email']; // Simpan email
+        $_SESSION['nik'] = $user['nik']; // Simpan email
         $_SESSION['status'] = "login"; // Tandai user sebagai login
 
         // Redirect ke halaman utama

@@ -9,6 +9,14 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id']; // Ambil user_id dari session
+$nik = $_SESSION['nik']; // Ambil user_id dari session
+
+// Ambil status berdasarkan nik pengguna yang login
+$sql = "SELECT status FROM perubahan_data_penduduk WHERE nik = :nik ORDER BY id DESC LIMIT 5"; // Menampilkan 5 status terbaru
+$stmt = $db->prepare($sql);
+$stmt->execute(['nik' => $nik]);  // Bind nilai nik pada parameter :nik
+$notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 // Query untuk mendapatkan data dari tabel data_anak
 $query_data_anak = "SELECT * FROM data_anak WHERE user_id = :user_id";
@@ -25,12 +33,30 @@ $stmt_akta_kelahiran->execute();
 $akta_kelahiran = $stmt_akta_kelahiran->fetchAll(PDO::FETCH_ASSOC);
 
 
+// Query untuk mendapatkan data dari tabel akta_kelahiran
+$query_surat_pindah_penduduk = "SELECT * FROM surat_pindah_penduduk WHERE user_id = :user_id";
+$stmt_surat_pindah_penduduk = $db->prepare($query_surat_pindah_penduduk);
+$stmt_surat_pindah_penduduk->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt_surat_pindah_penduduk->execute();
+$surat_pindah_penduduk = $stmt_surat_pindah_penduduk->fetchAll(PDO::FETCH_ASSOC);
+
+
 // Query untuk mendapatkan data dari tabel akta_kematian
-$query_akta_kematian = "SELECT * FROM akta_kematian WHERE user_id = :user_id";
+$query_akta_kematian = "SELECT * FROM akta_kematian WHERE nik_pelapor = :nik";
 $stmt_akta_kematian = $db->prepare($query_akta_kematian);
-$stmt_akta_kematian->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmt_akta_kematian->bindParam(':nik', $nik, PDO::PARAM_INT);
 $stmt_akta_kematian->execute();
 $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Query untuk mendapatkan data dari tabel pemohon berdasarkan NIK
+$query_pemohon = "SELECT * FROM pemohon WHERE user_id = :user_id";
+$stmt_pemohon = $db->prepare($query_pemohon);
+$stmt_pemohon->bindParam(':user_id', $user_id, PDO::PARAM_STR); // Gunakan PARAM_STR karena NIK biasanya berupa string
+$stmt_pemohon->execute();
+$data_pemohon = $stmt_pemohon->fetch(PDO::FETCH_ASSOC); // Gunakan fetch() karena hanya satu data yang diambil
+
+
 ?>
 
 <!DOCTYPE html>
@@ -61,74 +87,93 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <style>
-.card-body {
-    position: relative;
-    /* Menjadikan card-body sebagai konteks untuk posisi absolut */
-}
+    .card-body {
+        position: relative;
+        /* Menjadikan card-body sebagai konteks untuk posisi absolut */
+    }
 
-.card-body .btn {
-    position: absolute;
-    /* Menempatkan tombol di posisi absolut */
-    top: 10px;
-    /* Mengatur jarak dari atas */
-    right: 10px;
-    /* Mengatur jarak dari kanan */
-}
+    .card-body .btn {
+        position: absolute;
+        /* Menempatkan tombol di posisi absolut */
+        top: 10px;
+        /* Mengatur jarak dari atas */
+        right: 10px;
+        /* Mengatur jarak dari kanan */
+    }
 
-.navbar {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    .navbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-.carousel-inner .item img {
-    width: 100%;
-    /* Memastikan gambar memenuhi lebar kontainer carousel */
-    height: 500px;
-    /* Atur tinggi tetap agar seragam */
-    object-fit: cover;
-    /* Memastikan gambar tetap proporsional dan mengisi area */
-}
+    .status-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 15px;
+        /* font-weight: bold; */
+        color: white;
+    }
 
-.carousel-control {
-    display: flex;
-    align-items: center;
-    /* Pusatkan secara vertikal */
-    justify-content: center;
-    /* Pusatkan secara horizontal */
-    top: 50%;
-    /* Atur posisi di tengah secara vertikal */
-    transform: translateY(-50%);
-    /* Geser ke atas 50% dari ukurannya untuk pusatkan */
-    width: 50px;
-    /* Ukuran lebar tombol navigasi */
-    height: 50px;
-    /* Tinggi tombol navigasi */
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Latar belakang semi transparan */
-    border-radius: 50%;
-    /* Buat tombol berbentuk bulat */
-}
+    .selesai {
+        background-color: #28a745;
+        /* Hijau */
+    }
 
-.carousel-control .bi {
-    font-size: 24px;
-    /* Ukuran ikon */
-    color: #fff;
-    /* Warna ikon */
-}
+    .menunggu {
+        background-color: rgb(235, 176, 0);
+        /* Kuning */
+        color: white;
+    }
+
+    .carousel-inner .item img {
+        width: 100%;
+        /* Memastikan gambar memenuhi lebar kontainer carousel */
+        height: 500px;
+        /* Atur tinggi tetap agar seragam */
+        object-fit: cover;
+        /* Memastikan gambar tetap proporsional dan mengisi area */
+    }
+
+    .carousel-control {
+        display: flex;
+        align-items: center;
+        /* Pusatkan secara vertikal */
+        justify-content: center;
+        /* Pusatkan secara horizontal */
+        top: 50%;
+        /* Atur posisi di tengah secara vertikal */
+        transform: translateY(-50%);
+        /* Geser ke atas 50% dari ukurannya untuk pusatkan */
+        width: 50px;
+        /* Ukuran lebar tombol navigasi */
+        height: 50px;
+        /* Tinggi tombol navigasi */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Latar belakang semi transparan */
+        border-radius: 50%;
+        /* Buat tombol berbentuk bulat */
+    }
+
+    .carousel-control .bi {
+        font-size: 24px;
+        /* Ukuran ikon */
+        color: #fff;
+        /* Warna ikon */
+    }
 </style>
 
 <body style="width:100%; margin:0; overflow-x: hidden;">
     <div id="fb-root"></div>
     <script>
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://www.facebook.com/profile.php?id=61555707727963&';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
 
     <!--Success Modal Saved-->
@@ -153,15 +198,16 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
     <?php
     if (isset($_GET['status'])) {
     ?>
-    <script type="text/javascript">
-    $("#successmodalclear").modal();
-    </script>
+        <script type="text/javascript">
+            $("#successmodalclear").modal();
+        </script>
     <?php
     }
     ?>
     <!-- body -->
     <div class="shadow">
         <!-- navbar -->
+
         <nav class="navbar navbar-inverse navbar-fixed form-shadw">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -216,6 +262,47 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="login-user.php">LOGOUT</a></li>
+
+                        <li class="dropdown pull-right relative">
+                            <a href="#" class="dropdown-toggle flex items-center gap-2 text-gray-700 hover:text-gray-900" data-toggle="dropdown">
+                                <i class="fa fa-bell text-xl"></i>
+                                <span class="badge bg-red-500 text-white rounded-full text-xs px-2 py-1">
+                                    <?php echo count($notifications); ?>
+                                </span> <!-- Menampilkan jumlah notifikasi -->
+                            </a>
+                            <ul class="dropdown-menu absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-2 w-72" role="menu" id="notificationDropdown">
+                                <?php if (!empty($notifications)): ?>
+                                    <?php foreach ($notifications as $notification): ?>
+                                        <li class="border-b last:border-none">
+                                            <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md">
+                                                <!-- Icon berdasarkan status -->
+                                                <span class="bg-blue-500 text-white rounded-full p-2">
+                                                    <?php if ($notification['status'] == 'Selesai'): ?>
+                                                        <i class="fa fa-check-circle"></i>
+                                                    <?php elseif ($notification['status'] == 'Pending'): ?>
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                    <?php else: ?>
+                                                        <i class="fa fa-info-circle"></i>
+                                                    <?php endif; ?>
+                                                </span>
+                                                <!-- Isi notifikasi -->
+                                                <div>
+                                                    <p class="font-medium text-gray-800">
+                                                        Perubahan Data "<span class="font-semibold text-blue-600"><?= htmlspecialchars($notification['status']) ?></span>"
+                                                    </p>
+                                                    <!-- <span class="text-sm text-gray-500">Klik untuk melihat detail</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <hr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li class="p-2 text-center text-gray-500">
+                                        <i class="fa fa-info-circle text-lg"></i> Tidak ada notifikasi baru.
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -228,183 +315,303 @@ $data_kematian = $stmt_akta_kematian->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- content -->
         <div class="main-content">
-            <!-- section -->
             <div class="section">
                 <div class="row">
-
                     <!-- Social Media Feed -->
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <br>
-                        <!-- header text social-feed -->
-                        <h3 class="text-center h3-custom">Status Laporan</h3>
+                        <h3 class="text-center h3-custom">Status Perubahan Data</h3>
                         <hr class="custom-line" />
-                        <!-- end header text social-feed -->
-                        <!-- Instagram Feed -->
-                        <div class="box">
-                            <div class="box-icon shadow">
-                                <span class="fa fa-2x fa-instagram"></span>
-                            </div>
-                            <div class="info">
-                                <h3 class="text-center"></h3>
-                                <!-- Loop through the akta_kelahiran array to display statuses -->
-                                <?php if ($akta_kelahiran): ?>
-                                <?php foreach ($akta_kelahiran as $data): ?>
-                                <!-- Logika untuk menentukan apakah data baru -->
-                                <?php 
-                                    $is_new = false;
-                                    if (isset($data['created_at'])) {
-                                        $created_at = new DateTime($data['created_at']);
-                                        $now = new DateTime();
-                                        $interval = $now->diff($created_at);
-                                        // Data dianggap baru jika dibuat dalam 24 jam terakhir
-                                        if ($interval->days == 0 && $interval->h < 24) {
-                                            $is_new = true;
-                                        }
-                                    }
-                                    ?>
 
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
-                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
-                                        </h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">Tanggal Lahir:
-                                            <?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?></p>
-                                        <p class="card-text">Status: <?php echo htmlspecialchars($data['status']); ?>
-                                        </p>
-                                        <?php if ($is_new): ?>
-                                        <p class="text-success"><strong>Laporan data kelahiran</strong></p>
-                                        <?php endif; ?>
-                                        <a href="lihat_akta_kelahiran.php?id=<?php echo $data['id']; ?>"
-                                            class="btn btn-primary">Lihat Detail</a>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-                                <?php else: ?>
-                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        <!-- Container flex untuk card -->
+                        <div class="d-flex flex-wrap gap-3" style="padding-left: 20px;">
+                            <?php if ($data_pemohon): ?>
+                                <div class="col-md-4 mb-3">
+                                    <div class="box">
+                                        <div class="info">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 style="text-transform: capitalize;">
+                                                        <?php echo htmlspecialchars($data_pemohon['jenis_permohonan'] ?? 'Tidak Diketahui'); ?>
+                                                    </h3>
+                                                    <h5 class="card-subtitle mb-2">Nama Lengkap:
+                                                        <?php echo htmlspecialchars($data_pemohon['nama'] ?? 'Tidak Diketahui'); ?>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <p class="card-text mb-1">Nomor KK:
+                                                                <?php echo htmlspecialchars($data_pemohon['no_kk'] ?? '-'); ?>
+                                                            </p>
+                                                            <p class="card-text mb-1">NIK:
+                                                                <?php echo htmlspecialchars($data_pemohon['nik'] ?? '-'); ?>
+                                                            </p>
 
-                        <!-- End Instagram Feed -->
-                        <hr>
-                        <!-- Facebook Feed -->
-                        <div class="box">
-                            <div class="box-icon shadow">
-                                <span class="fa fa-2x fa-facebook"></span>
-                            </div>
-                            <div class="info">
-                                <h3 class="text-center"></h3>
-                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
-                                <?php if ($data_kematian): ?>
-                                <?php foreach ($data_kematian as $data): ?>
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <h5 class="card-subtitle mb-2 text-muted">Nama Lengkap Almarhum:
-                                            <?php echo htmlspecialchars($data['nama_lengkap_alm']); ?>
-                                        </h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <p class="card-text mb-1">Tanggal Kematian:
-                                                    <?php echo htmlspecialchars($data['hari_tanggal_kematian']); ?>
-                                                </p>
-                                                <p class="card-text mb-1">Status:
-                                                    <?php echo htmlspecialchars($data['status']); ?>
-                                                </p>
+                                                            <?php if (!empty($data_pemohon['dokumen'])): ?>
+                                                                <a href="../../perubahan_data/uploads/<?php echo rawurlencode($data_pemohon['dokumen']); ?>" target="_blank" class="btn btn-primary mt-2">
+                                                                    <i class="fa fa-external-link"></i> Lihat Dokumen
+                                                                </a>
+                                                            <?php else: ?>
+                                                                <p class="text-muted">Tidak ada dokumen tersedia.</p>
+                                                            <?php endif; ?>
+
+                                                            <?php if (isset($data_pemohon['status'])): ?>
+                                                                <?php if ($data_pemohon['status'] == "Selesai"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge selesai mt-5">
+                                                                            <i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($data_pemohon['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php elseif ($data_pemohon['status'] == "Menunggu Konfirmasi"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge menunggu">
+                                                                            <i class="fa fa-hourglass-half"></i> <?php echo htmlspecialchars($data_pemohon['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                <p class="text-muted">Status tidak tersedia.</p>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <a href="lihat_akta_kematian.php?id=<?php echo $data['id']; ?>"
-                                                class="btn btn-primary">Lihat Detail</a>
                                         </div>
                                     </div>
                                 </div>
-                                <?php endforeach; ?>
-                                <?php else: ?>
-                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
-                                <?php endif; ?>
-                            </div>
+                            <?php else: ?>
+                                <p class="text-center w-100">Belum ada status laporan perubahan data penduduk.</p>
+                            <?php endif; ?>
                         </div>
-
-                        <!-- End Facebook Feed -->
-
-                        <hr>
-                        <!-- Facebook Feed -->
-                        <div class="box">
-                            <div class="box-icon shadow">
-                                <span class="fa fa-2x fa-facebook"></span>
-                            </div>
-                            <div class="info">
-                                <h3 class="text-center"></h3>
-                                <!-- Loop through the akta_kelahiran_data array to display statuses -->
-                                <?php if ($data_anak): ?>
-                                <?php foreach ($data_anak as $data): ?>
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        <h5 class="card-subtitle mb-2 text-muted">Nama Anak:
-                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
-                                        </h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div>
-                                            <p class="card-text mb-1">Tanggal Lahir:
-                                                <?php echo htmlspecialchars($data['tanggal_lahir']); ?>
-                                            </p>
-                                            <p class="card-text mb-1">Status:
-                                                <?php echo htmlspecialchars($data['status']); ?>
-                                            </p>
-                                        </div>
-                                        <a href="lihat_kartu_identitas_anak.php?id=<?php echo $data['id']; ?>"
-                                            class="btn btn-primary">Lihat Detail</a>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-                                <?php else: ?>
-                                <p class="text-center">Belum ada status laporan akta kelahiran.</p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-
-                        <!-- End Facebook Feed -->
-                        <hr>
-                        <!-- Facebook Feed -->
-
-                        <!-- End Facebook Feed -->
                     </div>
-                    <!-- End Social Media Feed -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- /.section -->
 
-            <!-- link to top -->
+                    <div class="col-md-12"> <!-- Ubah dari col-md-4 menjadi col-md-12 -->
+                        <br>
+                        <h3 class="text-center h3-custom">Status Akta Kelahiran</h3>
+                        <hr class="custom-line" />
+
+                        <!-- Tambahkan container flex untuk card -->
+                        <div class="d-flex flex-wrap gap-3" style="padding-left: 20px;"> <!-- Tambahkan class flex-wrap dan gap-3 -->
+                            <?php if ($akta_kelahiran): ?>
+                                <?php foreach ($akta_kelahiran as $data): ?>
+                                    <!-- Setiap card dalam col-md-4 -->
+                                    <div class="col-md-4 mb-3">
+                                        <div class="box">
+                                            <div class="info">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <!-- <h3 style="text-transform: capitalize;"><?php echo htmlspecialchars($data['jenis_permohonan']); ?></h3> -->
+                                                        <h5 class="card-subtitle mb-2">Nama Lengkap:
+                                                            <?php echo htmlspecialchars($data['nama_anak']); ?>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <p class="card-text mb-1">Jenis Kelamin:
+                                                                    <?php echo htmlspecialchars($data['jk_anak']); ?>
+                                                                </p>
+                                                                <p class="card-text mb-1">Tanggal Lahir: <?php echo htmlspecialchars($data['tanggal_lahir_anak']); ?></p>
+                                                                <?php if (!empty($data['dokumen'])): ?>
+                                                                    <a href="../../data-akta-kelahiran/uploads/<?php echo rawurlencode($data['dokumen_admin']); ?>" target="_blank" style="position:relative;" class="btn btn-primary mt-2">
+                                                                        <i class="fa fa-external-link"></i> Lihat Dokumen
+                                                                    </a>
+                                                                <?php else: ?>
+                                                                    <p class="text-muted">Tidak ada dokumen tersedia.</p>
+                                                                <?php endif; ?>
+
+                                                                <?php if ($data['status'] == "Selesai"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge selesai mt-5" style="margin-top:20px;">
+                                                                            <i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($data['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php elseif ($data['status'] == "Menunggu Konfirmasi"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge menunggu">
+                                                                            <i class="fa fa-hourglass-half"></i> <?php echo htmlspecialchars($data['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php endif; ?>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="text-center w-100">Belum ada status laporan akta kelahiran.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12"> <!-- Ubah dari col-md-4 menjadi col-md-12 -->
+                        <br>
+                        <h3 class="text-center h3-custom">Status Surat Pindah Penduduk</h3>
+                        <hr class="custom-line" />
+
+                        <!-- Tambahkan container flex untuk card -->
+                        <div class="d-flex flex-wrap gap-3" style="padding-left: 20px;"> <!-- Tambahkan class flex-wrap dan gap-3 -->
+                            <?php if ($surat_pindah_penduduk): ?>
+                                <?php foreach ($surat_pindah_penduduk as $data): ?>
+                                    <!-- Setiap card dalam col-md-4 -->
+                                    <div class="col-md-4 mb-3">
+                                        <div class="box">
+                                            <div class="info">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <!-- <h3 style="text-transform: capitalize;"><?php echo htmlspecialchars($data['jenis_permohonan']); ?></h3> -->
+                                                        <h5 class="card-subtitle mb-2">Nama Lengkap Pemohon:
+                                                            <?php echo htmlspecialchars($data['nama_lengkap_pemohon']); ?>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <p class="card-text mb-1">Alamat Jelas:
+                                                                    <?php echo htmlspecialchars($data['jenis_permohonan']); ?>
+                                                                </p>
+                                                                <p class="card-text mb-1">Alamat Pindah:
+                                                                    <?php echo htmlspecialchars($data['alamat_pindah']); ?>
+                                                                </p>
+                                                                <p class="card-text mb-1">No Hp: <?php echo htmlspecialchars($data['nomor_handphone']); ?></p>
+                                                                <?php if (!empty($data['dokumen'])): ?>
+                                                                    <a href="../../data-surat-pindah-penduduk/uploads/<?php echo rawurlencode(str_replace('uploads/', '', $data['dokumen'])); ?>" target="_blank" style="position:relative;" class="btn btn-primary mt-2">
+
+                                                                        <i class="fa fa-external-link"></i> Lihat Dokumen
+                                                                    </a>
+                                                                <?php else: ?>
+                                                                    <p class="text-muted">Tidak ada dokumen tersedia.</p>
+                                                                <?php endif; ?>
+
+                                                                <?php if ($data['status'] == "Selesai"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge selesai mt-5" style="margin-top:20px;">
+                                                                            <i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($data['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php elseif ($data['status'] == "Menunggu Konfirmasi"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge menunggu">
+                                                                            <i class="fa fa-hourglass-half"></i> <?php echo htmlspecialchars($data['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php endif; ?>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="text-center w-100">Belum ada status laporan akta kelahiran.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12"> <!-- Ubah dari col-md-4 menjadi col-md-12 -->
+                        <br>
+                        <h3 class="text-center h3-custom">Status Akta Kematian</h3>
+                        <hr class="custom-line" />
+
+                        <!-- Tambahkan container flex untuk card -->
+                        <div class="d-flex flex-wrap gap-3" style="padding-left: 20px;"> <!-- Tambahkan class flex-wrap dan gap-3 -->
+                            <?php if ($data_kematian): ?>
+                                <?php foreach ($data_kematian as $data): ?>
+                                    <!-- Setiap card dalam col-md-4 -->
+                                    <div class="col-md-4 mb-3">
+                                        <div class="box">
+                                            <div class="info">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <!-- <h3 style="text-transform: capitalize;"><?php echo htmlspecialchars($data['jenis_permohonan']); ?></h3> -->
+                                                        <h5 class="card-subtitle mb-2">Nama Lengkap Almarhum:
+                                                            <?php echo htmlspecialchars($data['nama_lengkap_alm']); ?>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <p class="card-text mb-1">Sebab Kematian:
+                                                                    <?php echo htmlspecialchars($data['sebab_kematian']); ?>
+                                                                </p>
+                                                                <p class="card-text mb-1">Tanggal Kematian: <?php echo htmlspecialchars($data['hari_tanggal_kematian']); ?></p>
+                                                                <?php if (!empty($data['dokumen'])): ?>
+                                                                    <a href="../../data-akta-kematian/uploads/<?php echo rawurlencode($data['dokumen']); ?>" target="_blank" style="position:relative;" class="btn btn-primary mt-2">
+                                                                        <i class="fa fa-external-link"></i> Lihat Dokumen
+                                                                    </a>
+                                                                <?php else: ?>
+                                                                    <p class="text-muted">Tidak ada dokumen tersedia.</p>
+                                                                <?php endif; ?>
+
+                                                                <?php if ($data['status'] == "Selesai"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge selesai mt-5" style="margin-top:20px;">
+                                                                            <i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($data['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php elseif ($data['status'] == "Menunggu Konfirmasi"): ?>
+                                                                    <p class="card-text">
+                                                                        <span class="status-badge menunggu">
+                                                                            <i class="fa fa-hourglass-half"></i> <?php echo htmlspecialchars($data['status']); ?>
+                                                                        </span>
+                                                                    </p>
+                                                                <?php endif; ?>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="text-center w-100">Belum ada status laporan akta kelahiran.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <a id="top" href="#" onclick="topFunction()">
                 <i class="fa fa-arrow-circle-up"></i>
             </a>
-            <script>
-            // When the user scrolls down 100px from the top of the document, show the button
-            window.onscroll = function() {
-                scrollFunction()
-            };
+        </div>
 
-            function scrollFunction() {
-                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    document.getElementById("top").style.display = "block";
-                } else {
-                    document.getElementById("top").style.display = "none";
+        <!-- Tambahkan CSS -->
+        <style>
+            .d-flex.flex-wrap {
+                display: flex;
+                flex-wrap: wrap;
+                margin: -10px;
+                /* Compensate for card padding */
+            }
+
+            .col-md-4 {
+                padding: 10px;
+                flex: 0 0 33.333333%;
+            }
+
+            .card {
+                height: 100%;
+                margin: 0;
+            }
+
+            @media (max-width: 768px) {
+                .col-md-4 {
+                    flex: 0 0 100%;
                 }
             }
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }
-            </script>
-            <!-- link to top -->
-
-        </div>
+        </style>
         <!-- end main-content -->
 
         <!-- Footer -->

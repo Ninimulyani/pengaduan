@@ -67,12 +67,12 @@ if (isset($_POST['submit'])) {
     if ($simpan) {
         echo "<script>
                 alert('Edit data sukses!');
-                document.location='akta_kematian.php';
+                document.location='/pengaduan/data-akta-kematian/index.php';
             </script>";
     } else {
         echo "<script>
                 alert('Edit data Gagal!');
-                document.location='akta_kematian.php';
+                document.location='/pengaduan/data-akta-kematian/index.php';
             </script>";
     }
 }
@@ -121,14 +121,38 @@ if (isset($_POST['submit'])) {
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="../index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Dashboard</span>
+                        <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kematian</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Perubahan</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kelahiran/index.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-kartu-indentitas-anak/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
 

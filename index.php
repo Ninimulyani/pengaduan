@@ -87,7 +87,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                     </div>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Data User</span>
@@ -109,6 +109,18 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                     <a class="nav-link" href="perubahan_data/perubahan.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="data-kartu-indentitas-anak/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
             </ul>

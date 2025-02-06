@@ -2,6 +2,8 @@
 require_once("database.php");
 
 if (isset($_POST['register'])) {
+    $no_kk = $_POST['no_kk'];
+    $nik = $_POST['nik'];
     $nama = $_POST['nama'];
     $username = $_POST['username'];
     $alamat = $_POST['alamat'];
@@ -9,15 +11,17 @@ if (isset($_POST['register'])) {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
 
     // Periksa apakah semua field yang diperlukan diisi
-    if (!empty($nama) && !empty($username) && !empty($alamat) && !empty($email) && !empty($_POST['password'])) {
-        $sql = "INSERT INTO user (nama, username, alamat, email, password) VALUES (?, ?, ?, ?, ?)";
+    if (!empty($no_kk) && !empty($nik) && !empty($nama) && !empty($username) && !empty($alamat) && !empty($email) && !empty($_POST['password'])) {
+        $sql = "INSERT INTO user (no_kk, nik, nama, username, alamat, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($sql);
 
         if ($stmt) {
-            $stmt->bind_param("sssss", $nama, $username, $alamat, $email, $password);
+            $stmt->bind_param("sssssss", $no_kk, $nik, $nama, $username, $alamat, $email, $password);
 
             if ($stmt->execute()) {
                 session_start();
+                $_SESSION['no_kk'] = $no_kk;
+                $_SESSION['nik'] = $nik;
                 $_SESSION['email'] = $email;
                 $_SESSION['status'] = "register";
                 header('location: login-user.php');
@@ -56,6 +60,16 @@ if (isset($_POST['register'])) {
             <hr class="custom">
             <div class="card-body">
                 <form method="post" action="register-user.php">
+                    <div class="form-group">
+                        <label for="no_kk">Nomor Kartu Keluarga</label>
+                        <input class="form-control" id="no_kk" type="text" name="no_kk" placeholder="Masukkan Nomor Kartu Keluarga"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nik">NIK</label>
+                        <input class="form-control" id="nik" type="text" name="nik" placeholder="Masukkan NIK"
+                            required>
+                    </div>
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input class="form-control" id="nama" type="text" name="nama" placeholder="Masukkan Nama"
@@ -96,15 +110,15 @@ if (isset($_POST['register'])) {
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-    document.querySelector('form').addEventListener('submit', function(e) {
-        const password = document.getElementById('password').value;
-        const confirm = document.getElementById('confirm').value;
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
 
-        if (password !== confirm) {
-            e.preventDefault();
-            alert('Konfirmasi password tidak cocok!');
-        }
-    });
+            if (password !== confirm) {
+                e.preventDefault();
+                alert('Konfirmasi password tidak cocok!');
+            }
+        });
     </script>
 </body>
 
