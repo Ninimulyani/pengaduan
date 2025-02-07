@@ -111,11 +111,11 @@ if (isset($_POST['submit'])) {
 
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -194,11 +194,15 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="nama_lengkap_pemohon"
                                     name="nama_lengkap_pemohon" required>
+                                <input type="text" class="form-control" id="nama_lengkap_pemohon"
+                                    name="nama_lengkap_pemohon" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nik_pemohon" class="col-sm-2 control-label">NIK</label>
+                            <label for="nik_pemohon" class="col-sm-2 control-label">NIK</label>
                             <div class="col-sm-10">
+                                <input type="text" class="form-control" id="nik_pemohon" name="nik_pemohon" required>
                                 <input type="text" class="form-control" id="nik_pemohon" name="nik_pemohon" required>
                             </div>
                         </div>
@@ -207,6 +211,11 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-10">
                                 <select class="form-control" id="jenis_permohonan" name="jenis_permohonan" required>
                                     <option value="">-- Pilih Jenis Permohonan --</option>
+                                    <option value="Surat Keterangan Pindah">Surat Keterangan Pindah</option>
+                                    <option value="Surat Keterangan Pindah Luar Negeri (SKPLN)">Surat Keterangan Pindah
+                                        Luar Negeri (SKPLN)</option>
+                                    <option value="Surat Keterangan Tempat Tinggal (SKTT)">Surat Keterangan Tempat
+                                        Tinggal (SKTT)</option>
                                     <option value="Surat Keterangan Pindah">Surat Keterangan Pindah</option>
                                     <option value="Surat Keterangan Pindah Luar Negeri (SKPLN)">Surat Keterangan Pindah
                                         Luar Negeri (SKPLN)</option>
@@ -225,31 +234,44 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="desa_kelurahan_asal" class="col-sm-3 control-label">Desa/ Kelurahan</label>
+                            <label for="desa_kelurahan_asal" class="col-sm-3 control-label">Desa/ Kelurahan</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="desa_kelurahan_asal" name="desa_kelurahan_asal"
+                                    required></input>
                                 <input class="form-control" id="desa_kelurahan_asal" name="desa_kelurahan_asal"
                                     required></input>
                             </div>
                             <label for="kecamatan_asal" class="col-sm-3 control-label">Kecamatan</label>
+                            <label for="kecamatan_asal" class="col-sm-3 control-label">Kecamatan</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="kecamatan_asal" name="kecamatan_asal" required></input>
                                 <input class="form-control" id="kecamatan_asal" name="kecamatan_asal" required></input>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="kabupaten_kota_asal" class="col-sm-3 control-label">Kabupaten/Kota</label>
+                            <label for="kabupaten_kota_asal" class="col-sm-3 control-label">Kabupaten/Kota</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="kabupaten_kota_asal" name="kabupaten_kota_asal"
+                                    required></input>
                                 <input class="form-control" id="kabupaten_kota_asal" name="kabupaten_kota_asal"
                                     required></input>
                             </div>
                             <label for="provinsi_asal" class="col-sm-3 control-label">Provinsi</label>
+                            <label for="provinsi_asal" class="col-sm-3 control-label">Provinsi</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="provinsi_asal" name="provinsi_asal" required></input>
                                 <input class="form-control" id="provinsi_asal" name="provinsi_asal" required></input>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="kode_pos_asal" class="col-sm-3 control-label">Kode Pos</label>
+                            <label for="kode_pos_asal" class="col-sm-3 control-label">Kode Pos</label>
                             <div class="col-sm-3">
+                                <input type="number" class="form-control" id="kode_pos_asal" name="kode_pos_asal"
+                                    required></input>
                                 <input type="number" class="form-control" id="kode_pos_asal" name="kode_pos_asal"
                                     required></input>
                             </div>
@@ -258,9 +280,14 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="jenis_pindah" class="col-sm-3 control-label">Jenis
                                 Pindah</label>
+                            <label for="jenis_pindah" class="col-sm-3 control-label">Jenis
+                                Pindah</label>
                             <div class="col-sm-5">
                                 <select class="form-control" id="jenis_pindah" name="jenis_pindah" required>
+                                <select class="form-control" id="jenis_pindah" name="jenis_pindah" required>
                                     <option value="">-- Pilih Jenis Pindah --</option>
+                                    <option value="Dalam satu desa/kelurahan atau yang disebut dengan nama
+                                        lain">Dalam satu desa/kelurahan atau yang disebut dengan nama
                                     <option value="Dalam satu desa/kelurahan atau yang disebut dengan nama
                                         lain">Dalam satu desa/kelurahan atau yang disebut dengan nama
                                         lain</option>
@@ -269,7 +296,15 @@ if (isset($_POST['submit'])) {
                                         dalam satu kecamatan</option>
                                     <option value="Antar desa/kelurahan atau yang disebut dengan nama lain
                                         dalam satu kecamatan">Antar desa/kelurahan atau yang disebut dengan nama lain
+                                    <option value="Antar desa/kelurahan atau yang disebut dengan nama lain
+                                        dalam satu kecamatan">Antar desa/kelurahan atau yang disebut dengan nama lain
                                         dalam satu kecamatan</option>
+                                    <option value="Antar desa/kelurahan atau yang disebut dengan nama lain
+                                        dalam satu kecamatan">Antar desa/kelurahan atau yang disebut dengan nama lain
+                                        dalam satu kecamatan</option>
+                                    <option value="Antar kabupaten/kota dalam satu provinsi">Antar kabupaten/kota dalam
+                                        satu provinsi</option>
+                                    <option value="Antar provinsi">Antar provinsi</option>
                                     <option value="Antar kabupaten/kota dalam satu provinsi">Antar kabupaten/kota dalam
                                         satu provinsi</option>
                                     <option value="Antar provinsi">Antar provinsi</option>
@@ -287,12 +322,18 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="desa_kelurahan_pindah" class="col-sm-3 control-label">Desa/ Kelurahan</label>
+                            <label for="desa_kelurahan_pindah" class="col-sm-3 control-label">Desa/ Kelurahan</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="desa_kelurahan_pindah" name="desa_kelurahan_pindah"
+                                    required></input>
                                 <input class="form-control" id="desa_kelurahan_pindah" name="desa_kelurahan_pindah"
                                     required></input>
                             </div>
                             <label for="kecamatan_pindah" class="col-sm-3 control-label">Kecamatan</label>
+                            <label for="kecamatan_pindah" class="col-sm-3 control-label">Kecamatan</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="kecamatan_pindah" name="kecamatan_pindah"
+                                    required></input>
                                 <input class="form-control" id="kecamatan_pindah" name="kecamatan_pindah"
                                     required></input>
                             </div>
@@ -300,12 +341,18 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="kabupaten_kota_pindah" class="col-sm-3 control-label">Kabupaten/Kota</label>
+                            <label for="kabupaten_kota_pindah" class="col-sm-3 control-label">Kabupaten/Kota</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="kabupaten_kota_pindah" name="kabupaten_kota_pindah"
+                                    required></input>
                                 <input class="form-control" id="kabupaten_kota_pindah" name="kabupaten_kota_pindah"
                                     required></input>
                             </div>
                             <label for="provinsi_pindah" class="col-sm-3 control-label">Provinsi</label>
+                            <label for="provinsi_pindah" class="col-sm-3 control-label">Provinsi</label>
                             <div class="col-sm-3">
+                                <input class="form-control" id="provinsi_pindah" name="provinsi_pindah"
+                                    required></input>
                                 <input class="form-control" id="provinsi_pindah" name="provinsi_pindah"
                                     required></input>
                             </div>
@@ -313,7 +360,10 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="kode_pos_pindah" class="col-sm-3 control-label">Kode Pos</label>
+                            <label for="kode_pos_pindah" class="col-sm-3 control-label">Kode Pos</label>
                             <div class="col-sm-3">
+                                <input type="number" class="form-control" id="kode_pos_pindah" name="kode_pos_pindah"
+                                    required></input>
                                 <input type="number" class="form-control" id="kode_pos_pindah" name="kode_pos_pindah"
                                     required></input>
                             </div>
@@ -344,6 +394,12 @@ if (isset($_POST['submit'])) {
                                     <option value="Kepala Keluarga dan sebagian Anggota Keluarga">Kepala Keluarga dan
                                         sebagian Anggota Keluarga</option>
                                     <option value="Anggota Keluarga">Anggota Keluarga</option>
+                                    <option value="Antar provinsi">Antar provinsi</option>
+                                    <option value="Kepala Keluarga dan seluruh Anggota Keluarag">Kepala Keluarga dan
+                                        seluruh Anggota Keluarag</option>
+                                    <option value="Kepala Keluarga dan sebagian Anggota Keluarga">Kepala Keluarga dan
+                                        sebagian Anggota Keluarga</option>
+                                    <option value="Anggota Keluarga">Anggota Keluarga</option>
                                 </select>
                             </div>
                         </div>
@@ -351,8 +407,12 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="anggota_keluarga_tidak_pindah" class="col-sm-2 control-label">Anggota Keluarga
                                 Tidak
+                            <label for="anggota_keluarga_tidak_pindah" class="col-sm-2 control-label">Anggota Keluarga
+                                Tidak
                                 Pindah</label>
                             <div class="col-sm-10">
+                                <select class="form-control" id="anggota_keluarga_tidak_pindah"
+                                    name="anggota_keluarga_tidak_pindah" ` required>
                                 <select class="form-control" id="anggota_keluarga_tidak_pindah"
                                     name="anggota_keluarga_tidak_pindah" ` required>
                                     <option value="">-- Pilih Anggota Keluarga Tidak Pindah --</option>
@@ -364,8 +424,11 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="anggota_keluarga_pindah" class="col-sm-2 control-label">Anggota Keluarga yang
+                            <label for="anggota_keluarga_pindah" class="col-sm-2 control-label">Anggota Keluarga yang
                                 Pindah</label>
                             <div class="col-sm-10">
+                                <select class="form-control" id="anggota_keluarga_pindah" name="anggota_keluarga_pindah"
+                                    required>
                                 <select class="form-control" id="anggota_keluarga_pindah" name="anggota_keluarga_pindah"
                                     required>
                                     <option value="">-- Pilih Anggota Keluarga yang Pindah --</option>
@@ -391,8 +454,12 @@ if (isset($_POST['submit'])) {
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" name="nik_anggota_pindah[]"
                                         placeholder="NIK" required>
+                                    <input type="text" class="form-control" name="nik_anggota_pindah[]"
+                                        placeholder="NIK" required>
                                 </div>
                                 <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="anggota_pindah[]"
+                                        placeholder="Nama Lengkap" required>
                                     <input type="text" class="form-control" name="anggota_pindah[]"
                                         placeholder="Nama Lengkap" required>
                                 </div>
@@ -444,12 +511,17 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="nomor_itas_itap" class="col-sm-2 control-label">Nomor dan Tanggal ITAS &
+                            <label for="nomor_itas_itap" class="col-sm-2 control-label">Nomor dan Tanggal ITAS &
                                 ITAP</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" id="nomor_itas_itap" name="nomor_itas_itap"
                                     required>
+                                <input type="text" class="form-control" id="nomor_itas_itap" name="nomor_itas_itap"
+                                    required>
                             </div>
                             <div class="col-sm-5">
+                                <input type="text" class="form-control" id="tanggal_itas_itap" name="tanggal_itas_itap"
+                                    required>
                                 <input type="text" class="form-control" id="tanggal_itas_itap" name="tanggal_itas_itap"
                                     required>
                             </div>
@@ -486,7 +558,11 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="rencana_tanggal_pindah" class="col-sm-2 control-label">Rencana Tanggal
                                 Pindah</label>
+                            <label for="rencana_tanggal_pindah" class="col-sm-2 control-label">Rencana Tanggal
+                                Pindah</label>
                             <div class="col-sm-10">
+                                <input type="date" class="form-control" id="rencana_tanggal_pindah"
+                                    name="rencana_tanggal_pindah" required>
                                 <input type="date" class="form-control" id="rencana_tanggal_pindah"
                                     name="rencana_tanggal_pindah" required>
                             </div>
@@ -494,7 +570,10 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                             <label for="nomor_handphone" class="col-sm-2 control-label">Nomor Handphone</label>
+                            <label for="nomor_handphone" class="col-sm-2 control-label">Nomor Handphone</label>
                             <div class="col-sm-10">
+                                <input type="tel" class="form-control" id="nomor_handphone" name="nomor_handphone"
+                                    required>
                                 <input type="tel" class="form-control" id="nomor_handphone" name="nomor_handphone"
                                     required>
                             </div>
@@ -518,29 +597,31 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            // Fungsi untuk menambah form baru
-            $('#add-form').click(function() {
-                const newForm = `
+    $(document).ready(function() {
+        // Fungsi untuk menambah form baru
+        $('#add-form').click(function() {
+            const newForm = `
                 <div class="form-group row">
                     <div class="col-sm-5">
                         <input type="text" class="form-control" name="nik_anggota_pindah[]" placeholder="NIK" required>
+                        <input type="text" class="form-control" name="nik_anggota_pindah[]" placeholder="NIK" required>
                     </div>
                     <div class="col-sm-5">
+                        <input type="text" class="form-control" name="anggota_pindah[]" placeholder="Nama Lengkap" required>
                         <input type="text" class="form-control" name="anggota_pindah[]" placeholder="Nama Lengkap" required>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="btn btn-danger remove-form">-</button>
                     </div>
                 </div>`;
-                $('#form-container').append(newForm);
-            });
-
-            // Fungsi untuk menghapus form
-            $('#form-container').on('click', '.remove-form', function() {
-                $(this).closest('.form-group').remove();
-            });
+            $('#form-container').append(newForm);
         });
+
+        // Fungsi untuk menghapus form
+        $('#form-container').on('click', '.remove-form', function() {
+            $(this).closest('.form-group').remove();
+        });
+    });
     </script>
 </body>
 

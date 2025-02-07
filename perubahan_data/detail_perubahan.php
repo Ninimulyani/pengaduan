@@ -3,19 +3,19 @@ require_once("../database.php");
 session_start();
 logged_admin();
 
-// Logic untuk delete action
-if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
-    $deleteId = (int)$_GET['id'];
-    $koneksi->query("DELETE FROM pemohon WHERE id = $deleteId");
-    echo "<script>
-            alert('Hapus data sukses!');
-            document.location='index.php';
-          </script>";
+// Cek apakah parameter nik tersedia
+if (!isset($_GET['nik'])) {
+    echo "<script>alert('Data tidak ditemukan!'); window.location.href = 'index.php';</script>";
     exit();
 }
 
-// Ambil data pemohon
-$statement = $koneksi->query("SELECT * FROM pemohon ORDER BY id DESC");
+$nik = $_GET['nik'];
+
+// Perbaikan query untuk menampilkan data sesuai NIK
+$query = $koneksi->prepare("SELECT * FROM permohonan_perubahan WHERE nik = ?");
+$query->bind_param("s", $nik);
+$query->execute();
+$result = $query->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -117,51 +117,43 @@ $statement = $koneksi->query("SELECT * FROM pemohon ORDER BY id DESC");
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Data Pemohon
+                    <i class="fa fa-table"></i> Semua Data Perubahan
                 </div>
                 <div class="card-body">
-                    <a href="tambah_pemohon.php" class="btn btn-primary mb-3">Tambah Data Pemohon</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>ID Pemohon</th>
-                                    <th>Nama</th>
                                     <th>NIK</th>
-                                    <th>No KK</th>
-                                    <th>Alamat</th>
+                                    <th>Jenis Permohonan</th>
+                                    <th>Semula</th>
+                                    <th>Menjadi</th>
+                                    <th>Dasar Perubahan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $no = 1;
-                                while ($data = $statement->fetch_assoc()) {
-                                    echo "<tr>
-                                            <td>{$no}</td>
-                                            <td>{$data['id']}</td>
-                                            <td>{$data['nama_lengkap']}</td>
-                                            <td>{$data['nik']}</td>
-                                            <td>{$data['no_kk']}</td>
-                                            <td>{$data['alamat_rumah']}</td>
-                                            <td>
-                                                <a class='btn btn-info btn-sm' href='detail_penduduk.php?input_id={$data['input_id']}'>
-                                                    <i class='fa fa-eye'></i> Detail Penduduk
-                                                </a>
-                                                <a class='btn btn-warning btn-sm' href='edit_pemohon.php?id={$data['id']}'>
-                                                    <i class='fa fa-edit'></i> Edit
-                                                </a>
-                                                <a class='btn btn-danger btn-sm' href='?action=delete&id={$data['id']}'
-                                                    onclick='return confirm(\"Yakin ingin menghapus data ini?\");'>
-                                                    <i class='fa fa-trash'></i> Delete
-                                                </a>
-                                            </td>
-                                          </tr>";
-                                    $no++;
-                                }
-                                ?>
+                            $no = 1;
+                            while ($data = $result->fetch_assoc()) {
+                                echo "<tr>
+                                        <td>{$no}</td>
+                                        <td>{$data['nik']}</td>
+                                        <td>{$data['jenis_permohonan']}</td>
+                                        <td>{$data['semula']}</td>
+                                        <td>{$data['menjadi']}</td>
+                                        <td>{$data['dasar_perubahan']}</td>
+                                        <td>
+                                            <a href='edit.php?id={$data['id']}&nik={$data['nik']}' class='btn btn-warning btn-sm'>Edit</a>
+                                            <a href='hapus.php?id={$data['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a>
+                                        </td>
+                                    </tr>";
+                                $no++;
+                            }
+                            ?>
                             </tbody>
+
                         </table>
                     </div>
                 </div>

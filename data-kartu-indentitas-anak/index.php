@@ -221,17 +221,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav sidebar-menu" id="exampleAccordion">
+
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
+                            <img alt="image" src="user/public/images/logomaros.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
@@ -247,15 +250,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                         <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
-
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="../data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="index.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
@@ -278,7 +286,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                         <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
-
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -420,7 +427,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
         <i class="fa fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -3,19 +3,14 @@ require_once("../database.php");
 session_start();
 logged_admin();
 
-// Logic untuk delete action
-if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
-    $deleteId = (int)$_GET['id'];
-    $koneksi->query("DELETE FROM pemohon WHERE id = $deleteId");
-    echo "<script>
-            alert('Hapus data sukses!');
-            document.location='index.php';
-          </script>";
+// Cek apakah parameter input_id tersedia
+if (!isset($_GET['input_id'])) {
+    echo "<script>alert('Data tidak ditemukan!'); window.location.href = 'index.php';</script>";
     exit();
 }
 
-// Ambil data pemohon
-$statement = $koneksi->query("SELECT * FROM pemohon ORDER BY id DESC");
+$input_id = $_GET['input_id'];
+$query = $koneksi->query("SELECT * FROM penduduk WHERE input_id = '$input_id'");
 ?>
 
 <!DOCTYPE html>
@@ -120,43 +115,35 @@ $statement = $koneksi->query("SELECT * FROM pemohon ORDER BY id DESC");
                     <i class="fa fa-table"></i> Semua Data Pemohon
                 </div>
                 <div class="card-body">
-                    <a href="tambah_pemohon.php" class="btn btn-primary mb-3">Tambah Data Pemohon</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>ID Pemohon</th>
+                                    <th>ID</th>
                                     <th>Nama</th>
-                                    <th>NIK</th>
                                     <th>No KK</th>
-                                    <th>Alamat</th>
+                                    <th>NIK</th>
+                                    <th>SHDK</th>
+                                    <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1;
-                                while ($data = $statement->fetch_assoc()) {
+                                while ($data = $query->fetch_assoc()) {
                                     echo "<tr>
                                             <td>{$no}</td>
                                             <td>{$data['id']}</td>
-                                            <td>{$data['nama_lengkap']}</td>
-                                            <td>{$data['nik']}</td>
+                                            <td>{$data['nama']}</td>
                                             <td>{$data['no_kk']}</td>
-                                            <td>{$data['alamat_rumah']}</td>
-                                            <td>
-                                                <a class='btn btn-info btn-sm' href='detail_penduduk.php?input_id={$data['input_id']}'>
-                                                    <i class='fa fa-eye'></i> Detail Penduduk
-                                                </a>
-                                                <a class='btn btn-warning btn-sm' href='edit_pemohon.php?id={$data['id']}'>
-                                                    <i class='fa fa-edit'></i> Edit
-                                                </a>
-                                                <a class='btn btn-danger btn-sm' href='?action=delete&id={$data['id']}'
-                                                    onclick='return confirm(\"Yakin ingin menghapus data ini?\");'>
-                                                    <i class='fa fa-trash'></i> Delete
-                                                </a>
-                                            </td>
+                                            <td>{$data['nik']}</td>
+                                            <td>{$data['shdk']}</td>
+                                            <td>{$data['keterangan']}</td>
+                                            <td><a class='btn btn-secondary btn-sm' href='detail_perubahan.php?nik={$data['nik']}'>
+                                                    <i class='fa fa-info-circle'></i> Rincian Permohonan
+                                                </a></td>
                                           </tr>";
                                     $no++;
                                 }

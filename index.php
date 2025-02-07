@@ -67,7 +67,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -106,7 +108,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                    <a class="nav-link" href="data-akta-kelahiran">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kelahiran</span>
                     </a>
@@ -241,17 +243,18 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                             $no = 1;
                             foreach ($statement as $key) {
                             ?>
-                                <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $key['nama']; ?></td>
-                                    <td><?php echo $key['username']; ?></td>
-                                    <td><?php echo $key['email']; ?></td>
-                                    <td><?php echo $key['alamat']; ?></td>
-                                    <td>
-                                        <a class="btn btn-warning" href="edit-user.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td><?php echo $no++ ?></td>
+                                <td><?php echo $key['nama']; ?></td>
+                                <td><?php echo $key['username']; ?></td>
+                                <td><?php echo $key['email']; ?></td>
+                                <td><?php echo $key['alamat']; ?></td>
+                                <td>
+                                    <a class="btn btn-warning" href="edit-user.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                    <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
+                                        onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                </td>
+                            </tr>
                             <?php
                             }
                             ?>
@@ -279,7 +282,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

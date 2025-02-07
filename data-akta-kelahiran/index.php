@@ -198,17 +198,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav sidebar-menu" id="exampleAccordion">
+
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
+                            <img alt="image" src="user/public/images/logomaros.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
@@ -221,6 +224,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="../index.php">
                         <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Data User</span>
                         <span class="nav-link-text">Data User</span>
                     </a>
                 </li>
@@ -338,50 +342,82 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                                 $no = 1;
                                 foreach ($statement as $key) {
                                 ?>
-                                    <tr>
-                                        <td><?php echo $no++; ?></td>
-                                        <td><?php echo $key['nama_pelapor']; ?></td>
-                                        <td><?php echo $key['nik_pelapor']; ?></td>
-                                        <td><?php echo $key['nomor_dokumen_perjalanan']; ?></td>
-                                        <td><?php echo $key['nomor_kartu_keluarga_pelapor']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_pelapor']; ?></td>
-                                        <td><?php echo $key['nomor_handphone']; ?></td>
-                                        <td><?php echo $key['email']; ?></td>
-                                        <td><?php echo $key['nama_saksi_1']; ?></td>
-                                        <td><?php echo $key['nik_saksi_1']; ?></td>
-                                        <td><?php echo $key['nomor_kartu_keluarga_saksi_1']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_saksi_1']; ?></td>
-                                        <td><?php echo $key['nama_ayah']; ?></td>
-                                        <td><?php echo $key['nik_ayah']; ?></td>
-                                        <td><?php echo $key['tempat_lahir_ayah']; ?></td>
-                                        <td><?php echo $key['tanggal_lahir_ayah']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_ayah']; ?></td>
-                                        <td><?php echo $key['nama_ibu']; ?></td>
-                                        <td><?php echo $key['nik_ibu']; ?></td>
-                                        <td><?php echo $key['tempat_lahir_ibu']; ?></td>
-                                        <td><?php echo $key['tanggal_lahir_ibu']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_ibu']; ?></td>
-                                        <td><?php echo $key['nama_anak']; ?></td>
-                                        <td><?php echo $key['jk_anak']; ?></td>
-                                        <td><?php echo $key['tempat_lahir']; ?></td>
-                                        <td><?php echo $key['tanggal_lahir_anak']; ?></td>
-                                        <td><?php echo $key['pukul']; ?></td>
-                                        <td><?php echo $key['jenis_kelahiran']; ?></td>
-                                        <td><?php echo $key['kelahiran_ke']; ?></td>
-                                        <td><?php echo $key['penolong_kelahiran']; ?></td>
-                                        <td><?php echo $key['bb_bayi']; ?> kg</td>
-                                        <td><?php echo $key['pb']; ?> cm</td>
-                                        <td>
-                                            <?php if (!empty($key['dokumen_admin'])): ?>
-                                                <span class="text-success"><i class="fas fa-check-circle"></i> Done</span>
-                                            <?php else: ?>
-                                                <a class="btn btn-primary" href="upload_dokumen.php?edit&id=<?= $key['id'] ?>">
-                                                    <i class="fas fa-upload"></i>
-                                                </a>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <?php
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $key['nama_pelapor']; ?></td>
+                                    <td><?php echo $key['nik_pelapor']; ?></td>
+                                    <td><?php echo $key['nomor_dokumen_perjalanan']; ?></td>
+                                    <td><?php echo $key['nomor_kartu_keluarga_pelapor']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_pelapor']; ?></td>
+                                    <td><?php echo $key['nomor_handphone']; ?></td>
+                                    <td><?php echo $key['email']; ?></td>
+                                    <td><?php echo $key['nama_saksi_1']; ?></td>
+                                    <td><?php echo $key['nik_saksi_1']; ?></td>
+                                    <td><?php echo $key['nomor_kartu_keluarga_saksi_1']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_saksi_1']; ?></td>
+                                    <td><?php echo $key['nama_ayah']; ?></td>
+                                    <td><?php echo $key['nik_ayah']; ?></td>
+                                    <td><?php echo $key['tempat_lahir_ayah']; ?></td>
+                                    <td><?php echo $key['tanggal_lahir_ayah']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_ayah']; ?></td>
+                                    <td><?php echo $key['nama_ibu']; ?></td>
+                                    <td><?php echo $key['nik_ibu']; ?></td>
+                                    <td><?php echo $key['tempat_lahir_ibu']; ?></td>
+                                    <td><?php echo $key['tanggal_lahir_ibu']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_ibu']; ?></td>
+                                    <td><?php echo $key['nik_alm']; ?></td>
+                                    <td><?php echo $key['nama_lengkap_alm']; ?></td>
+                                    <td><?php echo $key['hari_tanggal_kematian']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
+                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+                                    <td><?php echo $key['nama_pelapor']; ?></td>
+                                    <td><?php echo $key['nik_pelapor']; ?></td>
+                                    <td><?php echo $key['nomor_dokumen_perjalanan']; ?></td>
+                                    <td><?php echo $key['nomor_kartu_keluarga_pelapor']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_pelapor']; ?></td>
+                                    <td><?php echo $key['nomor_handphone']; ?></td>
+                                    <td><?php echo $key['email']; ?></td>
+                                    <td><?php echo $key['nama_saksi_1']; ?></td>
+                                    <td><?php echo $key['nik_saksi_1']; ?></td>
+                                    <td><?php echo $key['nomor_kartu_keluarga_saksi_1']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_saksi_1']; ?></td>
+                                    <td><?php echo $key['nama_ayah']; ?></td>
+                                    <td><?php echo $key['nik_ayah']; ?></td>
+                                    <td><?php echo $key['tempat_lahir_ayah']; ?></td>
+                                    <td><?php echo $key['tanggal_lahir_ayah']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_ayah']; ?></td>
+                                    <td><?php echo $key['nama_ibu']; ?></td>
+                                    <td><?php echo $key['nik_ibu']; ?></td>
+                                    <td><?php echo $key['tempat_lahir_ibu']; ?></td>
+                                    <td><?php echo $key['tanggal_lahir_ibu']; ?></td>
+                                    <td><?php echo $key['kewarganegaraan_ibu']; ?></td>
+                                    <td><?php echo $key['nama_anak']; ?></td>
+                                    <td><?php echo $key['jk_anak']; ?></td>
+                                    <td><?php echo $key['tempat_lahir']; ?></td>
+                                    <td><?php echo $key['tanggal_lahir_anak']; ?></td>
+                                    <td><?php echo $key['pukul']; ?></td>
+                                    <td><?php echo $key['jenis_kelahiran']; ?></td>
+                                    <td><?php echo $key['kelahiran_ke']; ?></td>
+                                    <td><?php echo $key['penolong_kelahiran']; ?></td>
+                                    <td><?php echo $key['bb_bayi']; ?> kg</td>
+                                    <td><?php echo $key['pb']; ?> cm</td>
+                                    <td>
+                                        <?php if (!empty($key['dokumen_admin'])): ?>
+                                        <span class="text-success"><i class="fas fa-check-circle"></i> Done</span>
+                                        <?php else: ?>
+                                        <a class="btn btn-primary" href="upload_dokumen.php?edit&id=<?= $key['id'] ?>">
+                                            <i class="fas fa-upload"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php
                                             $status = $key['status'];
 
                                             if ($status == 'Sedang diProses') {
@@ -401,12 +437,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                           </span>';
                                             }
                                             ?>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                            <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">Delete</a>
-                                        </td>
-                                    </tr>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">Delete</a>
+                                    </td>
+                                </tr>
                                 <?php
                                 }
                                 ?>
@@ -432,7 +469,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
         <i class="fa fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
