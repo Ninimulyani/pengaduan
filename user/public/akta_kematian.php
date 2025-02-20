@@ -1,66 +1,88 @@
 <?php
-session_start(); // Memulai session
+session_start();
 
-// Periksa apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, arahkan ke halaman login
     header("Location: login-user.php");
     exit();
 }
 
-require_once("../private/database.php"); // Koneksi database
-$nik = $_SESSION['nik'];  // Menyimpan nik pengguna yang login
-// Ambil status berdasarkan nik pengguna yang login
-$sql = "SELECT status FROM perubahan_data_penduduk WHERE nik = :nik ORDER BY id DESC LIMIT 5"; // Menampilkan 5 status terbaru
-$stmt = $db->prepare($sql);
-$stmt->execute(['nik' => $nik]);  // Bind nilai nik pada parameter :nik
-$notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+require_once("../private/database.php");
 
 if (isset($_POST['submit'])) {
     try {
-        // Ambil user_id dari session
         $user_id = $_SESSION['user_id'];
+        $nik_alm = $_POST['nik_alm'];
 
-        // Get the next ID based on auto_increment
+
+        // Cek apakah nik_alm sudah ada di database
+        $stmtCheck = $db->prepare("SELECT COUNT(*) FROM akta_kematian WHERE nik_alm = :nik_alm");
+        $stmtCheck->bindParam(':nik_alm', $nik_alm);
+        $stmtCheck->execute();
+        $count = $stmtCheck->fetchColumn();
+
+        if ($count > 0) {
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            <script>
+              window.onload = function() {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal!',
+                  text: 'Nik Almarhum Telah Ada di Data.',
+                  confirmButtonText: 'Lanjutkan'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = 'akta_kematian.php';
+                  }
+                });
+              };
+            </script>";
+            exit();
+        }
+
+
         $statement = $db->query("SELECT id FROM akta_kematian ORDER BY id DESC LIMIT 1");
-        $max_id = 1; // Default ID jika tabel kosong
+        $max_id = 1;
         foreach ($statement as $key) {
             $max_id = $key['id'] + 1;
         }
 
-        // Set default status
+
         $status = "Menunggu";
+        $upload_dir = 'uploads/';
 
-        // Upload dokumen persyaratan
-        $upload_dir = 'uploads/'; // Direktori tempat file akan disimpan
-        $file_name = basename($_FILES['dokumen_persyaratan']['name']);
-        $target_file = $upload_dir . $file_name;
+        // Upload kartu_keluarga
+        $file_name_kk = basename($_FILES['kartu_keluarga']['name']);
+        $target_file_kk = $upload_dir . $file_name_kk;
 
-        if (move_uploaded_file($_FILES['dokumen_persyaratan']['tmp_name'], $target_file)) {
-            // Prepare the SQL query
+        // Upload keterangan_kematian
+        $file_name_keterangan = basename($_FILES['keterangan_kematian']['name']);
+        $target_file_keterangan = $upload_dir . $file_name_keterangan;
+
+        if (
+            move_uploaded_file($_FILES['kartu_keluarga']['tmp_name'], $target_file_kk) &&
+            move_uploaded_file($_FILES['keterangan_kematian']['tmp_name'], $target_file_keterangan)
+        ) {
+
             $sql = "INSERT INTO akta_kematian (
                 id, user_id, nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, 
                 kewarganegaraan_pelapor, nomor_handphone, email, nama_saksi_1, nik_saksi_1, nomor_kartu_keluarga_saksi_1, 
                 kewarganegaraan_saksi_1, nama_ayah, nik_ayah, tempat_lahir_ayah, tanggal_lahir_ayah, 
                 kewarganegaraan_ayah, nama_ibu, nik_ibu, tempat_lahir_ibu, tanggal_lahir_ibu, kewarganegaraan_ibu, 
                 nik_alm, nama_lengkap_alm, hari_tanggal_kematian, pukul, sebab_kematian, tempat_kematian, 
-                yang_menerangkan, dokumen_persyaratan, tanggal_input, status
+                yang_menerangkan, kartu_keluarga, keterangan_kematian, tanggal_input, status
             ) VALUES (
                 :id, :user_id, :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, 
                 :kewarganegaraan_pelapor, :nomor_handphone, :email, :nama_saksi_1, :nik_saksi_1, :nomor_kartu_keluarga_saksi_1, 
                 :kewarganegaraan_saksi_1, :nama_ayah, :nik_ayah, :tempat_lahir_ayah, :tanggal_lahir_ayah, 
                 :kewarganegaraan_ayah, :nama_ibu, :nik_ibu, :tempat_lahir_ibu, :tanggal_lahir_ibu, :kewarganegaraan_ibu, 
                 :nik_alm, :nama_lengkap_alm, :hari_tanggal_kematian, :pukul, :sebab_kematian, :tempat_kematian, 
-                :yang_menerangkan, :dokumen_persyaratan, CURRENT_TIMESTAMP, :status
+                :yang_menerangkan, :kartu_keluarga, :keterangan_kematian, CURRENT_TIMESTAMP, :status
             )";
 
-            // Prepare the statement
             $stmt = $db->prepare($sql);
 
-            // Bind the form data to the query
             $stmt->bindParam(':id', $max_id);
-            $stmt->bindParam(':user_id', $user_id); // Tambahkan user_id
+            $stmt->bindParam(':user_id', $user_id);
             $stmt->bindParam(':nama_pelapor', $_POST['nama_pelapor']);
             $stmt->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
             $stmt->bindParam(':nomor_dokumen_perjalanan', $_POST['nomor_dokumen_perjalanan']);
@@ -89,12 +111,13 @@ if (isset($_POST['submit'])) {
             $stmt->bindParam(':sebab_kematian', $_POST['sebab_kematian']);
             $stmt->bindParam(':tempat_kematian', $_POST['tempat_kematian']);
             $stmt->bindParam(':yang_menerangkan', $_POST['yang_menerangkan']);
-            $stmt->bindParam(':dokumen_persyaratan', $file_name); // Simpan nama file
+            $stmt->bindParam(':kartu_keluarga', $file_name_kk);
+            $stmt->bindParam(':keterangan_kematian', $file_name_keterangan);
             $stmt->bindParam(':status', $status);
 
-            // Execute the statement
             if ($stmt->execute()) {
-                echo "<div class='alert alert-success'>Data berhasil disimpan!</div>";
+                header("Location: home-2.php?status=success");
+                exit;
             } else {
                 echo 'Gagal menyimpan data.';
             }
@@ -106,6 +129,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -126,6 +150,8 @@ if (isset($_POST['submit'])) {
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="js/bootstrap.js"></script>
+    <!-- Validasi -->
+    <script src="js/validasi.js"></script>
     <!-- Animate CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Tambahkan link ke Font Awesome di dalam tag <head> -->
@@ -138,11 +164,11 @@ if (isset($_POST['submit'])) {
 
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -199,47 +225,6 @@ if (isset($_POST['submit'])) {
                         <li><a href="bantuan-2.php">BANTUAN</a></li>
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="login-user.php">LOGOUT</a></li>
-
-                        <li class="dropdown pull-right relative">
-                            <a href="#" class="dropdown-toggle flex items-center gap-2 text-gray-700 hover:text-gray-900" data-toggle="dropdown">
-                                <i class="fa fa-bell text-xl"></i>
-                                <span class="badge bg-red-500 text-white rounded-full text-xs px-2 py-1">
-                                    <?php echo count($notifications); ?>
-                                </span> <!-- Menampilkan jumlah notifikasi -->
-                            </a>
-                            <ul class="dropdown-menu absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-2 w-72" role="menu" id="notificationDropdown">
-                                <?php if (!empty($notifications)): ?>
-                                    <?php foreach ($notifications as $notification): ?>
-                                        <li class="border-b last:border-none">
-                                            <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md">
-                                                <!-- Icon berdasarkan status -->
-                                                <span class="bg-blue-500 text-white rounded-full p-2">
-                                                    <?php if ($notification['status'] == 'Selesai'): ?>
-                                                        <i class="fa fa-check-circle"></i>
-                                                    <?php elseif ($notification['status'] == 'Pending'): ?>
-                                                        <i class="fa fa-exclamation-circle"></i>
-                                                    <?php else: ?>
-                                                        <i class="fa fa-info-circle"></i>
-                                                    <?php endif; ?>
-                                                </span>
-                                                <!-- Isi notifikasi -->
-                                                <div>
-                                                    <p class="font-medium text-gray-800">
-                                                        Perubahan Data "<span class="font-semibold text-blue-600"><?= htmlspecialchars($notification['status']) ?></span>"
-                                                    </p>
-                                                    <!-- <span class="text-sm text-gray-500">Klik untuk melihat detail</span> -->
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <hr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <li class="p-2 text-center text-gray-500">
-                                        <i class="fa fa-info-circle text-lg"></i> Tidak ada notifikasi baru.
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -266,7 +251,9 @@ if (isset($_POST['submit'])) {
                             <label for="nik" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik" name="nik_pelapor"
-                                    placeholder="Masukkan NIK pelapor" required>
+                                    placeholder="Masukkan NIK pelapor" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenik()" maxlength="16">
+                                <small id="nikError" class="text-danger"></small> <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -275,7 +262,7 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nomor_dokumen_perjalanan"
                                     name="nomor_dokumen_perjalanan" placeholder="Masukkan nomor dokumen perjalanan"
-                                    required>
+                                    required onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -283,7 +270,7 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="no_kartu_keluarga"
                                     name="nomor_kartu_keluarga_pelapor" placeholder="Masukkan nomor kartu keluarga"
-                                    required>
+                                    required onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -296,8 +283,10 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="telpon" class="col-sm-3 control-label">Nomor Handphone</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="telpon" name="nomor_handphone"
-                                    placeholder="Masukkan nomor handphone" required>
+                                <input type="number" class="form-control" id="telpon" name="nomor_handphone"
+                                    placeholder="Masukkan nomor handphone" required
+                                    onkeypress="return hanyaAngka(event)" oninput="validateNoHP()" maxlength="16">
+                                <small id="NoHpError" class="text-danger"></small> <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -321,7 +310,9 @@ if (isset($_POST['submit'])) {
                             <label for="nik_saksi1" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik_saksi_1" name="nik_saksi_1"
-                                    placeholder="Masukkan NIK saksi 1" required>
+                                    placeholder="Masukkan NIK saksi 1" required oninput="validateSaksi()"
+                                    maxlength="16">
+                                <small id="nikErorSaksi" class="text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -330,7 +321,8 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nomor_kartu_keluarga_saksi_1"
                                     name="nomor_kartu_keluarga_saksi_1"
-                                    placeholder="Masukkan nomor kartu keluarga saksi 1" required>
+                                    placeholder="Masukkan nomor kartu keluarga saksi 1" required
+                                    onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -355,7 +347,9 @@ if (isset($_POST['submit'])) {
                             <label for="nik_ayah" class="col-sm-3 control-label">NIK Ayah</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik_ayah" name="nik_ayah"
-                                    placeholder="Masukkan NIK ayah" required>
+                                    placeholder="Masukkan NIK ayah" requiredonkeypress="return hanyaAngka(event)"
+                                    oninput="validatenikayah()" maxlength="16">
+                                <small id="nikAyahError" class="text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -391,7 +385,9 @@ if (isset($_POST['submit'])) {
                             <label for="nik_ibu" class="col-sm-3 control-label">NIK Ibu</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik_ibu" name="nik_ibu"
-                                    placeholder="Masukkan NIK ibu" required>
+                                    placeholder="Masukkan NIK ibu" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenikibu()" maxlength="16">
+                                <small id="nikIbuError" class="text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -416,13 +412,15 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
 
-                        <!-- Data Anak -->
+                        <!-- Data Alm -->
                         <h4>Kematian</h4>
                         <div class="form-group">
-                            <label for="nik" class="col-sm-3 control-label">NIK</label>
+                            <label for="nik_alm" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="nama_" name="nik_alm"
-                                    placeholder="Masukkan NIK" required>
+                                <input type="number" class="form-control" id="nik_alm" name="nik_alm"
+                                    placeholder="Masukkan NIK" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenikalm()" maxlength="16">
+                                <small id="nikAlmEror" class="text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -477,15 +475,31 @@ if (isset($_POST['submit'])) {
                                     placeholder="Masukkan Yang Menerangkan" required>
                             </div>
                         </div>
+
+                        <h4>Dokumen Persyaratan</h4>
                         <!-- Upload PDF -->
                         <div class="form-group">
-                            <label for="pdfFile" class="col-sm-3 control-label">Unggah Dokumen Persyaratan</label>
+                            <label for="pdfFile" class="col-sm-3 control-label">Kartu Keluarga Asli</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control" id="pdfFile" name="dokumen_persyaratan"
-                                    required>
+                                <input type="file" class="form-control" id="pdfFile" name="kartu_keluarga" required>
                             </div>
                         </div>
 
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">KTP Almarhum/Almarhuma</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="keterangan_kematian"
+                                    required>
+                            </div>
+                        </div>
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">Surat Keterangan Kematian</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="kartu_keluarga" required>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <button type="submit" class="btn btn-primary" name="submit">Kirim Laporan</button>
@@ -496,7 +510,6 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

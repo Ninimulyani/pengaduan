@@ -1,151 +1,135 @@
 <?php
-session_start(); // Memulai session
+session_start();
 
-// Periksa apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, arahkan ke halaman login
     header("Location: login-user.php");
     exit();
 }
 
 require_once("../private/database.php");
-$nik = $_SESSION['nik'];  // Menyimpan nik pengguna yang login
+$user_id = $_SESSION['user_id'];
 
 if (isset($_POST['submit'])) {
     try {
+        $user_id = $_SESSION['user_id'];
+
+        // Validasi NIK harus terdiri dari 16 digit angka
+        if (!preg_match('/^\d{16}$/', $_POST['nik_pelapor'])) {
+            echo 'NIK harus terdiri dari 16 digit angka.';
+            exit();
+        }
+
+        // Cek apakah nik_pelapor sudah ada dalam database
+        $stmt_check = $db->prepare("SELECT COUNT(*) FROM akta_kelahiran WHERE nik_pelapor = :nik_pelapor");
+        $stmt_check->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
+        $stmt_check->execute();
+        $nik_exists = $stmt_check->fetchColumn();
+
+        if ($nik_exists > 0) {
+            echo 'NIK sudah terdaftar, tidak dapat memasukkan data yang sama.';
+            exit();
+        }
+
+        // Ambil ID terakhir dan tambahkan 1
+        $statement = $db->query("SELECT id FROM akta_kelahiran ORDER BY id DESC LIMIT 1");
+        $max_id = 1;
+        foreach ($statement as $key) {
+            $max_id = $key['id'] + 1;
+        }
+
+        $status = "Menunggu";
+        $upload_dir = 'uploads/';
+
+        // Upload file
+        $file_fields = ['kartu_keluarga_asli', 'buku_nikah', 'ktp_orang_tua', 'ktp_saksi'];
+        $uploaded_files = [];
+
+        foreach ($file_fields as $field) {
+            if (isset($_FILES[$field]) && $_FILES[$field]['error'] == 0) {
+                $file_name = basename($_FILES[$field]['name']);
+                $target_file = $upload_dir . $file_name;
+
+                if (move_uploaded_file($_FILES[$field]['tmp_name'], $target_file)) {
+                    $uploaded_files[$field] = $file_name;
+                } else {
+                    echo "Gagal mengunggah file $field.";
+                    exit();
+                }
+            }
+        }
+
+        // Insert data ke database
         $sql = "INSERT INTO akta_kelahiran (
-            user_id, nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, kewarganegaraan_pelapor,
-            nomor_handphone, email, nama_saksi_1, nik_saksi_1, nomor_kartu_keluarga_saksi_1, kewarganegaraan_saksi_1,
-            nama_ayah, nik_ayah, tempat_lahir_ayah, tanggal_lahir_ayah, kewarganegaraan_ayah,
-            nama_ibu, nik_ibu, tempat_lahir_ibu, tanggal_lahir_ibu, kewarganegaraan_ibu,
-            nama_anak, jk_anak, tempat_lahir, tanggal_lahir_anak, pukul, jenis_kelahiran, kelahiran_ke,
-            penolong_kelahiran, bb_bayi, pb, dokumen
+            id, nama_pelapor, nik_pelapor, nomor_dokumen_perjalanan, nomor_kartu_keluarga_pelapor, 
+            kewarganegaraan_pelapor, nomor_handphone, email, nama_saksi_1, nik_saksi_1, nomor_kartu_keluarga_saksi_1, 
+            kewarganegaraan_saksi_1, nama_ayah, nik_ayah, tempat_lahir_ayah, tanggal_lahir_ayah, kewarganegaraan_ayah, 
+            nama_ibu, nik_ibu, tempat_lahir_ibu, tanggal_lahir_ibu, kewarganegaraan_ibu, nama_anak, jk_anak, 
+            tempat_lahir, tanggal_lahir_anak, pukul, jenis_kelahiran, kelahiran_ke, penolong_kelahiran, bb_bayi, pb, 
+            kartu_keluarga_asli, buku_nikah, ktp_orang_tua, ktp_saksi, status, dokumen_pemohon, user_id, created_at
         ) VALUES (
-            :user_id, :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, :kewarganegaraan_pelapor,
-            :nomor_handphone, :email, :nama_saksi_1, :nik_saksi_1, :nomor_kartu_keluarga_saksi_1, :kewarganegaraan_saksi_1,
-            :nama_ayah, :nik_ayah, :tempat_lahir_ayah, :tanggal_lahir_ayah, :kewarganegaraan_ayah,
-            :nama_ibu, :nik_ibu, :tempat_lahir_ibu, :tanggal_lahir_ibu, :kewarganegaraan_ibu,
-            :nama_anak, :jk_anak, :tempat_lahir, :tanggal_lahir_anak, :pukul, :jenis_kelahiran, :kelahiran_ke,
-            :penolong_kelahiran, :bb_bayi, :pb, :dokumen
+            :id, :nama_pelapor, :nik_pelapor, :nomor_dokumen_perjalanan, :nomor_kartu_keluarga_pelapor, 
+            :kewarganegaraan_pelapor, :nomor_handphone, :email, :nama_saksi_1, :nik_saksi_1, :nomor_kartu_keluarga_saksi_1, 
+            :kewarganegaraan_saksi_1, :nama_ayah, :nik_ayah, :tempat_lahir_ayah, :tanggal_lahir_ayah, :kewarganegaraan_ayah, 
+            :nama_ibu, :nik_ibu, :tempat_lahir_ibu, :tanggal_lahir_ibu, :kewarganegaraan_ibu, :nama_anak, :jk_anak, 
+            :tempat_lahir, :tanggal_lahir_anak, :pukul, :jenis_kelahiran, :kelahiran_ke, :penolong_kelahiran, :bb_bayi, :pb, 
+            :kartu_keluarga_asli, :buku_nikah, :ktp_orang_tua, :ktp_saksi, :status, :dokumen_pemohon, :user_id, CURRENT_TIMESTAMP
         )";
 
         $stmt = $db->prepare($sql);
 
-        $uploadDir = 'uploads/';
-        $fileName = basename($_FILES['dokumen']['name']);
-        $uploadFile = $uploadDir . $fileName;
+        $stmt->bindParam(':id', $max_id);
+        $stmt->bindParam(':nama_pelapor', $_POST['nama_pelapor']);
+        $stmt->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
+        $stmt->bindParam(':nomor_dokumen_perjalanan', $_POST['nomor_dokumen_perjalanan']);
+        $stmt->bindParam(':nomor_kartu_keluarga_pelapor', $_POST['nomor_kartu_keluarga_pelapor']);
+        $stmt->bindParam(':kewarganegaraan_pelapor', $_POST['kewarganegaraan_pelapor']);
+        $stmt->bindParam(':nomor_handphone', $_POST['nomor_handphone']);
+        $stmt->bindParam(':email', $_POST['email']);
+        $stmt->bindParam(':nama_saksi_1', $_POST['nama_saksi_1']);
+        $stmt->bindParam(':nik_saksi_1', $_POST['nik_saksi_1']);
+        $stmt->bindParam(':nomor_kartu_keluarga_saksi_1', $_POST['nomor_kartu_keluarga_saksi_1']);
+        $stmt->bindParam(':kewarganegaraan_saksi_1', $_POST['kewarganegaraan_saksi_1']);
+        $stmt->bindParam(':nama_ayah', $_POST['nama_ayah']);
+        $stmt->bindParam(':nik_ayah', $_POST['nik_ayah']);
+        $stmt->bindParam(':tempat_lahir_ayah', $_POST['tempat_lahir_ayah']);
+        $stmt->bindParam(':tanggal_lahir_ayah', $_POST['tanggal_lahir_ayah']);
+        $stmt->bindParam(':kewarganegaraan_ayah', $_POST['kewarganegaraan_ayah']);
+        $stmt->bindParam(':nama_ibu', $_POST['nama_ibu']);
+        $stmt->bindParam(':nik_ibu', $_POST['nik_ibu']);
+        $stmt->bindParam(':tempat_lahir_ibu', $_POST['tempat_lahir_ibu']);
+        $stmt->bindParam(':tanggal_lahir_ibu', $_POST['tanggal_lahir_ibu']);
+        $stmt->bindParam(':kewarganegaraan_ibu', $_POST['kewarganegaraan_ibu']);
+        $stmt->bindParam(':nama_anak', $_POST['nama_anak']);
+        $stmt->bindParam(':jk_anak', $_POST['jk_anak']);
+        $stmt->bindParam(':tempat_lahir', $_POST['tempat_lahir']);
+        $stmt->bindParam(':tanggal_lahir_anak', $_POST['tanggal_lahir_anak']);
+        $stmt->bindParam(':pukul', $_POST['pukul']);
+        $stmt->bindParam(':jenis_kelahiran', $_POST['jenis_kelahiran']);
+        $stmt->bindParam(':kelahiran_ke', $_POST['kelahiran_ke']);
+        $stmt->bindParam(':penolong_kelahiran', $_POST['penolong_kelahiran']);
+        $stmt->bindParam(':bb_bayi', $_POST['bb_bayi']);
+        $stmt->bindParam(':pb', $_POST['pb']);
+        $stmt->bindParam(':kartu_keluarga_asli', $uploaded_files['kartu_keluarga_asli']);
+        $stmt->bindParam(':buku_nikah', $uploaded_files['buku_nikah']);
+        $stmt->bindParam(':ktp_orang_tua', $uploaded_files['ktp_orang_tua']);
+        $stmt->bindParam(':ktp_saksi', $uploaded_files['ktp_saksi']);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':dokumen_pemohon', $_POST['dokumen_pemohon']);
+        $stmt->bindParam(':user_id', $user_id);
 
-        if ($_FILES['dokumen']['error'] == UPLOAD_ERR_OK) {
-            if ($_FILES['dokumen']['size'] > 10000000) {
-                echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Ukuran File Terlalu Besar',
-                        text: 'Maksimal ukuran file adalah 10MB.',
-                        confirmButtonText: 'OK'
-                    });
-                </script>";
-            } else {
-                if (!file_exists($uploadDir)) {
-                    mkdir($uploadDir, 0755, true);
-                }
-
-                if (move_uploaded_file($_FILES['dokumen']['tmp_name'], $uploadFile)) {
-                    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-                    $stmt->bindParam(':nama_pelapor', $_POST['nama_pelapor']);
-                    $stmt->bindParam(':nik_pelapor', $_POST['nik_pelapor']);
-                    $stmt->bindParam(':nomor_dokumen_perjalanan', $_POST['nomor_dokumen_perjalanan']);
-                    $stmt->bindParam(':nomor_kartu_keluarga_pelapor', $_POST['nomor_kartu_keluarga_pelapor']);
-                    $stmt->bindParam(':kewarganegaraan_pelapor', $_POST['kewarganegaraan_pelapor']);
-                    $stmt->bindParam(':nomor_handphone', $_POST['nomor_handphone']);
-                    $stmt->bindParam(':email', $_POST['email']);
-                    $stmt->bindParam(':nama_saksi_1', $_POST['nama_saksi_1']);
-                    $stmt->bindParam(':nik_saksi_1', $_POST['nik_saksi_1']);
-                    $stmt->bindParam(':nomor_kartu_keluarga_saksi_1', $_POST['nomor_kartu_keluarga_saksi_1']);
-                    $stmt->bindParam(':kewarganegaraan_saksi_1', $_POST['kewarganegaraan_saksi_1']);
-                    $stmt->bindParam(':nama_ayah', $_POST['nama_ayah']);
-                    $stmt->bindParam(':nik_ayah', $_POST['nik_ayah']);
-                    $stmt->bindParam(':tempat_lahir_ayah', $_POST['tempat_lahir_ayah']);
-                    $stmt->bindParam(':tanggal_lahir_ayah', $_POST['tanggal_lahir_ayah']);
-                    $stmt->bindParam(':kewarganegaraan_ayah', $_POST['kewarganegaraan_ayah']);
-                    $stmt->bindParam(':nama_ibu', $_POST['nama_ibu']);
-                    $stmt->bindParam(':nik_ibu', $_POST['nik_ibu']);
-                    $stmt->bindParam(':tempat_lahir_ibu', $_POST['tempat_lahir_ibu']);
-                    $stmt->bindParam(':tanggal_lahir_ibu', $_POST['tanggal_lahir_ibu']);
-                    $stmt->bindParam(':kewarganegaraan_ibu', $_POST['kewarganegaraan_ibu']);
-                    $stmt->bindParam(':nama_anak', $_POST['nama_anak']);
-                    $stmt->bindParam(':jk_anak', $_POST['jk_anak']);
-                    $stmt->bindParam(':tempat_lahir', $_POST['tempat_lahir']);
-                    $stmt->bindParam(':tanggal_lahir_anak', $_POST['tanggal_lahir_anak']);
-                    $stmt->bindParam(':pukul', $_POST['pukul']);
-                    $stmt->bindParam(':jenis_kelahiran', $_POST['jenis_kelahiran']);
-                    $stmt->bindParam(':kelahiran_ke', $_POST['kelahiran_ke']);
-                    $stmt->bindParam(':penolong_kelahiran', $_POST['penolong_kelahiran']);
-                    $stmt->bindParam(':bb_bayi', $_POST['bb_bayi']);
-                    $stmt->bindParam(':pb', $_POST['pb']);
-                    $stmt->bindParam(':dokumen', $fileName);
-
-                    if ($stmt->execute()) {
-                        echo "<script>
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Data Berhasil Disimpan',
-                                text: 'Data Anda telah tersimpan ke dalam sistem.',
-                                confirmButtonText: 'OK'
-                            }).then(() => {
-                                window.location.href = 'success_page.php';
-                            });
-                        </script>";
-                    } else {
-                        echo "<script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Kesalahan Sistem',
-                                text: 'Data gagal disimpan ke database.',
-                                confirmButtonText: 'OK'
-                            });
-                        </script>";
-                    }
-                } else {
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal Mengunggah Dokumen',
-                            text: 'Silakan coba lagi.',
-                            confirmButtonText: 'OK'
-                        });
-                    </script>";
-                }
-            }
+        if ($stmt->execute()) {
+            header("Location: home-2.php?status=success");
+            exit();
         } else {
-            echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Kesalahan Pengunggahan',
-                    text: 'Error: " . $_FILES['dokumen']['error'] . "',
-                    confirmButtonText: 'OK'
-                });
-            </script>";
+            echo 'Gagal menyimpan data.';
         }
-    } catch (PDOException $e) {
-        echo "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Kesalahan Sistem',
-                text: 'Terjadi kesalahan: " . htmlspecialchars($e->getMessage()) . "',
-                confirmButtonText: 'OK'
-            });
-        </script>";
+    } catch (Exception $e) {
+        echo 'Terjadi kesalahan: ' . $e->getMessage();
     }
 }
-
-// Ambil status berdasarkan nik pengguna yang login
-$sql = "SELECT status FROM perubahan_data_penduduk WHERE nik = :nik ORDER BY id DESC LIMIT 5"; // Menampilkan 5 status terbaru
-$stmt = $db->prepare($sql);
-$stmt->execute(['nik' => $nik]);  // Bind nilai nik pada parameter :nik
-$notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -162,6 +146,8 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Main Styles CSS -->
     <link href="css/style.css" rel="stylesheet">
+    <!-- Validasi -->
+    <script src="js/validasi.js"></script>
     <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
@@ -176,11 +162,11 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -238,46 +224,7 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="login-user.php">LOGOUT</a></li>
 
-                        <li class="dropdown pull-right relative">
-                            <a href="#" class="dropdown-toggle flex items-center gap-2 text-gray-700 hover:text-gray-900" data-toggle="dropdown">
-                                <i class="fa fa-bell text-xl"></i>
-                                <span class="badge bg-red-500 text-white rounded-full text-xs px-2 py-1">
-                                    <?php echo count($notifications); ?>
-                                </span> <!-- Menampilkan jumlah notifikasi -->
-                            </a>
-                            <ul class="dropdown-menu absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-2 w-72" role="menu" id="notificationDropdown">
-                                <?php if (!empty($notifications)): ?>
-                                    <?php foreach ($notifications as $notification): ?>
-                                        <li class="border-b last:border-none">
-                                            <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md">
-                                                <!-- Icon berdasarkan status -->
-                                                <span class="bg-blue-500 text-white rounded-full p-2">
-                                                    <?php if ($notification['status'] == 'Selesai'): ?>
-                                                        <i class="fa fa-check-circle"></i>
-                                                    <?php elseif ($notification['status'] == 'Pending'): ?>
-                                                        <i class="fa fa-exclamation-circle"></i>
-                                                    <?php else: ?>
-                                                        <i class="fa fa-info-circle"></i>
-                                                    <?php endif; ?>
-                                                </span>
-                                                <!-- Isi notifikasi -->
-                                                <div>
-                                                    <p class="font-medium text-gray-800">
-                                                        Perubahan Data "<span class="font-semibold text-blue-600"><?= htmlspecialchars($notification['status']) ?></span>"
-                                                    </p>
-                                                    <!-- <span class="text-sm text-gray-500">Klik untuk melihat detail</span> -->
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <hr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <li class="p-2 text-center text-gray-500">
-                                        <i class="fa fa-info-circle text-lg"></i> Tidak ada notifikasi baru.
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -304,16 +251,19 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label for="nik" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik" name="nik_pelapor"
-                                    placeholder="Masukkan NIK pelapor" required>
+                                    placeholder="Masukkan NIK pelapor" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenik()" maxlength="16">
+                                <small id="nikError" class="text-danger"></small> <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="no_dokumen_perjalanan" class="col-sm-3 control-label">Nomor Dokumen
+                            <label for="ndp" class="col-sm-3 control-label">Nomor Dokumen
                                 Perjalanan</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nomor_dokumen_perjalanan"
-                                    name="nomor_dokumen_perjalanan" placeholder="Masukkan nomor dokumen perjalanan"
-                                    required>
+                                <input type="text" class="form-control" id="ndp" name="nomor_dokumen_perjalanan"
+                                    placeholder="Masukkan nomor dokumen perjalanan" required oninput="validateNDP()"
+                                    maxlength="16">
+                                <small id="ndpError" class="text-danger"></small> <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -321,7 +271,7 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="no_kartu_keluarga"
                                     name="nomor_kartu_keluarga_pelapor" placeholder="Masukkan nomor kartu keluarga"
-                                    required>
+                                    required onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -334,8 +284,10 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="form-group">
                             <label for="telpon" class="col-sm-3 control-label">Nomor Handphone</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="telpon" name="nomor_handphone"
-                                    placeholder="Masukkan nomor handphone" required>
+                                <input type="number" class="form-control" id="telpon" name="nomor_handphone"
+                                    placeholder="Masukkan nomor handphone" required
+                                    onkeypress="return hanyaAngka(event)" oninput="validateNoHP()" maxlength="16">
+                                <small id="NoHpError" class="text-danger"></small> <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -356,19 +308,23 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nik_saksi1" class="col-sm-3 control-label">NIK</label>
+                            <label for="nik_saksi_1" class="col-sm-3 control-label">NIK</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nik_saksi1" name="nik_saksi_1"
-                                    placeholder="Masukkan NIK saksi 1" required>
+                                <input type="text" class="form-control" id="nik_saksi_1" name="nik_saksi_1"
+                                    placeholder="Masukkan NIK saksi 1" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validateSaksi()" maxlength="16">
+                                <small id="nikErorSaksi" class="text-danger"></small>
+                                <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="no_kartu_keluarga_saksi1" class="col-sm-3 control-label">Nomor Kartu
                                 Keluarga</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="no_kartu_keluarga_saksi1"
+                                <input type="text" class="form-control" id="no_kartu_keluarga"
                                     name="nomor_kartu_keluarga_saksi_1"
-                                    placeholder="Masukkan nomor kartu keluarga saksi 1" required>
+                                    placeholder="Masukkan nomor kartu keluarga saksi 1" required
+                                    onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -393,7 +349,10 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label for="nik_ayah" class="col-sm-3 control-label">NIK Ayah</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik_ayah" name="nik_ayah"
-                                    placeholder="Masukkan NIK ayah" required>
+                                    placeholder="Masukkan NIK ayah" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenikayah()" maxlength="16">
+                                <small id="nikAyahError" class="text-danger"></small>
+                                <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -429,7 +388,9 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label for="nik_ibu" class="col-sm-3 control-label">NIK Ibu</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nik_ibu" name="nik_ibu"
-                                    placeholder="Masukkan NIK ibu" required>
+                                    placeholder="Masukkan NIK ibu" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenikibu()" maxlength="16">
+                                <small id="nikIbuError" class="text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -534,34 +495,82 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label for="berat_bayi" class="col-sm-3 control-label">Berat Bayi (kg)</label>
                             <div class="col-sm-9">
                                 <input type="number" step="0.01" class="form-control" id="bb_bayi" name="bb_bayi"
-                                    placeholder="Masukkan berat bayi dalam kilogram" required>
+                                    placeholder="Masukkan berat bayi dalam kilogram" required
+                                    onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="panjang_bayi" class="col-sm-3 control-label">Panjang Bayi (cm)</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="pb" name="pb"
-                                    placeholder="Masukkan panjang bayi dalam sentimeter" required>
+                                    placeholder="Masukkan panjang bayi dalam sentimeter" required
+                                    onkeypress="return hanyaAngka(event)">
+                            </div>
+                        </div>
+
+                        <h3>Dokumen Persyaratan</h3>
+
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">Surat Keterangan Kelahiran</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="surat_keterangan_kelahiran"
+                                    required>
                             </div>
                         </div>
 
                         <!-- Upload PDF -->
                         <div class="form-group">
-                            <label for="pdfFile" class="col-sm-3 control-label">Unggah Dokumen Persyaratan</label>
+                            <label for="pdfFile" class="col-sm-3 control-label">Kartu Keluarga Asli</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control" id="dokumen" name="dokumen" required>
+                                <input type="file" class="form-control" id="pdfFile" name="kartu_keluarga_asli"
+                                    required>
                             </div>
                         </div>
+
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">Akta/Buku Nikah</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="akta/buku_nikah" required>
+                            </div>
+                        </div>
+
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">KTP Ayah</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="ktp_ayah" required>
+                            </div>
+                        </div>
+
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">KTP Ibu</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="ktp_ibu" required>
+                            </div>
+                        </div>
+
+                        <!-- Upload PDF -->
+                        <div class="form-group">
+                            <label for="pdfFile" class="col-sm-3 control-label">KTP Saksi</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pdfFile" name="ktp_saksi" required>
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <button type="submit" class="btn btn-primary" name="submit">Kirim Laporan</button>
                             </div>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 
 </body>

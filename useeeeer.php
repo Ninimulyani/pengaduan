@@ -1,13 +1,13 @@
-<?phpe
+<? phpe
 
 ?>
 <?php
-    require_once("user/private/database.php");
-    $statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
-    foreach ($statement as $key ) {
-        // get max id from tabel laporan
-        $max_id = $key['id']+1;
-    }
+require_once("user/private/database.php");
+$statement = $db->query("SELECT id FROM `laporan` ORDER BY id DESC LIMIT 1");
+foreach ($statement as $key) {
+    // get max id from tabel laporan
+    $max_id = $key['id'] + 1;
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lapor | Kantor Kelurahan Tamalanrea</title>
+    <title>Lapor | Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="user/public/css/bootstrap.css">
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="user/public/images/logo.png" width="40" >
+                        <img alt="Brand" src="user/public/images/logomaros.png" width="40">
                     </a>
                 </div>
 
@@ -59,7 +59,7 @@
                                 <li class="divider"></li>
                                 <li><a href="user/public/profildinas.php">Struktur Organisasi</a></li>
                                 <li class="divider"></li>
-                                </ul>
+                            </ul>
                         </li>
                         <li><a href="user/public/faq.php">FAQ</a></li>
                         <li><a href="user/public/bantuan.php">BANTUAN</a></li>
@@ -74,7 +74,7 @@
         <div class="main-content">
 
             <h3>Buat Laporan</h3>
-            <hr/>
+            <hr />
             <div class="row">
                 <div class="col-md-8 card-shadow-2 form-custom">
                     <form class="form-horizontal" role="form" method="post" action="../private/validasi">
@@ -156,7 +156,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <!--menampilkan gambar captcha-->
-                                    <img class="card-shadow-2" src="../private/captcha.php"/> <br/>
+                                    <img class="card-shadow-2" src="../private/captcha.php" /> <br />
                                 </div>
                             </div>
                         </div>
@@ -190,20 +190,23 @@
                 <i class="fa fa-arrow-circle-up"></i>
             </a>
             <script>
-            // When the user scrolls down 100px from the top of the document, show the button
-            window.onscroll = function() {scrollFunction()};
-            function scrollFunction() {
-                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    document.getElementById("top").style.display = "block";
-                } else {
-                    document.getElementById("top").style.display = "none";
+                // When the user scrolls down 100px from the top of the document, show the button
+                window.onscroll = function() {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                        document.getElementById("top").style.display = "block";
+                    } else {
+                        document.getElementById("top").style.display = "none";
+                    }
                 }
-            }
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                }
             </script>
             <!-- link to top -->
 
@@ -263,7 +266,7 @@
                     <p class="mb-0">
                         90245 <br>
                         kelurahantamalanrea@tamalanrea.go.id <br>
-                        kelurahan.tamalanrea@gmail.com
+                        kecamatan.tanralili1@gmail.com
                     </p>
                 </div>
             </div>
@@ -272,7 +275,7 @@
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small>| Copyright &copy; Kantor Kelurahan Tamalanrea</small>
+                <small>| Copyright &copy; Kantor Kecamatan Tanralili</small>
             </div>
         </div>
         <!-- shadow -->

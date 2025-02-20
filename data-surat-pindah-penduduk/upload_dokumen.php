@@ -1,5 +1,5 @@
 <?php
-require_once("../database.php"); // koneksi DB
+require_once("../database.php"); // Koneksi DB
 logged_admin();
 
 // Ambil data dari database jika mode edit
@@ -9,43 +9,68 @@ if (isset($_GET['edit'])) {
     $data = mysqli_fetch_array($tampil);
 
     if ($data) {
-        $dokumen = $data['dokumen']; // Path PDF dari database
+        // Ambil daftar dokumen lama dari database (format JSON)
+        $dokumen_pemohon = json_decode($data['dokumen_pemohon'], true) ?? [];
     }
 }
 
 // Perintah Mengubah Data
 if (isset($_POST['submit'])) {
     $id = $_GET['id'];
+    $dokumen_pemohon = [];
+
+    // Ambil daftar file lama jika ada
+    $tampil = mysqli_query($koneksi, "SELECT dokumen_pemohon FROM surat_pindah_penduduk WHERE id = '$id'");
+    $data = mysqli_fetch_array($tampil);
+
+    if ($data) {
+        $dokumen_pemohon = json_decode($data['dokumen_pemohon'], true) ?? [];
+    }
 
     // Proses unggah file PDF jika ada file baru
-    if (!empty($_FILES['dokumen']['name'])) {
-        $dokumen_name = $_FILES['dokumen']['name'];
-        $dokumen_tmp = $_FILES['dokumen']['tmp_name'];
-        $dokumen_destination = "uploads/" . $dokumen_name;
+    if (!empty($_FILES['dokumen_pemohon']['name'][0])) {
+        foreach ($_FILES['dokumen_pemohon']['name'] as $key => $filename) {
+            $pdf_tmp = $_FILES['dokumen_pemohon']['tmp_name'][$key];
+            $pdf_destination = "uploads/" . time() . "_" . $filename; // Beri timestamp agar unik
 
-        if (move_uploaded_file($dokumen_tmp, $dokumen_destination)) {
-            $dokumen = $dokumen_destination; // Update path PDF jika file berhasil diunggah
-        } else {
-            echo "<script>alert('Gagal mengunggah file PDF!');</script>";
+            if (move_uploaded_file($pdf_tmp, $pdf_destination)) {
+                $dokumen_pemohon[] = $pdf_destination; // Tambahkan ke daftar file
+            } else {
+                echo "<script>alert('Gagal mengunggah file $filename!');</script>";
+            }
         }
     }
 
-    // Update data di database
-    $simpan = mysqli_query($koneksi, "UPDATE surat_pindah_penduduk SET dokumen = '$dokumen' WHERE id = '$id'");
+    // Simpan ke database dalam format JSON
+    $dokumen_pemohon_json = mysqli_real_escape_string($koneksi, json_encode($dokumen_pemohon));
+
+    // UPDATE ke tabel surat_pindah_penduduk
+    $query = "UPDATE surat_pindah_penduduk SET dokumen_pemohon = '$dokumen_pemohon_json' WHERE id = '$id'";
+    $simpan = mysqli_query($koneksi, $query);
 
     if ($simpan) {
-        echo "<script>
-                alert('Edit data sukses!');
-                document.location='/pengaduan/data-surat-pindah-penduduk/';
-            </script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Diterima',
+                    text: 'Dokumen Pemohon Telah di Kirim'
+                }).then(() => {
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>";
     } else {
         echo "<script>
-                alert('Edit data Gagal!');
-                document.location='/pengaduan/data-surat-pindah-penduduk/';
+                alert('Edit data Gagal! " . mysqli_error($koneksi) . "');
+                document.location='index.php';
             </script>";
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,8 +81,9 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="../user/public/images/logomaros.png">
+    <link rel="shortcut icon" href="../image/logomaros.png" width="20">
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
     <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
@@ -67,8 +93,10 @@ if (isset($_POST['submit'])) {
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="../index.php">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -77,12 +105,10 @@ if (isset($_POST['submit'])) {
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logo.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
@@ -94,37 +120,36 @@ if (isset($_POST['submit'])) {
                     </a>
                 </li>
 
-                <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="index.php">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kematian/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                    <a class="nav-link" href="../perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../data-akta-kelahiran/index.php">
+                    <a class="nav-link" href="../data-akta-kelahiran/">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kelahiran</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../data-kartu-indentitas-anak/">
+                    <a class="nav-link" href="index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kartu Identitas Anak</span>
                     </a>
                 </li>
                 <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="index.php">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
-
             </ul>
 
             <ul class="navbar-nav sidenav-toggler">
@@ -151,29 +176,119 @@ if (isset($_POST['submit'])) {
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Edit Laporan Kematian</li>
+                <li class="breadcrumb-item active">Upload Dokumen Surat Pindah Penduduk</li>
             </ol>
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Edit Data Akta Kematian
+                    <i class="fa fa-table"></i> Upload Dokumen
                 </div>
-                <div class="card-body">
-                    <a href="akta_kematian.php" class="btn btn-primary mb-3">Kembali</a>
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
                     <form method="post" enctype="multipart/form-data">
-
-                        <div class="form-group">
-                            <label for="dokumen">Unggah Dokumen PDF</label>
-                            <input type="file" class="form-control" id="dokumen" name="dokumen">
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="dokumen_pemohon" name="dokumen_pemohon[]"
+                                multiple accept=".pdf" onchange="previewFiles()">
                         </div>
 
-                        <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    </form>
+                        <!-- Daftar file yang dipilih -->
+                        <ul id="fileList" class="list-group mb-3"></ul>
 
+                        <button type="submit" name="submit" class="btn btn-primary">Upload Data Pemohon</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+    let selectedFiles = new DataTransfer(); // Simpan file yang sudah dipilih
+
+    document.getElementById("dokumen_pemohon").addEventListener("change", function(event) {
+        let fileList = document.getElementById("fileList");
+        let newFiles = event.target.files;
+
+        for (let i = 0; i < newFiles.length; i++) {
+            let file = newFiles[i];
+
+            // Validasi: hanya file PDF diperbolehkan
+            if (file.type !== "application/pdf") {
+                alert("Hanya file PDF yang diperbolehkan!");
+                return;
+            }
+
+            // Validasi ukuran maksimal 2MB
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Ukuran file terlalu besar! Maksimal 2MB.");
+                return;
+            }
+
+            // Cek apakah file sudah ada dalam daftar
+            let isDuplicate = false;
+            for (let j = 0; j < selectedFiles.files.length; j++) {
+                if (selectedFiles.files[j].name === file.name) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if (!isDuplicate) {
+                selectedFiles.items.add(file);
+
+                // Tambahkan ke daftar tampilan
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                listItem.textContent = file.name;
+
+                // Tombol hapus
+                let deleteButton = document.createElement("button");
+                deleteButton.className = "btn btn-danger btn-sm";
+                deleteButton.textContent = "Hapus";
+                deleteButton.onclick = function() {
+                    removeFile(file.name);
+                };
+
+                listItem.appendChild(deleteButton);
+                fileList.appendChild(listItem);
+            }
+        }
+
+        // Update input file dengan file yang sudah dipilih
+        document.getElementById("dokumen_pemohon").files = selectedFiles.files;
+    });
+
+    function removeFile(fileName) {
+        let fileList = document.getElementById("fileList");
+        let newDataTransfer = new DataTransfer();
+
+        for (let i = 0; i < selectedFiles.files.length; i++) {
+            if (selectedFiles.files[i].name !== fileName) {
+                newDataTransfer.items.add(selectedFiles.files[i]);
+            }
+        }
+
+        selectedFiles = newDataTransfer;
+        document.getElementById("dokumen_pemohon").files = selectedFiles.files;
+
+        // Perbarui tampilan daftar file
+        fileList.innerHTML = "";
+        for (let i = 0; i < selectedFiles.files.length; i++) {
+            let listItem = document.createElement("li");
+            listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            listItem.textContent = selectedFiles.files[i].name;
+
+            let deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger btn-sm";
+            deleteButton.textContent = "Hapus";
+            deleteButton.onclick = function() {
+                removeFile(selectedFiles.files[i].name);
+            };
+
+            listItem.appendChild(deleteButton);
+            fileList.appendChild(listItem);
+        }
+    }
+    </script>
+
 </body>
 
 </html>

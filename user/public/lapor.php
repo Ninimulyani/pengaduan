@@ -36,8 +36,8 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Lapor | Kantor Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logo.png">
+    <title>Lapor | Kantor Kecamatan Tanralili</title>
+    <link rel="shortcut icon" href="images/logomaros.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -55,14 +55,15 @@ if (isset($_POST['submit'])) {
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logo.png" style="width: 40px;">
+                        <img alt="Brand" src="images/logomaros.png" style="width: 40px;">
                     </a>
                 </div>
 
@@ -74,7 +75,8 @@ if (isset($_POST['submit'])) {
                         <li><a href="status.php">LIHAT PENGADUAN</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
-                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS <span class="caret"></span></a>
+                            <a href="profildinas-2.php" class="dropdown-toggle" data-toggle="dropdown">PROFIL DINAS
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="profildinas-2.php">Profil Dinas</a></li>
                                 <li class="divider"></li>
@@ -110,7 +112,8 @@ if (isset($_POST['submit'])) {
 
                                         <i class="bi bi-123"></i>
                                     </div>
-                                    <input type="text" class="form-control" id="nomor" name="id" value="<?php echo $max_id; ?>" readonly>
+                                    <input type="text" class="form-control" id="nomor" name="id"
+                                        value="<?php echo $max_id; ?>" readonly>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +122,8 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap" value="<?= @$_GET['nama'] ?>" required>
+                                    <input type="text" class="form-control" id="nama" name="nama"
+                                        placeholder="Nama Lengkap" value="<?= @$_GET['nama'] ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['namaError'] ?></p>
                             </div>
@@ -128,8 +132,10 @@ if (isset($_POST['submit'])) {
                             <label for="email" class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?= @$_GET['email'] ?>" required>
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                                    </div>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="example@domain.com" value="<?= @$_GET['email'] ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['emailError'] ?></p>
                             </div>
@@ -139,7 +145,8 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
-                                    <input type="text" class="form-control" id="telpon" name="telpon" placeholder="087123456789" value="<?= @$_GET['telpon'] ?>" required>
+                                    <input type="text" class="form-control" id="telpon" name="telpon"
+                                        placeholder="087123456789" value="<?= @$_GET['telpon'] ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['telponError'] ?></p>
                             </div>
@@ -149,7 +156,8 @@ if (isset($_POST['submit'])) {
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
-                                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="<?= @$_GET['alamat'] ?>" required>
+                                    <input type="text" class="form-control" id="alamat" name="alamat"
+                                        placeholder="Alamat" value="<?= @$_GET['alamat'] ?>" required>
                                 </div>
                                 <p class="error"><?= @$_GET['alamatError'] ?></p>
                             </div>
@@ -158,7 +166,8 @@ if (isset($_POST['submit'])) {
                             <label for="tujuan" class="col-sm-3 control-label">Tujuan Pengaduan</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span></div>
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-random"></span>
+                                    </div>
                                     <select class="form-control" name="tujuan">
                                         <?php
                                         // Kode PHP untuk mengambil dan menampilkan pilihan dari tabel "divisi"
@@ -179,8 +188,11 @@ if (isset($_POST['submit'])) {
                             <label for="pengaduan" class="col-sm-3 control-label">Isi Pengaduan</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                                    <textarea class="form-control" rows="4" name="pengaduan" placeholder="Tuliskan Isi Pengaduan" required><?= @$_GET['pengaduan'] ?></textarea>
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span>
+                                    </div>
+                                    <textarea class="form-control" rows="4" name="pengaduan"
+                                        placeholder="Tuliskan Isi Pengaduan"
+                                        required><?= @$_GET['pengaduan'] ?></textarea>
                                 </div>
                                 <p class="error"><?= @$_GET['pengaduanError'] ?></p>
                             </div>
@@ -196,7 +208,8 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <div class="col-sm-10 col-sm-offset-3">
-                                <input id="submit" name="submit" type="submit" value="Kirim Pengaduan" class="btn btn-primary-custom form-shadow">
+                                <input id="submit" name="submit" type="submit" value="Kirim Pengaduan"
+                                    class="btn btn-primary-custom form-shadow">
                             </div>
                         </div>
                         <div class="form-group">
@@ -267,12 +280,14 @@ if (isset($_POST['submit'])) {
                     </ul>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://www.facebook.com/profile.php?id=61555707727963&">
                                 <i class="fa fa-fw fa-facebook"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/disdukcapilbkl">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+                                href="https://twitter.com/disdukcapilbkl">
                                 <i class="fa fa-fw fa-twitter"></i>
                             </a>
                         </li>
@@ -299,7 +314,7 @@ if (isset($_POST['submit'])) {
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea </small>
+                <small> | Copyright &copy; Kantor Kecamatan Tanralili </small>
             </div>
         </div>
         <!-- shadow -->

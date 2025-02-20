@@ -3,31 +3,6 @@ require_once("database.php"); // koneksi DB
 
 logged_admin();
 global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-if ($id_admin > 0) {
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_masuk = $row['COUNT(*)'];
-    }
-
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_menunggu = $row['COUNT(*)'];
-    }
-} else {
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-        $total_laporan_masuk = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-        $total_laporan_menunggu = $row['COUNT(*)'];
-    }
-}
 
 require_once("database.php");
 
@@ -82,8 +57,8 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href=" user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href=" user/public/images/logomaros.png">
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -97,7 +72,7 @@ if (isset($_POST['submit'])) {
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -108,12 +83,12 @@ if (isset($_POST['submit'])) {
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="user/public/images/logo.png" width="80">
+                            <img alt="image" src="user/public/images/logomaros.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
+                            <span class="user" style="font-family: monospace;"><?php ?></span>
                         </p>
                     </div>
                 </li>
@@ -131,13 +106,13 @@ if (isset($_POST['submit'])) {
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                    <a class="nav-link" href="perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                    <a class="nav-link" href="perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kelahiran</span>
                     </a>
@@ -342,7 +317,7 @@ if (isset($_POST['submit'])) {
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small>Copyright © Andi Sri Mulyani</small>
+                <small>Copyright © Kantor Kecamatan Tanralili</small>
             </div>
         </div>
     </footer>

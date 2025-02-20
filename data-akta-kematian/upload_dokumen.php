@@ -1,106 +1,75 @@
 <?php
-require_once("../database.php"); // koneksi DB
+require_once("../database.php"); // Koneksi DB
 logged_admin();
 
-
+// Ambil data dari database jika mode edit
 if (isset($_GET['edit'])) {
-    $tampil = mysqli_query($koneksi, "SELECT * FROM akta_kematian WHERE id = '$_GET[id]'");
+    $id = $_GET['id'];
+    $tampil = mysqli_query($koneksi, "SELECT * FROM akta_kematian WHERE id = '$id'");
     $data = mysqli_fetch_array($tampil);
+
     if ($data) {
-        $id = $data['id'];
-        $nama_pelapor = $data['nama_pelapor'];
-        $nik_pelapor = $data['nik_pelapor'];
-        $nomor_dokumen_perjalanan = $data['nomor_dokumen_perjalanan'];
-        $nomor_kartu_keluarga_pelapor = $data['nomor_kartu_keluarga_pelapor'];
-        $kewarganegaraan_pelapor = $data['kewarganegaraan_pelapor'];
-        $nomor_handphone = $data['nomor_handphone'];
-        $email = $data['email'];
-        $dokumen = $data['dokumen'];
-        $nama_saksi_1 = $data['nama_saksi_1'];
-        $nik_saksi_1 = $data['nik_saksi_1'];
-        $nomor_kartu_keluarga_saksi_1 = $data['nomor_kartu_keluarga_saksi_1'];
-        $kewarganegaraan_saksi_1 = $data['kewarganegaraan_saksi_1'];
-        $nama_ayah = $data['nama_ayah'];
-        $nik_ayah = $data['nik_ayah'];
-        $tempat_lahir_ayah = $data['tempat_lahir_ayah'];
-        $tanggal_lahir_ayah = $data['tanggal_lahir_ayah'];
-        $kewarganegaraan_ayah = $data['kewarganegaraan_ayah'];
-        $nama_ibu = $data['nama_ibu'];
-        $nik_ibu = $data['nik_ibu'];
-        $tempat_lahir_ibu = $data['tempat_lahir_ibu'];
-        $tanggal_lahir_ibu = $data['tanggal_lahir_ibu'];
-        $kewarganegaraan_ibu = $data['kewarganegaraan_ibu'];
-        $nik_alm = $data['nik_alm'];
-        $nama_lengkap_alm = $data['nama_lengkap_alm'];
-        $hari_tanggal_kematian = $data['hari_tanggal_kematian'];
+        // Ambil daftar dokumen lama dari database (format JSON)
+        $dokumen_pemohon = json_decode($data['dokumen_pemohon'], true) ?? [];
     }
 }
 
-//Perintah Mengubah Data
+// Perintah Mengubah Data
 if (isset($_POST['submit'])) {
+    $id = $_GET['id'];
+    $dokumen_pemohon = [];
 
-    $file_name = $dokumen; // Gunakan nama file lama jika tidak ada yang diunggah
+    // Ambil daftar file lama jika ada
+    $tampil = mysqli_query($koneksi, "SELECT dokumen_pemohon FROM akta_kematian WHERE id = '$id'");
+    $data = mysqli_fetch_array($tampil);
 
-    // Cek apakah ada file yang diunggah
-    if (!empty($_FILES['dokumen']['name'])) {
-        $allowed_ext = ['pdf', 'doc', 'docx', 'jpg', 'png'];
-        $file_tmp = $_FILES['dokumen']['tmp_name'];
-        $file_size = $_FILES['dokumen']['size'];
-        $upload_dir = "uploads/"; // Folder penyimpanan
+    if ($data) {
+        $dokumen_pemohon = json_decode($data['dokumen_pemohon'], true) ?? [];
+    }
 
-        $file_ext = strtolower(pathinfo($_FILES['dokumen']['name'], PATHINFO_EXTENSION));
+    // Proses unggah file PDF jika ada file baru
+    if (!empty($_FILES['dokumen_pemohon']['name'][0])) {
+        foreach ($_FILES['dokumen_pemohon']['name'] as $key => $filename) {
+            $pdf_tmp = $_FILES['dokumen_pemohon']['tmp_name'][$key];
+            $pdf_destination = "uploads/" . time() . "_" . $filename; // Beri timestamp agar unik
 
-        if (!in_array($file_ext, $allowed_ext)) {
-            echo "<script>alert('Format file tidak diperbolehkan!');</script>";
-        } elseif ($file_size > 2 * 1024 * 1024) { // Maksimal 2MB
-            echo "<script>alert('Ukuran file terlalu besar! Maksimal 2MB.');</script>";
-        } else {
-            // Buat nama file unik
-            $file_name = "dokumen_" . time() . "." . $file_ext;
-            move_uploaded_file($file_tmp, $upload_dir . $file_name);
+            if (move_uploaded_file($pdf_tmp, $pdf_destination)) {
+                $dokumen_pemohon[] = $pdf_destination; // Tambahkan ke daftar file
+            } else {
+                echo "<script>alert('Gagal mengunggah file $filename!');</script>";
+            }
         }
     }
-    $simpan = mysqli_query($koneksi, "UPDATE akta_kematian SET
-        nama_pelapor = '$_POST[nama_pelapor]',
-        nik_pelapor = '$_POST[nik_pelapor]',
-        nomor_dokumen_perjalanan = '$_POST[nomor_dokumen_perjalanan]',
-        nomor_kartu_keluarga_pelapor = '$_POST[nomor_kartu_keluarga_pelapor]',
-        kewarganegaraan_pelapor = '$_POST[kewarganegaraan_pelapor]',
-        nomor_handphone = '$_POST[nomor_handphone]',
-        email = '$_POST[email]',
-        nama_saksi_1 = '$_POST[nama_saksi_1]',
-        nik_saksi_1 = '$_POST[nik_saksi_1]',
-        nomor_kartu_keluarga_saksi_1 = '$_POST[nomor_kartu_keluarga_saksi_1]',
-        kewarganegaraan_saksi_1 = '$_POST[kewarganegaraan_saksi_1]',
-        nama_ayah = '$_POST[nama_ayah]',
-        nik_ayah = '$_POST[nik_ayah]',
-        tempat_lahir_ayah = '$_POST[tempat_lahir_ayah]',
-        tanggal_lahir_ayah = '$_POST[tanggal_lahir_ayah]',
-        kewarganegaraan_ayah = '$_POST[kewarganegaraan_ayah]',
-        nama_ibu = '$_POST[nama_ibu]',
-        nik_ibu = '$_POST[nik_ibu]',
-        tempat_lahir_ibu = '$_POST[tempat_lahir_ibu]',
-        tanggal_lahir_ibu = '$_POST[tanggal_lahir_ibu]',
-        kewarganegaraan_ibu = '$_POST[kewarganegaraan_ibu]',
-        nik_alm = '$_POST[nik_alm]',
-        nama_lengkap_alm = '$_POST[nama_lengkap_alm]',
-        hari_tanggal_kematian = '$_POST[hari_tanggal_kematian]',
-        dokumen = '$file_name'
-        WHERE id = '$_GET[id]'");
+
+    // Simpan ke database dalam format JSON
+    $dokumen_pemohon_json = mysqli_real_escape_string($koneksi, json_encode($dokumen_pemohon));
+
+    // UPDATE ke tabel akta_kematian
+    $query = "UPDATE akta_kematian SET dokumen_pemohon = '$dokumen_pemohon_json' WHERE id = '$id'";
+    $simpan = mysqli_query($koneksi, $query);
 
     if ($simpan) {
-        echo "<script>
-                alert('Edit data sukses!');
-                document.location='/pengaduan/data-akta-kematian/index.php';
-            </script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Diterima',
+                    text: 'Dokumen Pemohon Telah di Kirim'
+                }).then(() => {
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>";
     } else {
         echo "<script>
-                alert('Edit data Gagal!');
-                document.location='/pengaduan/data-akta-kematian/index.php';
+                alert('Edit data Gagal! " . mysqli_error($koneksi) . "');
+                document.location='index.php';
             </script>";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,8 +80,9 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="../user/public/images/logomaros.png">
+    <link rel="shortcut icon" href="../image/logomaros.png" width="20">
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
     <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
@@ -122,8 +92,10 @@ if (isset($_POST['submit'])) {
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -132,12 +104,10 @@ if (isset($_POST['submit'])) {
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logo.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
@@ -156,7 +126,7 @@ if (isset($_POST['submit'])) {
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                    <a class="nav-link" href="../perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
@@ -205,126 +175,118 @@ if (isset($_POST['submit'])) {
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Edit Laporan Kematian</li>
+                <li class="breadcrumb-item active">Upload Dokumen Akta Kematian</li>
             </ol>
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Edit Data Akta Kematian
+                    <i class="fa fa-table"></i> Upload Dokumen
                 </div>
-                <div class="card-body">
-                    <a href="akta_kematian.php" class="btn btn-primary mb-3">Kembali</a>
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
                     <form method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="id">Nomor Pengaduan</label>
-                            <input type="text" class="form-control" id="id" name="id" value="<?= $id ?>" readonly>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="dokumen_pemohon" name="dokumen_pemohon[]"
+                                multiple accept=".pdf" onchange="previewFiles()">
                         </div>
-                        <div class="form-group">
-                            <label for="nama_pelapor">Nama Pelapor</label>
-                            <input type="text" class="form-control" id="nama_pelapor" name="nama_pelapor" value="<?= $nama_pelapor ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nik_pelapor">NIK Pelapor</label>
-                            <input type="text" class="form-control" id="nik_pelapor" name="nik_pelapor" value="<?= $nik_pelapor ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor_dokumen_perjalanan">Nomor Dokumen Perjalanan</label>
-                            <input type="text" class="form-control" id="nomor_dokumen_perjalanan" name="nomor_dokumen_perjalanan" value="<?= $nomor_dokumen_perjalanan ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor_kartu_keluarga_pelapor">Nomor Kartu Keluarga Pelapor</label>
-                            <input type="text" class="form-control" id="nomor_kartu_keluarga_pelapor" name="nomor_kartu_keluarga_pelapor" value="<?= $nomor_kartu_keluarga_pelapor ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kewarganegaraan_pelapor">Kewarganegaraan Pelapor</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_pelapor" name="kewarganegaraan_pelapor" value="<?= $kewarganegaraan_pelapor ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor_handphone">Nomor Handphone</label>
-                            <input type="text" class="form-control" id="nomor_handphone" name="nomor_handphone" value="<?= $nomor_handphone ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?= $email ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_saksi_1">Nama Saksi 1</label>
-                            <input type="text" class="form-control" id="nama_saksi_1" name="nama_saksi_1" value="<?= $nama_saksi_1 ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nik_saksi_1">NIK Saksi 1</label>
-                            <input type="text" class="form-control" id="nik_saksi_1" name="nik_saksi_1" value="<?= $nik_saksi_1 ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor_kartu_keluarga_saksi_1">Nomor Kartu Keluarga Saksi 1</label>
-                            <input type="text" class="form-control" id="nomor_kartu_keluarga_saksi_1" name="nomor_kartu_keluarga_saksi_1" value="<?= $nomor_kartu_keluarga_saksi_1 ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kewarganegaraan_saksi_1">Kewarganegaraan Saksi 1</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_saksi_1" name="kewarganegaraan_saksi_1" value="<?= $kewarganegaraan_saksi_1 ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_ayah">Nama Ayah</label>
-                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" value="<?= $nama_ayah ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nik_ayah">NIK Ayah</label>
-                            <input type="text" class="form-control" id="nik_ayah" name="nik_ayah" value="<?= $nik_ayah ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tempat_lahir_ayah">Tempat Lahir Ayah</label>
-                            <input type="text" class="form-control" id="tempat_lahir_ayah" name="tempat_lahir_ayah" value="<?= $tempat_lahir_ayah ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggal_lahir_ayah">Tanggal Lahir Ayah</label>
-                            <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" value="<?= $tanggal_lahir_ayah ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kewarganegaraan_ayah">Kewarganegaraan Ayah</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_ayah" name="kewarganegaraan_ayah" value="<?= $kewarganegaraan_ayah ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_ibu">Nama Ibu</label>
-                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" value="<?= $nama_ibu ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nik_ibu">NIK Ibu</label>
-                            <input type="text" class="form-control" id="nik_ibu" name="nik_ibu" value="<?= $nik_ibu ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tempat_lahir_ibu">Tempat Lahir Ibu</label>
-                            <input type="text" class="form-control" id="tempat_lahir_ibu" name="tempat_lahir_ibu" value="<?= $tempat_lahir_ibu ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggal_lahir_ibu">Tanggal Lahir Ibu</label>
-                            <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" value="<?= $tanggal_lahir_ibu ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kewarganegaraan_ibu">Kewarganegaraan Ibu</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_ibu" name="kewarganegaraan_ibu" value="<?= $kewarganegaraan_ibu ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nik_alm">NIK Alm</label>
-                            <input type="text" class="form-control" id="nik_alm" name="nik_alm" value="<?= $nik_alm ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_lengkap_alm">Nama Lengkap Alm</label>
-                            <input type="text" class="form-control" id="nama_lengkap_alm" name="nama_lengkap_alm" value="<?= $nama_lengkap_alm ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hari_tanggal_kematian">Hari Tanggal Kematian</label>
-                            <input type="date" class="form-control" id="hari_tanggal_kematian" name="hari_tanggal_kematian" value="<?= $hari_tanggal_kematian ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hari_tanggal_kematian">Dokumen</label>
-                            <input type="file" class="form-control" id="dokumen" name="dokumen" required>
-                        </div>
-                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+
+                        <!-- Daftar file yang dipilih -->
+                        <ul id="fileList" class="list-group mb-3"></ul>
+
+                        <button type="submit" name="submit" class="btn btn-primary">Upload Data Pemohon</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+    let selectedFiles = new DataTransfer(); // Simpan file yang sudah dipilih
+
+    document.getElementById("dokumen_pemohon").addEventListener("change", function(event) {
+        let fileList = document.getElementById("fileList");
+        let newFiles = event.target.files;
+
+        for (let i = 0; i < newFiles.length; i++) {
+            let file = newFiles[i];
+
+            // Validasi: hanya file PDF diperbolehkan
+            if (file.type !== "application/pdf") {
+                alert("Hanya file PDF yang diperbolehkan!");
+                return;
+            }
+
+            // Validasi ukuran maksimal 2MB
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Ukuran file terlalu besar! Maksimal 2MB.");
+                return;
+            }
+
+            // Cek apakah file sudah ada dalam daftar
+            let isDuplicate = false;
+            for (let j = 0; j < selectedFiles.files.length; j++) {
+                if (selectedFiles.files[j].name === file.name) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if (!isDuplicate) {
+                selectedFiles.items.add(file);
+
+                // Tambahkan ke daftar tampilan
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                listItem.textContent = file.name;
+
+                // Tombol hapus
+                let deleteButton = document.createElement("button");
+                deleteButton.className = "btn btn-danger btn-sm";
+                deleteButton.textContent = "Hapus";
+                deleteButton.onclick = function() {
+                    removeFile(file.name);
+                };
+
+                listItem.appendChild(deleteButton);
+                fileList.appendChild(listItem);
+            }
+        }
+
+        // Update input file dengan file yang sudah dipilih
+        document.getElementById("dokumen_pemohon").files = selectedFiles.files;
+    });
+
+    function removeFile(fileName) {
+        let fileList = document.getElementById("fileList");
+        let newDataTransfer = new DataTransfer();
+
+        for (let i = 0; i < selectedFiles.files.length; i++) {
+            if (selectedFiles.files[i].name !== fileName) {
+                newDataTransfer.items.add(selectedFiles.files[i]);
+            }
+        }
+
+        selectedFiles = newDataTransfer;
+        document.getElementById("dokumen_pemohon").files = selectedFiles.files;
+
+        // Perbarui tampilan daftar file
+        fileList.innerHTML = "";
+        for (let i = 0; i < selectedFiles.files.length; i++) {
+            let listItem = document.createElement("li");
+            listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            listItem.textContent = selectedFiles.files[i].name;
+
+            let deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger btn-sm";
+            deleteButton.textContent = "Hapus";
+            deleteButton.onclick = function() {
+                removeFile(selectedFiles.files[i].name);
+            };
+
+            listItem.appendChild(deleteButton);
+            fileList.appendChild(listItem);
+        }
+    }
+    </script>
 </body>
 
 </html>

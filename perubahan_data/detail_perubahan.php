@@ -26,7 +26,8 @@ $result = $query->get_result();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard - Data Pemohon</title>
-    <link rel="shortcut icon" href="../image/logo.png">
+    <link rel="shortcut icon" href="../user/public/images/logomaros.png">
+    <link rel="shortcut icon" href="../image/logomaros.png" width="20">
     <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
@@ -35,7 +36,7 @@ $result = $query->get_result();
 
 <body class="fixed-nav sticky-footer" id="page-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -48,12 +49,10 @@ $result = $query->get_result();
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="user/public/images/logomaros.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
@@ -70,22 +69,28 @@ $result = $query->get_result();
                         <span class="nav-link-text">Data Kematian</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../data-akta-kelahiran">
+                    <a class="nav-link" href="../data-akta-kelahiran/">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kelahiran</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../data-kartu-indentitas-anak">
+                    <a class="nav-link" href="../data-kartu-indentitas-anak/">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
                     </a>
                 </li>
             </ul>
@@ -111,7 +116,7 @@ $result = $query->get_result();
     <div class="content-wrapper">
         <div class="container-fluid">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="perubahan.php">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                 <li class="breadcrumb-item active">Data Pemohon</li>
             </ol>
 
@@ -135,9 +140,9 @@ $result = $query->get_result();
                             </thead>
                             <tbody>
                                 <?php
-                            $no = 1;
-                            while ($data = $result->fetch_assoc()) {
-                                echo "<tr>
+                                $no = 1;
+                                while ($data = $result->fetch_assoc()) {
+                                    echo "<tr>
                                         <td>{$no}</td>
                                         <td>{$data['nik']}</td>
                                         <td>{$data['jenis_permohonan']}</td>
@@ -149,9 +154,9 @@ $result = $query->get_result();
                                             <a href='hapus.php?id={$data['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a>
                                         </td>
                                     </tr>";
-                                $no++;
-                            }
-                            ?>
+                                    $no++;
+                                }
+                                ?>
                             </tbody>
 
                         </table>
@@ -165,7 +170,7 @@ $result = $query->get_result();
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small>Copyright © Andi Sri Mulyani</small>
+                <small>Copyright © Kantor Kecamatan Tanralili</small>
             </div>
         </div>
     </footer>

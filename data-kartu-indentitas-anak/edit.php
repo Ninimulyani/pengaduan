@@ -1,4 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../user/public/images/logomaros.png">
+    <link rel="shortcut icon" href="../image/logomaros.png" width="20">
+
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
+    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="../css/admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <?php
+
 require_once("../database.php"); // koneksi DB
 logged_admin();
 
@@ -18,7 +40,6 @@ if (isset($_GET['edit'])) {
         $nama_ayah = $data['nama_ayah'];
         $nama_ibu = $data['nama_ibu'];
         $alamat_pemohon = $data['alamat_pemohon'];
-        $pdf = $data['pdf_path']; // Path PDF dari database
         $status = $data['status'];
     }
 }
@@ -62,15 +83,25 @@ if (isset($_POST['submit'])) {
         nama_ayah = '$nama_ayah',
         nama_ibu = '$nama_ibu',
         alamat_pemohon = '$alamat_pemohon',
-        pdf_path = '$pdf',
         status = '$status'
         WHERE id = '$id'");
 
     if ($simpan) {
-        echo "<script>
-                alert('Edit data sukses!');
-                document.location='/pengaduan/data-kartu-indentitas-anak/index.php';
-            </script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Edit data sukses.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'index.php';
+                    }
+                });
+            });
+        </script>";
     } else {
         echo "<script>
                 alert('Edit data Gagal!');
@@ -80,28 +111,13 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
-    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="../css/admin.css" rel="stylesheet">
-</head>
-
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -110,12 +126,10 @@ if (isset($_POST['submit'])) {
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logo.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
@@ -134,7 +148,7 @@ if (isset($_POST['submit'])) {
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                    <a class="nav-link" href="../perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
@@ -185,62 +199,69 @@ if (isset($_POST['submit'])) {
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Edit Laporan Kematian</li>
+                <li class="breadcrumb-item active">Edit Kartu Identitas Anak</li>
             </ol>
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Edit Data Akta Kematian
+                    <i class="fa fa-table"></i> Edit Data Kartu Identitas Anak
                 </div>
-                <div class="card-body">
-                    <a href="akta_kematian.php" class="btn btn-primary mb-3">Kembali</a>
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
                     <form method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nik_anak">NIK Anak</label>
-                            <input type="text" class="form-control" id="nik_anak" name="nik_anak" value="<?= $nik_anak ?>" required>
+                            <input type="text" class="form-control" id="nik_anak" name="nik_anak"
+                                value="<?= $nik_anak ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nomor_akta_kelahiran">Nomor Akta Kelahiran</label>
-                            <input type="text" class="form-control" id="nomor_akta_kelahiran" name="nomor_akta_kelahiran" value="<?= $nomor_akta_kelahiran ?>" required>
+                            <input type="text" class="form-control" id="nomor_akta_kelahiran"
+                                name="nomor_akta_kelahiran" value="<?= $nomor_akta_kelahiran ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_anak">Nama Anak</label>
-                            <input type="text" class="form-control" id="nama_anak" name="nama_anak" value="<?= $nama_anak ?>" required>
+                            <input type="text" class="form-control" id="nama_anak" name="nama_anak"
+                                value="<?= $nama_anak ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="tempat_lahir">Tempat Lahir</label>
-                            <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="<?= $tempat_lahir ?>" required>
+                            <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
+                                value="<?= $tempat_lahir ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="<?= $tanggal_lahir ?>" required>
+                            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
+                                value="<?= $tanggal_lahir ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="anak_ke">Anak Ke</label>
-                            <input type="number" class="form-control" id="anak_ke" name="anak_ke" value="<?= $anak_ke ?>" required>
+                            <input type="number" class="form-control" id="anak_ke" name="anak_ke"
+                                value="<?= $anak_ke ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_ayah">Nama Ayah</label>
-                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" value="<?= $nama_ayah ?>" required>
+                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah"
+                                value="<?= $nama_ayah ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_ibu">Nama Ibu</label>
-                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" value="<?= $nama_ibu ?>" required>
+                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu"
+                                value="<?= $nama_ibu ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="alamat_pemohon">Alamat Pemohon</label>
-                            <input type="text" class="form-control" id="alamat_pemohon" name="alamat_pemohon" value="<?= $alamat_pemohon ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pdf_path">Path Dokumen PDF</label>
-                            <input type="file" class="form-control" id="pdf_path" name="pdf_path" value="<?= $pdf_path ?>">
+                            <input type="text" class="form-control" id="alamat_pemohon" name="alamat_pemohon"
+                                value="<?= $alamat_pemohon ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status">
-                                <option value="Menunggu" <?= $status == 'Menunggu' ? 'selected' : '' ?>>Menunggu</option>
+                                <option value="Menunggu" <?= $status == 'Menunggu' ? 'selected' : '' ?>>Menunggu
+                                </option>
                                 <option value="Ditolak" <?= $status == 'Ditolak' ? 'selected' : '' ?>>Ditolak</option>
-                                <option value="Sedang diproses" <?= $status == 'Sedang diproses' ? 'selected' : '' ?>>Sedang diproses</option>
+                                <option value="Sedang diproses" <?= $status == 'Sedang diproses' ? 'selected' : '' ?>>
+                                    Sedang diproses</option>
                                 <option value="Selesai" <?= $status == 'Selesai' ? 'selected' : '' ?>>Selesai</option>
                             </select>
                         </div>

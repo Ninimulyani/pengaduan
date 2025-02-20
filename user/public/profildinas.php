@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Profil Dinas | Kantor Kelurahan Tamalanrea</title>
+    <title>Profil Dinas | Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -28,7 +28,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logo.png" width="40">
+                        <img alt="Brand" src="images/logomaros.png" width="40">
                     </a>
                 </div>
 

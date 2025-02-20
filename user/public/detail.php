@@ -19,13 +19,13 @@ if ($id !== null) {
 
     // Ambil hasil query
     $result = $statement->fetch(PDO::FETCH_ASSOC);
-
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -63,12 +63,12 @@ if ($id !== null) {
 
     <?php
     // Show modal if $notFound is set
-    if(isset($nomorError)) {
-        ?>
+    if (isset($nomorError)) {
+    ?>
         <script type="text/javascript">
-        $("#failedmodal").modal();
+            $("#failedmodal").modal();
         </script>
-        <?php
+    <?php
     }
     ?>
 
@@ -84,7 +84,7 @@ if ($id !== null) {
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="home.php">
-                        <img alt="Brand" src="images/logo.png" width="40">
+                        <img alt="Brand" src="images/logomaros.png" width="40">
                     </a>
                 </div>
 
@@ -105,87 +105,91 @@ if ($id !== null) {
         <div class="main-content">
             <h3>Detail Pengaduan</h3>
 
-                            <div class="panel-body-lihat card-shadow-2">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <h3 class="h3-laporan custom">Laporan Detail</h3>
-                                    </div>
-                                </div>
-                                <hr class="hr-laporan">
-                                <a class="media-left" href="#"><img class="img-circle card-shadow-2 img-sm" src="images/avatar/avatar1.png"></a>
-                                <div class="media-body">
-                                    <?php if($result):  ?>
-                                    <div>
-                                        <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $result['nama_divisi']; ?></h4>
-                                        <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $result['nama']; ?></h4>
-                                        <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">email  :</span>  <?php echo $result['email']; ?></p>
-                                        <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">telpon  :</span><?php echo $result['telpon']; ?></p>
-                                        <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">alamat  :</span><?php echo $result['alamat']; ?></p>
-                                        <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">tanggal  :</span><?php echo $result['tanggal']; ?></p>
-                                    </div>
-
-                                    <hr class="hr-laporan">
-                                    <?php endif; ?>
-                            </div>
-
-            <!-- link to top -->
-            <a id="top" href="#" onclick="topFunction()">
-                <i class="fa fa-arrow-circle-up"></i>
-            </a>
-            <script>
-            // When the user scrolls down 100px from the top of the document, show the button
-            window.onscroll = function() {scrollFunction()};
-            function scrollFunction() {
-                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    document.getElementById("top").style.display = "block";
-                } else {
-                    document.getElementById("top").style.display = "none";
-                }
-            }
-
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }
-            </script>
-            <!-- link to top -->
-        </div>
-
-        <hr>
-
-        <!-- Footer -->
-        <div class="footer footer-bottom text-center">
-            <div class="row">
-                <div class="col-md-4 mb-5 mb-lg-0">
-                    <ul class="list-inline mb-0">
-                        <!-- Add footer content as needed -->
-                    </ul>
+            <div class="panel-body-lihat card-shadow-2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="h3-laporan custom">Laporan Detail</h3>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-5 mb-lg-0">
-                    <ul class="list-inline mb-0">
-                        <!-- Add footer content as needed -->
-                    </ul>
+                <hr class="hr-laporan">
+                <a class="media-left" href="#"><img class="img-circle card-shadow-2 img-sm" src="images/avatar/avatar1.png"></a>
+                <div class="media-body">
+                    <?php if ($result):  ?>
+                        <div>
+                            <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $result['nama_divisi']; ?></h4>
+                            <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $result['nama']; ?></h4>
+                            <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">email :</span> <?php echo $result['email']; ?></p>
+                            <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">telpon :</span><?php echo $result['telpon']; ?></p>
+                            <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">alamat :</span><?php echo $result['alamat']; ?></p>
+                            <p class="text-green profil-name" style="font-family: monospace;"><span style="color:black">tanggal :</span><?php echo $result['tanggal']; ?></p>
+                        </div>
+
+                        <hr class="hr-laporan">
+                    <?php endif; ?>
                 </div>
-                <div class="col-md-4">
-                    <ul class="list-inline mb-0">
-                        <!-- Add footer content as needed -->
-                    </ul>
+
+                <!-- link to top -->
+                <a id="top" href="#" onclick="topFunction()">
+                    <i class="fa fa-arrow-circle-up"></i>
+                </a>
+                <script>
+                    // When the user scrolls down 100px from the top of the document, show the button
+                    window.onscroll = function() {
+                        scrollFunction()
+                    };
+
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                            document.getElementById("top").style.display = "block";
+                        } else {
+                            document.getElementById("top").style.display = "none";
+                        }
+                    }
+
+                    // When the user clicks on the button, scroll to the top of the document
+                    function topFunction() {
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    }
+                </script>
+                <!-- link to top -->
+            </div>
+
+            <hr>
+
+            <!-- Footer -->
+            <div class="footer footer-bottom text-center">
+                <div class="row">
+                    <div class="col-md-4 mb-5 mb-lg-0">
+                        <ul class="list-inline mb-0">
+                            <!-- Add footer content as needed -->
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-5 mb-lg-0">
+                        <ul class="list-inline mb-0">
+                            <!-- Add footer content as needed -->
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline mb-0">
+                            <!-- Add footer content as needed -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /footer -->
+
+            <div class="copyright py-4 text-center text-white">
+                <div class="container">
+                    <small> | Copyright &copy; Kantor Kecamatan Tanralili</small>
                 </div>
             </div>
         </div>
-        <!-- /footer -->
 
-        <div class="copyright py-4 text-center text-white">
-            <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea</small>
-            </div>
-        </div>
-    </div>
-
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="js/bootstrap.js"></script>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="js/bootstrap.js"></script>
 </body>
+
 </html>

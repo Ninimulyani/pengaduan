@@ -3,11 +3,11 @@ require_once("../private/database.php");
 $nomorError = "";
 global $found, $foundreply;
 // jalankan jika tombol cari ditekan
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     $nomor = $_POST['nomor'];
     $is_valid = true;
     // validasi nomor laporan yang di inputankan user
-    if (!preg_match("/^[0-9]*$/",$nomor)) { // cek nomor hanya boleh angka
+    if (!preg_match("/^[0-9]*$/", $nomor)) { // cek nomor hanya boleh angka
         $nomorError = "Input Hanya Boleh Angka";
         $is_valid = false;
     } else {
@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
         $statement = $db->query("SELECT * FROM laporan LEFT JOIN divisi ON laporan.tujuan = divisi.id_divisi WHERE laporan.id = $nomor");
         // jika laporan tidak ditemukan tampilkan pesan
         if ($statement->rowCount() < 1) {
-            $notFound= "Nomor Pengaduan Tidak Ditemukan !";
+            $notFound = "Nomor Pengaduan Tidak Ditemukan !";
         }
         // jika  laporan ditemukan
         else {
@@ -37,11 +37,12 @@ if(isset($_POST['submit'])) {
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kantor Kelurahan Tamalanrea</title>
-    <link rel="shortcut icon" href="images/logomaros.png" width="20" >
+    <title>Kantor Kecamatan Tanralili</title>
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- font Awesome CSS -->
@@ -55,26 +56,27 @@ if(isset($_POST['submit'])) {
     <!-- Animate CSS -->
     <link rel="stylesheet" href="css/animate.min.css">
 </head>
+
 <body>
 
-        <div class="shadow">
+    <div class="shadow">
         <nav class="navbar navbar-fixed navbar-inverse form-shadow">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="home.php">
-                            <img alt="Brand" src="images/logomaros.png" width="50">
-                        </a>
-                    </div>
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="home.php">
+                        <img alt="Brand" src="images/logomaros.png" width="50">
+                    </a>
+                </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="home-2.php">HOME</a></li>
                         <li class="dropdown">
@@ -91,7 +93,7 @@ if(isset($_POST['submit'])) {
                                 <li><a href="surat_pindah_penduduk.php">Surat Pindah Penduduk</a></li>
                                 <li class="divider"></li>
                             </ul>
-                         </li>                        
+                        </li>
                         <li><a href="status.php">STATUS</a></li>
                         <li><a href="cara-2.php">CARA</a></li>
                         <li class="dropdown">
@@ -110,20 +112,20 @@ if(isset($_POST['submit'])) {
                         <li class="active"><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="../../login.php">LOGOUT</a></li>
                     </ul>
-                        <!-- <ul class="nav navbar-nav navbar-right">
+                    <!-- <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">LOGIN</a></li>
                             <li><a href="#">REGISTER</a></li>
                         </ul> -->
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
-    <!-- end navbar -->
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <!-- end navbar -->
 
 
         <!-- content -->
         <div class="main-content">
             <h3>STATUS</h3>
-            <hr/>
+            <hr />
             <div class="row">
                 <div class="col-md-6 card-shadow-2 form-custom">
                     <form class="form-horizontal" role="form" method="post">
@@ -150,12 +152,12 @@ if(isset($_POST['submit'])) {
             <br>
             <?php
             // dijalankan ketika $found bernilai true // laporan ditemukan
-            if ($found){
+            if ($found) {
                 foreach ($statement as $key) {
                     $mysqldate = $key['tanggal'];
                     $phpdate = strtotime($mysqldate);
-                    $tanggal = date( 'd F Y, H:i:s', $phpdate);
-                    ?>
+                    $tanggal = date('d F Y, H:i:s', $phpdate);
+            ?>
                     <h3>Hasil Pencarian</h3>
 
                     <div class="row">
@@ -172,190 +174,190 @@ if(isset($_POST['submit'])) {
                                 </div>
                                 <hr class="hr-laporan">
                                 <a class="media-left" href="#"><img class="img-circle card-shadow-2 img-sm" src="images/avatar/avatar1.png"></a>
-                            <div class="wrapper-media">
-                                <div class="media-body">
-                                    <div>
-                                        <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $key['nama']; ?></h4>
-                                        <p class="text-muted text-sm"><i class="fa fa-th fa-fw"></i>  -  <?php echo $tanggal; ?></p>
-                                    </div>
-                                    <hr class="hr-nama">
-                                    <div class="isi-laporan">
-                                        <p class="text-justify">
-                                            <?php echo $key['isi']; ?>
-                                        </p>
-                                    </div>
-                                    <hr class="hr-laporan">
-
-                                    <!-- Comments -->
-                                    <div>
-                                        <h3 class="custom">Tindak Lanjut Laporan</h3>
+                                <div class="wrapper-media">
+                                    <div class="media-body">
+                                        <div>
+                                            <h4 class="text-green profil-name" style="font-family: monospace;"><?php echo $key['nama']; ?></h4>
+                                            <p class="text-muted text-sm"><i class="fa fa-th fa-fw"></i> - <?php echo $tanggal; ?></p>
+                                        </div>
+                                        <hr class="hr-nama">
+                                        <div class="isi-laporan">
+                                            <p class="text-justify">
+                                                <?php echo $key['isi']; ?>
+                                            </p>
+                                        </div>
                                         <hr class="hr-laporan">
-                                        <?php
-                                        // dijalankan ketika $foundreply bernilai true // tanggapan ditemukan
-                                        if ($foundreply){
-                                            foreach ($stat as $key) {
-                                                $mysqldatea = $key['tanggal_tanggapan'];
-                                                $phpdatea = strtotime($mysqldatea);
-                                                $tanggal_tanggapan = date( 'd F Y, H:i:s', $phpdatea);
-                                                ?>
 
-                                                <div class="media-block comment">
-                                                    <a class="media-left" href="#"><img class="img-circle card-shadow-2 img-sm" src="images/avatar/avatar2.png"></a>
-                                                    <div class="media-body">
-                                                        <div>
-                                                            <h4 class="text-primary profil-name" style="font-family: monospace;"><?php echo $key['admin']; ?></h4>
-                                                            <p class="text-muted text-sm"><i class="fa fa-th fa-fw"></i>  -  <?php echo $tanggal_tanggapan; ?></p>
-                                                        </div>
-                                                        <hr class="hr-nama-admin">
-                                                        <p class="text-justify">
-                                                            <?php echo $key['isi_tanggapan']; ?>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- media body -->
+                                        <!-- Comments -->
+                                        <div>
+                                            <h3 class="custom">Tindak Lanjut Laporan</h3>
+                                            <hr class="hr-laporan">
                                             <?php
-                                        }
-                                    }
-                                    // dijalankan ketika $cari bernilai false // tanggapan tidak ditemukan
-                                    else {
-                                        echo "<h5 class=\"text-muted text-lg\"><i class=\"fa fa-exclamation-circle fa-fw\"></i>  Belum Ada Tanggapan</h5>";
-                                    }
-                                    ?>
-                                    
-                                     <div>
-                                        <a href="detail.php?id=<?php echo $key['id']; ?>" class="btn btn-primary">Lihat Detail</a>
-                                    </div>
-                                </div>
-                                
+                                            // dijalankan ketika $foundreply bernilai true // tanggapan ditemukan
+                                            if ($foundreply) {
+                                                foreach ($stat as $key) {
+                                                    $mysqldatea = $key['tanggal_tanggapan'];
+                                                    $phpdatea = strtotime($mysqldatea);
+                                                    $tanggal_tanggapan = date('d F Y, H:i:s', $phpdatea);
+                                            ?>
+
+                                                    <div class="media-block comment">
+                                                        <a class="media-left" href="#"><img class="img-circle card-shadow-2 img-sm" src="images/avatar/avatar2.png"></a>
+                                                        <div class="media-body">
+                                                            <div>
+                                                                <h4 class="text-primary profil-name" style="font-family: monospace;"><?php echo $key['admin']; ?></h4>
+                                                                <p class="text-muted text-sm"><i class="fa fa-th fa-fw"></i> - <?php echo $tanggal_tanggapan; ?></p>
+                                                            </div>
+                                                            <hr class="hr-nama-admin">
+                                                            <p class="text-justify">
+                                                                <?php echo $key['isi_tanggapan']; ?>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                        <!-- media body -->
                                 <?php
+                                                }
+                                            }
+                                            // dijalankan ketika $cari bernilai false // tanggapan tidak ditemukan
+                                            else {
+                                                echo "<h5 class=\"text-muted text-lg\"><i class=\"fa fa-exclamation-circle fa-fw\"></i>  Belum Ada Tanggapan</h5>";
+                                            }
+                                ?>
 
-                                    require "function.php";
+                                <div>
+                                    <a href="detail.php?id=<?php echo $key['id']; ?>" class="btn btn-primary">Lihat Detail</a>
+                                </div>
+                                    </div>
 
-                                    if (isset($_POST["submit"])){
+                            <?php
 
-                                        if (tambah($_POST) > 0){
-                                            echo "<script>
+                            require "function.php";
+
+                            if (isset($_POST["submit"])) {
+
+                                if (tambah($_POST) > 0) {
+                                    echo "<script>
                                             alert('Data Berhasil Ditambahkan!');
                                             </script>";
-                                        }else{
-                                            
-                                            echo "<script>
+                                } else {
+
+                                    echo "<script>
                                             alert('Data Gagal Ditambahkan!');
                                             </script>";
-                                        }
-
-
-                                    }
-
+                                }
+                            }
                         }
                     }
-                    ?>
-                </div>
-                <div class="col-md-4">
-                </div>
-            </div>
+                            ?>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                            </div>
 
-            <!-- link to top -->
-            <a id="top" href="#" onclick="topFunction()">
-                <i class="fa fa-arrow-circle-up"></i>
-            </a>
-            <script>
-            // When the user scrolls down 100px from the top of the document, show the button
-            window.onscroll = function() {scrollFunction()};
-            function scrollFunction() {
-                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    document.getElementById("top").style.display = "block";
-                } else {
-                    document.getElementById("top").style.display = "none";
-                }
-            }
-
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }
-            </script>
-            <!-- link to top -->
-
-            <!-- /.main content -->
-        </div>
-
-
-        <hr>
-
-        <!-- Footer -->
-        <div class="footer footer-bottom text-center">
-            <div class="row">
-                <div class="col-md-4 mb-5 mb-lg-0">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item">
-                            <i class="fa fa-top fa-map-marker"></i>
-                        </li>
-                        <li class="list-inline-item">
-                            <h4 class="text-uppercase mb-4">Kantor</h4>
-                        </li>
-                    </ul>
-                    <p class="mb-0">
-                    Jl. Poros Ammarrang, Kelurahan Borong, 
-                    <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
-                    </p>
-                </div>
-                <div class="col-md-4 mb-5 mb-lg-0">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item">
-                            <i class="fa fa-top fa-rss"></i>
-                        </li>
-                        <li class="list-inline-item">
-                            <h4 class="text-uppercase mb-4">Sosial Media</h4>
-                        </li>
-                    </ul>
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
-                                <i class="fa fa-fw fa-facebook"></i>
+                            <!-- link to top -->
+                            <a id="top" href="#" onclick="topFunction()">
+                                <i class="fa fa-arrow-circle-up"></i>
                             </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/disdukcapilbkl">
-                                <i class="fa fa-fw fa-twitter"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item">
-                            <i class="fa fa-top fa-envelope-o"></i>
-                        </li>
-                        <li class="list-inline-item">
-                            <h4 class="text-uppercase mb-4">Kontak</h4>
-                        </li>
-                    </ul>
-                    <p class="mb-0">
-                            90553 <br>
-                            kelurahan.tamalanrea@gmail.com
-                            </p>
-                </div>
-            </div>
-        </div>
-        <!-- /footer -->
+                            <script>
+                                // When the user scrolls down 100px from the top of the document, show the button
+                                window.onscroll = function() {
+                                    scrollFunction()
+                                };
 
-        <div class="copyright py-4 text-center text-white">
-            <div class="container">
-                <small>V-3.0 | Copyright &copy; Kantor Kecamatan Tanralili</small>
-            </div>
-        </div>
+                                function scrollFunction() {
+                                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                                        document.getElementById("top").style.display = "block";
+                                    } else {
+                                        document.getElementById("top").style.display = "none";
+                                    }
+                                }
+
+                                // When the user clicks on the button, scroll to the top of the document
+                                function topFunction() {
+                                    document.body.scrollTop = 0;
+                                    document.documentElement.scrollTop = 0;
+                                }
+                            </script>
+                            <!-- link to top -->
+
+                            <!-- /.main content -->
+                        </div>
 
 
-        <!-- shadow -->
-    </div>
+                        <hr>
 
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="js/bootstrap.js"></script>
+                        <!-- Footer -->
+                        <div class="footer footer-bottom text-center">
+                            <div class="row">
+                                <div class="col-md-4 mb-5 mb-lg-0">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <i class="fa fa-top fa-map-marker"></i>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <h4 class="text-uppercase mb-4">Kantor</h4>
+                                        </li>
+                                    </ul>
+                                    <p class="mb-0">
+                                        Jl. Poros Ammarrang, Kelurahan Borong,
+                                        <br>Kecamatan Tanralili, Kabupaten Maros, Sulawesi Selatan
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-5 mb-lg-0">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <i class="fa fa-top fa-rss"></i>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <h4 class="text-uppercase mb-4">Sosial Media</h4>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/profile.php?id=61555707727963&">
+                                                <i class="fa fa-fw fa-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/disdukcapilbkl">
+                                                <i class="fa fa-fw fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <i class="fa fa-top fa-envelope-o"></i>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <h4 class="text-uppercase mb-4">Kontak</h4>
+                                        </li>
+                                    </ul>
+                                    <p class="mb-0">
+                                        90553 <br>
+                                        kecamatan.tanralili1@gmail.com
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /footer -->
+
+                        <div class="copyright py-4 text-center text-white">
+                            <div class="container">
+                                <small>V-3.0 | Copyright &copy; Kantor Kecamatan Tanralili</small>
+                            </div>
+                        </div>
+
+
+                        <!-- shadow -->
+                    </div>
+
+                    <!-- jQuery -->
+                    <script src="js/jquery.min.js"></script>
+                    <!-- Bootstrap JavaScript -->
+                    <script src="js/bootstrap.js"></script>
 
 </body>
 

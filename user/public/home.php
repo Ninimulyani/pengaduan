@@ -18,7 +18,7 @@ function RandomAvatar()
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kantor Kelurahan Tamalanrea</title>
+    <title>Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logo.ico" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -89,7 +89,7 @@ function RandomAvatar()
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="">
-                        <img alt="Brand" src="images/logo.png" width="40">
+                        <img alt="Brand" src="images/logomaros.png" width="40">
                     </a>
                 </div>
 
@@ -140,7 +140,7 @@ function RandomAvatar()
                     <img src="images/header_02.jpg" alt="...">
                     <div class="carousel-caption welcome">
                         <h2 class="animated bounceInRight">Selamat Datang</h2>
-                        <h3 class="animated bounceInLeft">Website Pengaduan Masyarakat Kelurahan Tamalanrea</h3>
+                        <h3 class="animated bounceInLeft">Website Pelayanan Administrasi Kependudukan Kecamatan Tanralili</h3>
                     </div>
                 </div>
                 <div class="item">
@@ -244,7 +244,7 @@ function RandomAvatar()
                                 <h3 class="text-center">facebook</h3>
                                 <div class="fb-page" data-height="300" data-width="500" data-href="https://www.facebook.com/profile.php?id=61555707727963" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
                                     <blockquote cite="https://www.facebook.com/profile.php?id=61555707727963" class="fb-xfbml-parse-ignore">
-                                        <a href="https://www.facebook.com/profile.php?id=61555707727963">Kantor Kelurahan Tamalanrea</a>
+                                        <a href="https://www.facebook.com/profile.php?id=61555707727963">Kantor Kecamatan Tanralili</a>
                                     </blockquote>
                                 </div>
                             </div>
@@ -340,7 +340,7 @@ function RandomAvatar()
                     <p class="mb-0">
                         90245 <br>
                         kelurahantamalanrea@tamalanrea.go.id <br>
-                        kelurahan.tamalanrea@gmail.com
+                        kecamatan.tanralili1@gmail.com
                     </p>
                 </div>
             </div>
@@ -349,7 +349,7 @@ function RandomAvatar()
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea </small>
+                <small> | Copyright &copy; Kantor Kecamatan Tanralili </small>
             </div>
         </div>
         <!-- shadow -->

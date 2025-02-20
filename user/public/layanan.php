@@ -5,7 +5,7 @@ require_once("../private/database.php");
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Kantor Kelurahan Tamalanrea</title>
+    <title>Kantor Kecamatan Tanralili</title>
     <link rel="shortcut icon" href="images/logomaros.png" width="20">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -184,7 +184,7 @@ require_once("../private/database.php");
                     </ul>
                     <p class="mb-0">
                         90553 <br>
-                        kelurahan.tamalanrea@gmail.com
+                        kecamatan.tanralili1@gmail.com
                     </p>
                 </div>
             </div>
@@ -193,7 +193,7 @@ require_once("../private/database.php");
 
         <div class="copyright py-4 text-center text-white">
             <div class="container">
-                <small> | Copyright &copy; Kantor Kelurahan Tamalanrea </small>
+                <small> | Copyright &copy; Kantor Kecamatan Tanralili </small>
             </div>
         </div>
         <!-- shadow -->

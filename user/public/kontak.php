@@ -184,7 +184,7 @@
                     <p class="mb-0">
                         90245 <br>
                         kelurahantamalanrea@tamalanrea.go.id <br>
-                        kelurahan.tamalanrea@gmail.com
+                        kecamatan.tanralili1@gmail.com
                     </p>
                 </div>
             </div>

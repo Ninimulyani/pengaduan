@@ -1,77 +1,77 @@
 <?php
-    require_once("database.php"); // koneksi DB
+require_once("database.php"); // koneksi DB
 
-    logged_admin ();
-    global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-    if ($id_admin > 0) {
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi>query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-    } else {
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
+logged_admin();
+global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
+if ($id_admin > 0) {
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
     }
 
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
 
-    if (isset($_POST['register'])) {
-        $nama_divisi = $_POST['nama_divisi'];
-       
-        // Periksa apakah semua field yang diperlukan diisi
-        if (!empty($nama_divisi)) {
-            $sql = "INSERT INTO divisi (nama_divisi) VALUES (?)";
-            $stmt = $koneksi->prepare($sql);
-    
-            if ($stmt) {
-                $stmt->bind_param("s", $nama_divisi);
-    
-                if ($stmt->execute()) {
-                    session_start();
-                    $_SESSION['nama_divisi'] = $nama_divisi;
-                    $_SESSION['status'] = "register";
-                    echo "<script>
+    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+} else {
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+}
+
+
+if (isset($_POST['register'])) {
+    $nama_divisi = $_POST['nama_divisi'];
+
+    // Periksa apakah semua field yang diperlukan diisi
+    if (!empty($nama_divisi)) {
+        $sql = "INSERT INTO divisi (nama_divisi) VALUES (?)";
+        $stmt = $koneksi->prepare($sql);
+
+        if ($stmt) {
+            $stmt->bind_param("s", $nama_divisi);
+
+            if ($stmt->execute()) {
+                session_start();
+                $_SESSION['nama_divisi'] = $nama_divisi;
+                $_SESSION['status'] = "register";
+                echo "<script>
                     alert('Tambah data sukses!');
                     document.location='kategori.php';
                     </script>";
-                } else {
-                    echo "<script>
+            } else {
+                echo "<script>
                     alert('Register Gagal, Periksa Email dan Password Anda!');
                     window.location.href = '../kategori/';
                     </script>";
-                }
-    
-                $stmt->close();
-            } else {
-                echo "<script>
+            }
+
+            $stmt->close();
+        } else {
+            echo "<script>
                 alert('Gagal menyiapkan pernyataan SQL.');
                 window.location.href = '../kategori/';
                 </script>";
-            }
-        } else {
-            echo "<script>
+        }
+    } else {
+        echo "<script>
             alert('Pendaftaran Gagal, Harap Isi Semua Informasi.');
             window.location.href = 'create_kategori.php';
             </script>";
-        }
     }
+}
 
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,8 +81,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="user/public/images/logomaros.png">
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -96,7 +96,7 @@
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -107,7 +107,7 @@
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="user/public/images/logo.png" width="80">
+                            <img alt="image" src="user/public/images/logomaros.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
@@ -236,12 +236,12 @@
                 <div class="card-body mx-2 col-8">
                     <a href="kategori.php" class="btn btn-primary mb-3">Kembali</a>
                     <form class="form-horizontal" role="form" method="post">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Nama Kategori</label>
-                        <input class="form-control" id="nama" type="text" name="nama_divisi" aria-describedby="userlHelp" placeholder="Masukkan Nama Kategori" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Kategori</label>
+                            <input class="form-control" id="nama" type="text" name="nama_divisi" aria-describedby="userlHelp" placeholder="Masukkan Nama Kategori" required>
+                        </div>
 
-                    <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Tambah">
+                        <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="register" value="Tambah">
                     </form>
                 </div>
                 <div class="card-footer small text-muted"></div>
@@ -253,7 +253,7 @@
         <footer class="sticky-footer">
             <div class="container">
                 <div class="text-center">
-                    <small>Copyright © Andi Sri Mulyani</small>
+                    <small>Copyright © Kantor Kecamatan Tanralili</small>
                 </div>
             </div>
         </footer>

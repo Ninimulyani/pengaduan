@@ -280,7 +280,7 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </ul>
                     <p class="mb-0">
                         90553 <br>
-                        kelurahan.tamalanrea@gmail.com
+                        kecamatan.tanralili1@gmail.com
                     </p>
                 </div>
             </div>

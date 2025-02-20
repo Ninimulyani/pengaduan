@@ -43,18 +43,17 @@ if (isset($_POST['submit'])) {
         dasar_perubahan = '$dasar_perubahan'
         WHERE id = '$id'");
 
-if ($simpan) {
-    echo "<script>
+    if ($simpan) {
+        echo "<script>
             alert('Edit data sukses!');
-            document.location='detail_perubahan.php?nik=$nik';
+            document.location='detail_index.php?nik=$nik';
           </script>";
-} else {
-    echo "<script>
+    } else {
+        echo "<script>
             alert('Edit data gagal!');
-            document.location='detail_perubahan.php?nik=$nik';
+            document.location='detail_index.php?nik=$nik';
           </script>";
-}
-
+    }
 }
 ?>
 
@@ -72,6 +71,83 @@ if ($simpan) {
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav sidebar-menu" id="exampleAccordion">
+
+                <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
+                    <div class="profile-main">
+                        <p class="image">
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
+                        </p>
+                        <p>
+                            <span class="">Admin</span><br><br>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="../index.php">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Data User</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kematian/index.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kematian</span>
+                    </a>
+                </li>
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../perubahan_data/index.php">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Perubahan</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-akta-kelahiran/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kelahiran</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-kartu-indentitas-anak/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Kartu Identitas Anak</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link" href="../data-surat-pindah-penduduk/">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Data Surat Pindah Penduduk</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out"></i>Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="content-wrapper">
         <div class="container-fluid">
             <ol class="breadcrumb">
@@ -86,7 +162,7 @@ if ($simpan) {
                     <i class="fa fa-table"></i> Edit Data Perubahan Penduduk
                 </div>
                 <div class="card-body">
-                    <a href="detail_perubahan.php?nik=<?= $nik ?>" class="btn btn-primary mb-3">Kembali</a>
+                    <a href="detail_index.php?nik=<?= $nik ?>" class="btn btn-primary mb-3">Kembali</a>
                     <form method="post">
                         <div class="form-group">
                             <label for="nik">NIK</label>

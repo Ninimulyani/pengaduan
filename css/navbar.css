@@ -1,0 +1,51 @@
+/* Navbar utama */
+#mainNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  /* Pastikan navbar berada di atas konten lainnya */
+  background-color: #343a40;
+  /* Warna latar belakang navbar */
+}
+
+/* Navigasi di dalam navbar */
+.navbar-nav {
+  overflow-y: auto;
+  /* Membatasi tinggi agar tidak terlalu panjang */
+  background-color: #343a40;
+  /* Warna latar belakang navbar */
+  padding: 0;
+  margin: 0;
+}
+
+/* Item dalam navbar */
+.navbar-nav .nav-item {
+  margin: 0;
+  /* Hapus margin agar item lebih rapat */
+}
+
+/* Link dalam navbar */
+.navbar-nav .nav-link {
+  color: #fff;
+  /* Warna teks */
+  display: block;
+  /* Agar link memenuhi seluruh item */
+  padding: 10px 15px;
+  /* Menambahkan ruang di dalam item */
+  width: 100%;
+  /* Memastikan link mengisi seluruh area item */
+  text-decoration: none;
+  /* Hapus garis bawah pada link */
+  transition: background-color 0.3s ease-in-out;
+  /* Efek transisi hover */
+}
+
+/* Hover effect untuk link */
+.navbar-nav .nav-link:hover {
+  background-color: #23272b;
+  /* Warna latar belakang saat hover */
+  color: #fff;
+  /* Warna teks tetap putih */
+}

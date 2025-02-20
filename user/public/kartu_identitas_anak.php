@@ -1,67 +1,84 @@
 <?php
-session_start(); // Memulai session
+session_start();
 
-// Periksa apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, arahkan ke halaman login
     header("Location: login-user.php");
     exit();
 }
 
 require_once("../private/database.php");
-$nik = $_SESSION['nik'];  // Menyimpan nik pengguna yang login
+$user_id = $_SESSION['user_id'];
 
-// Fetch the max id from the 'data_anak' table
-$statement = $db->query("SELECT id FROM data_anak ORDER BY id DESC LIMIT 1");
-$max_id = $statement->fetchColumn() + 1; // Get the last ID and add 1
-
-// Check if the form is submitted
 if (isset($_POST['submit'])) {
-    // Set default status (can be changed based on conditions)
-    $status = "Menunggu";
-
-    // Prepare the SQL query with placeholders
-    $sql = "INSERT INTO data_anak (
-        id, nik_anak, nomor_akta_kelahiran, nama_anak, tempat_lahir, tanggal_lahir, anak_ke, 
-        nama_ayah, nama_ibu, alamat_pemohon, tanggal_input, user_id, status
-    ) VALUES (
-        :id, :nik_anak, :nomor_akta_kelahiran, :nama_anak, :tempat_lahir, :tanggal_lahir, :anak_ke,
-        :nama_ayah, :nama_ibu, :alamat_pemohon, CURRENT_TIMESTAMP, :user_id, :status
-    )";
-
-    // Prepare the statement
-    $stmt = $db->prepare($sql);
-
-    // Bind the form input values to the parameters
-    $stmt->bindParam(':id', $max_id, PDO::PARAM_INT);
-    $stmt->bindParam(':nik_anak', $_POST['nik_anak'], PDO::PARAM_STR);
-    $stmt->bindParam(':nomor_akta_kelahiran', $_POST['nomor_akta_kelahiran'], PDO::PARAM_STR);
-    $stmt->bindParam(':nama_anak', $_POST['nama_anak'], PDO::PARAM_STR);
-    $stmt->bindParam(':tempat_lahir', $_POST['tempat_lahir'], PDO::PARAM_STR);
-    $stmt->bindParam(':tanggal_lahir', $_POST['tanggal_lahir'], PDO::PARAM_STR);
-    $stmt->bindParam(':anak_ke', $_POST['anak_ke'], PDO::PARAM_INT);
-    $stmt->bindParam(':nama_ayah', $_POST['nama_ayah'], PDO::PARAM_STR);
-    $stmt->bindParam(':nama_ibu', $_POST['nama_ibu'], PDO::PARAM_STR);
-    $stmt->bindParam(':alamat_pemohon', $_POST['alamat_pemohon'], PDO::PARAM_STR);
-    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT); // User ID dari session
-    $stmt->bindParam(':status', $status, PDO::PARAM_STR); // Default status
-
     try {
-        // Execute the query
-        $stmt->execute();
-        echo "<div class='alert alert-success'>Data berhasil disimpan!</div>";
-    } catch (PDOException $e) {
-        echo "<div class='alert alert-danger'>Error: " . htmlspecialchars($e->getMessage()) . "</div>";
+        $user_id = $_SESSION['user_id'];
+        $status = "Menunggu";
+        $upload_dir = 'uploads/';
+
+        // Upload kartu_keluarga
+        $file_name_kk = isset($_FILES['kartu_keluarga']) ? basename($_FILES['kartu_keluarga']['name']) : '';
+        $target_file_kk = $upload_dir . $file_name_kk;
+
+        // Upload akta_kelahiran
+        $file_name_akta = isset($_FILES['akta_kelahiran']) ? basename($_FILES['akta_kelahiran']['name']) : '';
+        $target_file_akta = $upload_dir . $file_name_akta;
+
+        // Upload pasfoto
+        $file_name_pasfoto = isset($_FILES['pasfoto']) ? basename($_FILES['pasfoto']['name']) : '';
+        $target_file_pasfoto = $upload_dir . $file_name_pasfoto;
+
+        // Move uploaded files
+        if (
+            move_uploaded_file($_FILES['kartu_keluarga']['tmp_name'], $target_file_kk) &&
+            move_uploaded_file($_FILES['akta_kelahiran']['tmp_name'], $target_file_akta) &&
+            move_uploaded_file($_FILES['pasfoto']['tmp_name'], $target_file_pasfoto)
+        ) {
+
+            $sql = "INSERT INTO data_anak (
+                nik_anak, nomor_akta_kelahiran, nama_anak, tempat_lahir, tanggal_lahir, anak_ke,
+                nama_ayah, nama_ibu, alamat_pemohon, dokumen_pemohon, kartu_keluarga, akta_kelahiran,
+                pasfoto, tanggal_input, status, user_id
+            ) VALUES (
+                :nik_anak, :nomor_akta_kelahiran, :nama_anak, :tempat_lahir, :tanggal_lahir, :anak_ke,
+                :nama_ayah, :nama_ibu, :alamat_pemohon, :dokumen_pemohon, :kartu_keluarga, :akta_kelahiran,
+                :pasfoto, CURRENT_TIMESTAMP, :status, :user_id
+            )";
+
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':nik_anak', $_POST['nik_anak']);
+            $stmt->bindParam(':nomor_akta_kelahiran', $_POST['nomor_akta_kelahiran']);
+            $stmt->bindParam(':nama_anak', $_POST['nama_anak']);
+            $stmt->bindParam(':tempat_lahir', $_POST['tempat_lahir']);
+            $stmt->bindParam(':tanggal_lahir', $_POST['tanggal_lahir']);
+            $stmt->bindParam(':anak_ke', $_POST['anak_ke']);
+            $stmt->bindParam(':nama_ayah', $_POST['nama_ayah']);
+            $stmt->bindParam(':nama_ibu', $_POST['nama_ibu']);
+            $stmt->bindParam(':alamat_pemohon', $_POST['alamat_pemohon']);
+            $stmt->bindParam(':dokumen_pemohon', $_POST['dokumen_pemohon']);
+            $stmt->bindParam(':kartu_keluarga', $file_name_kk);
+            $stmt->bindParam(':akta_kelahiran', $file_name_akta);
+            $stmt->bindParam(':pasfoto', $file_name_pasfoto);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':user_id', $user_id);
+
+            if ($stmt->execute()) {
+                header("Location: home-2.php?status=success");
+                exit;
+            } else {
+                echo 'Gagal menyimpan data.';
+            }
+        } else {
+            echo 'Gagal mengunggah file.';
+        }
+    } catch (Exception $e) {
+        echo 'Terjadi kesalahan: ' . $e->getMessage();
     }
 }
-// Ambil status berdasarkan nik pengguna yang login
-$sql = "SELECT status FROM perubahan_data_penduduk WHERE nik = :nik ORDER BY id DESC LIMIT 5"; // Menampilkan 5 status terbaru
-$stmt = $db->prepare($sql);
-$stmt->execute(['nik' => $nik]);  // Bind nilai nik pada parameter :nik
-$notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -79,6 +96,8 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="css/style.css" rel="stylesheet">
     <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
+    <!-- Validasi -->
+    <script src="js/validasi.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="js/bootstrap.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -92,11 +111,11 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <style>
-    .navbar {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 </style>
 
 <body style="width:100%; margin:0;">
@@ -141,46 +160,6 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li><a href="kontak-2.php">KONTAK</a></li>
                         <li><a href="login-user.php">LOGOUT</a></li>
 
-                        <li class="dropdown pull-right relative">
-                            <a href="#" class="dropdown-toggle flex items-center gap-2 text-gray-700 hover:text-gray-900" data-toggle="dropdown">
-                                <i class="fa fa-bell text-xl"></i>
-                                <span class="badge bg-red-500 text-white rounded-full text-xs px-2 py-1">
-                                    <?php echo count($notifications); ?>
-                                </span> <!-- Menampilkan jumlah notifikasi -->
-                            </a>
-                            <ul class="dropdown-menu absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-2 w-72" role="menu" id="notificationDropdown">
-                                <?php if (!empty($notifications)): ?>
-                                    <?php foreach ($notifications as $notification): ?>
-                                        <li class="border-b last:border-none">
-                                            <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-md">
-                                                <!-- Icon berdasarkan status -->
-                                                <span class="bg-blue-500 text-white rounded-full p-2">
-                                                    <?php if ($notification['status'] == 'Selesai'): ?>
-                                                        <i class="fa fa-check-circle"></i>
-                                                    <?php elseif ($notification['status'] == 'Pending'): ?>
-                                                        <i class="fa fa-exclamation-circle"></i>
-                                                    <?php else: ?>
-                                                        <i class="fa fa-info-circle"></i>
-                                                    <?php endif; ?>
-                                                </span>
-                                                <!-- Isi notifikasi -->
-                                                <div>
-                                                    <p class="font-medium text-gray-800">
-                                                        Perubahan Data "<span class="font-semibold text-blue-600"><?= htmlspecialchars($notification['status']) ?></span>"
-                                                    </p>
-                                                    <!-- <span class="text-sm text-gray-500">Klik untuk melihat detail</span> -->
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <hr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <li class="p-2 text-center text-gray-500">
-                                        <i class="fa fa-info-circle text-lg"></i> Tidak ada notifikasi baru.
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -191,15 +170,18 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <hr />
             <div class="row">
                 <div class="col-md-13 card-shadow-2 form-custom">
-                    <form class="form-horizontal" role="form" method="post">
+                    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+
 
                         <!-- Data Pemohon -->
                         <h4>Data Pemohon</h4>
                         <div class="form-group">
                             <label for="nik_anak" class="col-sm-3 control-label">NIK Anak</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nik_anak" name="nik_anak"
-                                    placeholder="Masukkan NIK Anak" required>
+                                <input type="text" class="form-control" id="nik" name="nik_anak"
+                                    placeholder="Masukkan NIK Anak" required onkeypress="return hanyaAngka(event)"
+                                    oninput="validatenik()" maxlength="16">
+                                <small id="nikError" class="text-danger"></small> <!-- Tempat munculnya pesan error -->
                             </div>
                         </div>
                         <div class="form-group">
@@ -207,7 +189,8 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 Kelahiran</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nomor_akta_kelahiran"
-                                    name="nomor_akta_kelahiran" placeholder="Masukkan Nomor Akta Kelahiran" required>
+                                    name="nomor_akta_kelahiran" placeholder="Masukkan Nomor Akta Kelahiran" required
+                                    onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
                         <div class="form-group">
@@ -233,7 +216,8 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <label for="anakke" class="col-sm-2 control-label">Anak ke</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="anakke" name="anak_ke" required>
+                                <input type="number" class="form-control" id="anakke" name="anak_ke" required
+                                    onkeypress="return hanyaAngka(event)">
                             </div>
                         </div>
 
@@ -261,6 +245,41 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
+                        <h4>Dokumen Persyaratan</h4>
+                        <div class="form-group">
+                            <label for="kartu_keluarga" class="col-sm-3 control-label">Kartu Keluarga</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="kartu_keluarga" name="kartu_keluarga"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="akta_kelahiran" class="col-sm-3 control-label">Akta Kelahiran</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="akta_kelahiran" name="akta_kelahiran"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="akta_kelahiran" class="col-sm-3 control-label">KTP Ayah</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="akta_kelahiran" name="akta_kelahiran"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="akta_kelahiran" class="col-sm-3 control-label">KTP Ibu</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="akta_kelahiran" name="akta_kelahiran"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pasfoto" class="col-sm-3 control-label">Pasfoto</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="pasfoto" name="pasfoto" required>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <button type="submit" class="btn btn-primary" name="submit">Kirim Permohonan</button>

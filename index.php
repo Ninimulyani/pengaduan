@@ -3,31 +3,6 @@ require_once("database.php"); // koneksi DB
 
 logged_admin();
 global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-if ($id_admin > 0) {
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_masuk = $row['COUNT(*)'];
-    }
-
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_menunggu = $row['COUNT(*)'];
-    }
-} else {
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-        $total_laporan_masuk = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-        $total_laporan_menunggu = $row['COUNT(*)'];
-    }
-}
 
 // Logic to handle delete action
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
@@ -52,7 +27,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="user/public/images/logomaros.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kantor Kecamatan Tanralili</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -66,7 +41,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -80,11 +55,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                     <div class="profile-main">
                         <p class="image">
                             <img alt="image" src="user/public/images/logomaros.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
+                            <span class="user" style="font-family: monospace;"><?php ?></span>
                         </p>
                     </div>
                 </li>
@@ -102,7 +76,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="perubahan_data/perubahan.php">
+                    <a class="nav-link" href="perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
@@ -243,18 +217,18 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
                             $no = 1;
                             foreach ($statement as $key) {
                             ?>
-                            <tr>
-                                <td><?php echo $no++ ?></td>
-                                <td><?php echo $key['nama']; ?></td>
-                                <td><?php echo $key['username']; ?></td>
-                                <td><?php echo $key['email']; ?></td>
-                                <td><?php echo $key['alamat']; ?></td>
-                                <td>
-                                    <a class="btn btn-warning" href="edit-user.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                    <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
-                                        onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $key['nama']; ?></td>
+                                    <td><?php echo $key['username']; ?></td>
+                                    <td><?php echo $key['email']; ?></td>
+                                    <td><?php echo $key['alamat']; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="edit-user.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
+                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                    </td>
+                                </tr>
                             <?php
                             }
                             ?>
@@ -271,7 +245,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small>Copyright © Andi Sri Mulyani</small>
+                <small>Pelayanan Administrasi Kependudukan Kecamatan Tanralili</small>
             </div>
         </div>
     </footer>

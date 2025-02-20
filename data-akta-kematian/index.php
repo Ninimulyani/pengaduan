@@ -1,36 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../user/public/images/logomaros.png">
+    <link rel="shortcut icon" href="../image/logomaros.png" width="20">
+
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
+    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="../css/admin.css" rel="stylesheet">
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
 <?php
 require_once("../database.php"); // koneksi DB
 
 logged_admin();
 global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-
-if ($id_admin > 0) {
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_masuk = $row['COUNT(*)'];
-    }
-
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
-
-    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-        $total_laporan_menunggu = $row['COUNT(*)'];
-    }
-} else {
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-        $total_laporan_masuk = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-        $total_laporan_ditanggapi = $row['COUNT(*)'];
-    }
-
-    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-        $total_laporan_menunggu = $row['COUNT(*)'];
-    }
-}
-
-
 if (isset($_GET['action']) && $_GET['action'] == 'accept' && isset($_GET['id'])) {
     // Ambil ID dari URL
     $id = $_GET['id'];
@@ -39,9 +32,17 @@ if (isset($_GET['action']) && $_GET['action'] == 'accept' && isset($_GET['id']))
     $queryUpdateStatus = "UPDATE akta_kematian SET status = 'Sedang diProses' WHERE id = '$id'";
 
     if ($koneksi->query($queryUpdateStatus)) {
-        echo "<script>
-                alert('Diterima');
-                document.location='/pengaduan/data-akta-kematian/index.php';
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+              <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                      Swal.fire({
+                          icon: 'success',
+                          title: 'Berhasil',
+                          text: 'Status berhasil diperbarui menjadi Sedang Diproses.'
+                      }).then(() => {
+                          window.location.href = '/pengaduan/data-akta-kematian/index.php';
+                      });
+                  });
               </script>";
     } else {
         echo "Error: " . $koneksi->error;
@@ -57,24 +58,44 @@ if (isset($_GET['action']) && $_GET['action'] == 'reject' && isset($_GET['id']))
     $queryUpdateStatus = "UPDATE akta_kematian SET status = 'Ditolak' WHERE id = '$id'";
 
     if ($koneksi->query($queryUpdateStatus)) {
-        echo "<script>
-                alert('Ditolak');
-                document.location='/pengaduan/data-akta-kematian/index.php';
-              </script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'DiTolak',
+                    text: 'Permohan Di Tolak'
+                }).then(() => {
+                    window.location.href = '/pengaduan/data-surat-pindah-penduduk/index.php';
+                });
+            });
+        </script>";
     } else {
         echo "Error: " . $koneksi->error;
     }
 }
+
 // Logic to handle delete action
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $deleteId = $_GET['id'];
     // Perform the deletion query
     $koneksi->query("DELETE FROM akta_kematian WHERE id = $deleteId");
     // Redirect to the same page after deletion
-    echo "<script>
-                alert('Hapus data sukses!');
-                document.location='index.php';
-                </script>";
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data Berhasil Dihapus',
+                        text: 'Data telah dihapus dari sistem.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = 'index.php';
+                        }
+                    });
+                });
+              </script>";
     exit();
 }
 
@@ -92,16 +113,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
     $queryUpdateStatus = "UPDATE akta_kematian SET status = 'Selesai' WHERE id = '$id'";
 
     if ($koneksi->query($queryUpdateStatus)) {
-        // Ambil NIK dari tabel akta_kematian berdasarkan ID
-        $queryNik = "SELECT nik_pelapor FROM akta_kematian WHERE id = '$id'";
-        $resultNik = $koneksi->query($queryNik);
+        // Ambil User_Id dari tabel akta_kematian berdasarkan ID
+        $querUserId = "SELECT user_id FROM akta_kematian WHERE id = '$id'";
+        $resultUserId = $koneksi->query($querUserId);
 
-        if ($resultNik->num_rows > 0) {
-            $rowNik = $resultNik->fetch_assoc();
-            $nik = $rowNik['nik_pelapor'];
+        if ($resultUserId->num_rows > 0) {
+            $rowUserId = $resultUserId->fetch_assoc();
+            $user_id = $rowUserId['user_id'];
 
-            // Cari email di tabel user berdasarkan NIK
-            $queryUser = "SELECT email FROM user WHERE nik = '$nik'";
+            // Cari email di tabel user berdasarkan UserID
+            $queryUser = "SELECT email FROM user WHERE id = '$user_id'";
             $resultUser = $koneksi->query($queryUser);
 
             if ($resultUser->num_rows > 0) {
@@ -116,40 +137,48 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                     $mail->isSMTP();
                     $mail->Host       = 'smtp.gmail.com';         // Server SMTP Gmail
                     $mail->SMTPAuth   = true;
-                    $mail->Username   = 'surawalawal094@gmail.com';   // Email pengirim
-                    $mail->Password   = 'xudi dsnm nysy krqi';     // App Password Gmail
+                    $mail->Username   = 'srimulyani.nini@gmail.com';   // Email pengirim
+                    $mail->Password   = 'zbwc cyus tlkb wosw';     // App Password Gmail
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Gunakan STARTTLS
                     $mail->Port       = 587;
 
                     // Informasi pengirim dan penerima
-                    $mail->setFrom('surawalawal094@gmail.com', 'Pengaduan System');
+                    $mail->setFrom('srimulyani@gmail.com', 'Pengaduan System');
                     $mail->addAddress($userEmail); // Email penerima
 
                     // Konten email
                     $mail->isHTML(true);
-                    $mail->Subject = 'Pemberitahuan: Perubahan Data Telah Selesai';
+                    $mail->Subject = 'Pemberitahuan: Data Kematian Telah Selesai';
                     $mail->Body    = "
                         <html>
                         <head>
-                            <title>Perubahan Data Selesai</title>
+                            <title>Permohonan Anda Telah Selesai</title>
                         </head>
                         <body>
-                            <p>Yth. Pengguna,</p>
-                            <p>Dengan ini kami memberitahukan bahwa Akta Kematian  telah selesai diproses.</p>
-                            <p>Silakan periksa detail Akta Kematian Anda di sistem kami.</p>
+                            <p>Yth. Masyarakat Kecamatan Tanralili,</p>
+                            <p>Dengan ini kami memberitahukan bahwa permohonan Akta Kematian telah selesai diproses.</p>
+                            <p>Silakan periksa detail permohonan Anda di sistem kami.</p>
                             <br>
                             <p>Hormat kami,</p>
-                            <p>Tim Administrasi</p>
+                            <p>Bagian Dsidukcapil Kantor Kecamatan Tanralili</p>
                         </body>
                         </html>
                     ";
 
                     // Kirim email
                     $mail->send();
-                    echo "<script>
-                            alert('Status diperbarui menjadi Selesai dan email telah dikirim.');
-                            document.location='/pengaduan/data-akta-kematian/index.php';
-                          </script>";
+                    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Diterima',
+                                text: 'Status diperbarui menjadi Selesai dan email telah dikirim.'
+                            }).then(() => {
+                                window.location.href = '/pengaduan/data-akta-kematian/index.php';
+                            });
+                        });
+                    </script>";
                 } catch (Exception $e) {
                     echo "<script>
                             alert('Status diperbarui menjadi Selesai, namun email gagal dikirim. Error: {$mail->ErrorInfo}');
@@ -175,30 +204,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logomaros.png">
-    <link rel="shortcut icon" href="../image/logo.png" width="20">
-
-    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
-    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="../css/admin.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -211,12 +221,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="user/public/images/logomaros.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
@@ -235,7 +243,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                    <a class="nav-link" href="../perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
@@ -292,7 +300,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                     <i class="fa fa-table"></i> Semua Data Kematian
                 </div>
                 <div class="card-body">
-                    <a href="create_user.php" class="btn btn-primary mb-3 mx-2">Tambah Data Kematian</a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
@@ -322,6 +329,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                                     <th>NIK Alm</th>
                                     <th>Nama Lengkap Alm</th>
                                     <th>Hari Tanggal Kematian</th>
+                                    <th>Cetak Form</th>
+                                    <th>Dokumen Persyaratan</th>
                                     <th>Dokumen</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -361,80 +370,94 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
                                     <td><?php echo $key['nik_alm']; ?></td>
                                     <td><?php echo $key['nama_lengkap_alm']; ?></td>
                                     <td><?php echo $key['hari_tanggal_kematian']; ?></td>
-                                    <td>
-                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>"
-                                            onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                    <td><a href="cetak_genarate_pdf.php?id=<?= $key['id'] ?>" target="_blank"
+                                            class="btn btn-primary">
+                                            Lihat
+                                        </a>
                                     </td>
-                                </tr>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $key['nama_pelapor']; ?></td>
-                                        <td><?php echo $key['nik_pelapor']; ?></td>
-                                        <td><?php echo $key['nomor_dokumen_perjalanan']; ?></td>
-                                        <td><?php echo $key['nomor_kartu_keluarga_pelapor']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_pelapor']; ?></td>
-                                        <td><?php echo $key['nomor_handphone']; ?></td>
-                                        <td><?php echo $key['email']; ?></td>
-                                        <td><?php echo $key['nama_saksi_1']; ?></td>
-                                        <td><?php echo $key['nik_saksi_1']; ?></td>
-                                        <td><?php echo $key['nomor_kartu_keluarga_saksi_1']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_saksi_1']; ?></td>
-                                        <td><?php echo $key['nama_ayah']; ?></td>
-                                        <td><?php echo $key['nik_ayah']; ?></td>
-                                        <td><?php echo $key['tempat_lahir_ayah']; ?></td>
-                                        <td><?php echo $key['tanggal_lahir_ayah']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_ayah']; ?></td>
-                                        <td><?php echo $key['nama_ibu']; ?></td>
-                                        <td><?php echo $key['nik_ibu']; ?></td>
-                                        <td><?php echo $key['tempat_lahir_ibu']; ?></td>
-                                        <td><?php echo $key['tanggal_lahir_ibu']; ?></td>
-                                        <td><?php echo $key['kewarganegaraan_ibu']; ?></td>
-                                        <td><?php echo $key['nik_alm']; ?></td>
-                                        <td><?php echo $key['nama_lengkap_alm']; ?></td>
-                                        <td><?php echo $key['hari_tanggal_kematian']; ?></td>
-                                        <td>
-                                            <?php if (!empty($key['dokumen'])): ?>
-                                                <span class="text-success"><i class="fas fa-check-circle"></i> Done</span>
+                                    <td>
+                                        <?php
+                                            $fileCount = 0; // Menghitung jumlah file yang ada
+                                            if (!empty($key['kartu_keluarga'])) {
+                                                $fileCount++;
+                                                $filePath = "../../../pengaduan/user/public/uploads/" . $key['kartu_keluarga'];
+                                                $fileName = $key['kartu_keluarga'];
+                                                echo "<strong>$fileCount.</strong> <a href='$filePath' target='_blank'>$fileName</a><br>";
+                                            }
 
-                                            <?php else: ?>
-                                                <a class="btn btn-primary" href="upload_dokumen.php?edit&id=<?= $key['id'] ?>">
-                                                    <i class="fas fa-upload"></i>
-                                                </a>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            // Fetch status dari database
-                                            $status = $key['status'];
+                                            if (!empty($key['keterangan_kematian'])) {
+                                                $fileCount++;
+                                                $filePath = "../../../pengaduan/user/public/uploads/" . $key['keterangan_kematian'];
+                                                $fileName = $key['keterangan_kematian'];
+                                                echo "<strong>$fileCount.</strong> <a href='$filePath' target='_blank'>$fileName</a><br>";
+                                            }
 
-                                            if ($status == 'Sedang diProses') {
-                                                // Tampilkan tombol "Diproses" dengan ikon
-                                                echo '<a class="btn btn-warning" href="?action=done&id=' . $key['id'] . '">
-                <i class="fas fa-spinner"></i> Diproses
-              </a>';
-                                            } elseif ($status == 'Menunggu') {
-                                                // Tampilkan tombol "Accept" dan "Reject" dengan ikon
-                                                echo '<a class="btn btn-success" href="?action=accept&id=' . $key['id'] . '">
-                <i class="fas fa-check"></i> 
-              </a> ';
-                                                echo '<a class="btn btn-danger" href="?action=reject&id=' . $key['id'] . '" onclick="return confirm(\'Are you sure you want to reject this item?\')">
-                <i class="fas fa-times"></i> 
-              </a>';
-                                            } elseif ($status == 'Selesai') {
-                                                // Tampilkan status "Selesai" dalam bentuk ikon disabled
-                                                echo '<span class="btn btn-success disabled">
-                <i class="fas fa-check-circle"></i> Selesai
-              </span>';
+                                            if ($fileCount === 0) {
+                                                echo '<span class="text-danger">Belum ada file yang diunggah</span>';
                                             }
                                             ?>
-                                        </td>
+                                    </td>
 
-                                        <td>
-                                            <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
-                                            <a class="btn btn-danger" href="?action=delete&id=<?= $key['id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                                        </td>
-                                    </tr>
+                                    <td>
+                                        <?php if (!empty($key['dokumen_pemohon'])) : ?>
+                                        <?php 
+                                            // Decode JSON untuk mendapatkan daftar file
+                                            $dokumen_pemohon = json_decode($key['dokumen_pemohon'], true); 
+                                        ?>
+                                        <?php if (!empty($dokumen_pemohon)) : ?>
+                                        <ul>
+                                            <?php foreach ($dokumen_pemohon as $file) : ?>
+                                            <li>
+                                                <a href="<?= htmlspecialchars($file) ?>" target="_blank">
+                                                    <?= basename($file) ?>
+                                                </a>
+                                            </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <?php endif; ?>
+                                        <?php else : ?>
+                                        <a class="btn btn-primary btn-sm"
+                                            href="upload_dokumen.php?edit&id=<?= $key['id'] ?>">
+                                            <i class="fa fa-upload"></i> Upload
+                                        </a>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $status = $key['status'];
+                                            if ($status == 'Sedang diProses') : ?>
+                                        <a class="btn btn-warning btn-sm" href="?action=done&id=<?= $key['id'] ?>">
+                                            <i class="fas fa-spinner"></i> Diproses
+                                        </a>
+                                        <?php elseif ($status == 'Menunggu') : ?>
+                                        <a class="btn btn-success btn-sm" href="?action=accept&id=<?= $key['id'] ?>">
+                                            <i class="fas fa-check"></i> Terima
+                                        </a>
+                                        <a class="btn btn-danger btn-sm"
+                                            href="alasan_ditolak.php?edit&id=<?= $key['id'] ?>">
+                                            <i class="fas fa-times"></i> Tolak
+                                        </a>
+                                        <?php elseif ($status == 'Ditolak') : ?>
+                                        <span class="btn btn-danger btn-sm disabled">
+                                            <i class="fas fa-check-circle"></i> Ditolak
+                                        </span>
+                                        <br>
+                                        <small><strong>Alasan:
+                                            </strong><?= htmlspecialchars($key['alasan_ditolak']) ?></small>
+                                        <?php elseif ($status == 'Selesai') : ?>
+                                        <span class="btn btn-success btn-sm disabled">
+                                            <i class="fas fa-check-circle"></i> Selesai
+                                        </span>
+                                        <?php endif; ?>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-warning" href="edit.php?edit&id=<?= $key['id'] ?>">Edit</a>
+                                        <!-- Tombol Delete dengan konfirmasi -->
+                                        <a class="btn btn-danger" href="#" onclick="confirmDelete('<?= $key['id'] ?>')">
+                                            <i class="fa fa-trash"></i>Delete</a>
+                                    </td>
+                                </tr>
                                 <?php
                                 }
                                 ?>
@@ -450,7 +473,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small>Copyright © Andi Sri Mulyani</small>
+                <small>© Kantor Kecamatan Tanralili</small>
             </div>
         </div>
     </footer>
@@ -478,13 +501,34 @@ if (isset($_GET['action']) && $_GET['action'] == 'done' && isset($_GET['id'])) {
         </div>
     </div>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="js/admin.js"></script>
-    <script src="js/admin-datatables.js"></script>
+
+
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/admin-datatables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "?action=delete&id=" + id;
+            }
+        });
+    }
+    </script>
 
 </body>
 

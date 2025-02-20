@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Ambil nik dari session pengguna yang login
-$nik = $_SESSION['nik'];  // Menyimpan nik pengguna yang login
+$nik = $_SESSION['user_id'];  // Menyimpan nik pengguna yang login
 
 // Fungsi untuk merandom avatar profil
 function RandomAvatar()
@@ -428,7 +428,7 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </ul>
                     <p class="mb-0">
                         90553 <br>
-                        kelurahan.tamalanrea@gmail.com
+                        kecamatan.tanralili1@gmail.com
                     </p>
                 </div>
             </div>

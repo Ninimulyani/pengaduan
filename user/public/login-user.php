@@ -44,9 +44,21 @@ if (isset($_POST['login'])) {
         header("Location: home-2.php");
         exit();
     } else {
-        $message = "Email atau Password salah!";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Gagal',
+                    text: 'Email Atau password salah!'
+                }).then(() => {
+                    window.location.href = 'login-user.php';
+                });
+            });
+        </script>";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -56,39 +68,173 @@ if (isset($_POST['login'])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login - Pengaduan Masyarakat</title>
-    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="css/admin.css" rel="stylesheet">
+    <title>Login - Website Pelayanan Administrasi</title>
+    <link rel="shortcut icon" href="images/logomaros.png" width="20">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+        }
+
+        .left {
+            left: 0;
+            background: url('images/kantor.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+
+        .left::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Overlay untuk membuat gambar lebih gelap */
+        }
+
+        .logo-container-right {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container-right img {
+            width: 120px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            position: relative;
+            text-align: center;
+        }
+
+
+
+        .right {
+            right: 0;
+            background: #f0f8f5;
+            /* Warna netral yang cocok untuk logo hijau */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-header img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .form-header h3 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 25px;
+            box-shadow: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);
+        }
+
+        .btn-primary {
+            border-radius: 25px;
+            background: linear-gradient(to right, #28a745, #85d17f);
+            /* Warna hijau gradasi */
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #218838, #28a745);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
 </head>
 
-<body class="bg-dark">
-    <div class="container">
-        <div class="card container card-login mx-auto mt-5">
-            <h3 class="text-center" style="padding-top:8px; font-family: monospace;">Login User</h3>
-            <hr class="custom">
-            <div class="card-body">
-                <form method="post">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input class="form-control" id="email" type="email" name="email" placeholder="Enter Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
-                    </div>
-                    <input type="submit" class="btn btn-primary btn-block card-shadow-2" name="login" value="Login">
-                    <br>
-                    <div class="form-group text-center">
-                        <label>Belum Punya Akun? <a class="small" href="register-user.php">Register</a></label>
-                    </div>
-                </form>
-            </div>
-            <p class="text-center text-danger"><small><?php echo $message; ?></small></p>
+<body>
+    <div class="split left">
+        <div class="logo-container">
         </div>
     </div>
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <div class="split right">
+        <div class="form-container">
+            <div class="logo-container-right">
+                <img src="images/logomaros.png" alt="Logo Kanan">
+            </div>
+            <div class="form-header">
+                <h3>Login User</h3>
+            </div>
+            <form method="post">
+                <div class="form-group text-center mt-3">
+                    <label for="email">Email</label>
+                    <input class="form-control" id="email" type="email" name="email" placeholder="Masukkan Email"
+                        required>
+                </div>
+                <div class="form-group text-center mt-3">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" type="password" name="password"
+                        placeholder="Masukkan Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" name="login">Login</button>
+                <div class="form-group text-center mt-3">
+                    <label>Belum Punya Akun? <a class="small" href="register-user.php">Register</a></label>
+                </div>
+            </form>
+            <div class="footer">
+                <p>&copy; 2025 Website Pelayanan Kecamatan Tanralili. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

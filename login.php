@@ -24,54 +24,9 @@ if (isset($_POST['login'])) {
 
 ?>
 
-
 <?php
 
 
-$message = "";
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = md5($_POST['password']);
-
-    $login = mysqli_query($koneksi, "SELECT * FROM user WHERE username='$username' and password='$password'");
-    $cek = mysqli_num_rows($login);
-
-    if ($cek > 0) {
-        $_SESSION['nik'] = $nik;
-        $_SESSION['username'] = $username;
-        $_SESSION['status'] = "login";
-        header('location:user/public/home-2.php');
-    } else {
-        echo "<script>
-            alert('Login Gagal, Periksa Username dan Password Anda!');
-            header('location:../admin/');
-                 </script>";
-    }
-}
-?>
-
-<?php
-
-
-$message = "";
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = md5($_POST['password']);
-
-    $login = mysqli_query($koneksi, "SELECT * FROM ketua_rt WHERE username='$username' and password='$password'");
-    $cek = mysqli_num_rows($login);
-
-    if ($cek > 0) {
-        $_SESSION['username'] = $username;
-        $_SESSION['status'] = "login";
-        header('location:dashboard-rt.php');
-    } else {
-        echo "<script>
-        alert('Login Gagal, Periksa Username dan Password Anda!');
-        header('location:../admin/');
-             </script>";
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,8 +37,8 @@ if (isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png" width="20">
-    <title>Login - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="user/public/images/logomaros.png" width="20">
+    <title>Login - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
 
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
@@ -101,11 +56,13 @@ if (isset($_POST['login'])) {
                 <form method="post">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Username</label>
-                        <input class="form-control" id="username" type="text" name="username" aria-describedby="userlHelp" placeholder="Enter Username" required>
+                        <input class="form-control" id="username" type="text" name="username"
+                            aria-describedby="userlHelp" placeholder="Enter Username" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Password"
+                            required>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
@@ -137,9 +94,11 @@ if (isset($_POST['login'])) {
                         var parent = elem.parentElement || head;
                         parent.removeChild(elem);
                         var rel = elem.rel;
-                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() ==
+                            "stylesheet") {
                             var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
+                                .valueOf());
                         }
                         parent.appendChild(elem);
                     }

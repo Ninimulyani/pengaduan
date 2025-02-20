@@ -1,48 +1,47 @@
 <?php
-    require_once("database.php"); // koneksi DB
+require_once("database.php"); // koneksi DB
 
-    logged_admin ();
-    global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
-    if ($id_admin > 0) {
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi>query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-    } else {
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
-            $total_laporan_masuk = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
-            $total_laporan_ditanggapi = $row['COUNT(*)'];
-        }
-
-        foreach($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
-            $total_laporan_menunggu = $row['COUNT(*)'];
-        }
-        
+logged_admin();
+global $total_laporan_masuk, $total_laporan_menunggu, $total_laporan_ditanggapi;
+if ($id_admin > 0) {
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
     }
-    if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
-        $deleteId = $_GET['id'];
-        // Perform the deletion query using the correct column name
-        $koneksi->query("DELETE FROM komentar WHERE id_komentar = $deleteId");
-        // Redirect to the same page after deletion
-        echo "<script>
+
+    foreach ($db->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi > query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\" AND laporan.tujuan = $id_admin") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+} else {
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan") as $row) {
+        $total_laporan_masuk = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Ditanggapi\"") as $row) {
+        $total_laporan_ditanggapi = $row['COUNT(*)'];
+    }
+
+    foreach ($koneksi->query("SELECT COUNT(*) FROM laporan WHERE status = \"Menunggu\"") as $row) {
+        $total_laporan_menunggu = $row['COUNT(*)'];
+    }
+}
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+    $deleteId = $_GET['id'];
+    // Perform the deletion query using the correct column name
+    $koneksi->query("DELETE FROM komentar WHERE id_komentar = $deleteId");
+    // Redirect to the same page after deletion
+    echo "<script>
         alert('Hapus data sukses!');
         document.location='komentar.php';
         </script>";
-        exit();
-    }
-    
+    exit();
+}
 
- ?>
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,8 +51,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="user/public/images/logomaros.png">
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -67,7 +66,7 @@
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -78,7 +77,7 @@
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="user/public/images/logo.png" width="80">
+                            <img alt="image" src="user/public/images/logomaros.png" width="80">
                             <span class="status"><i class="fa fa-circle text-success"></i></span>
                         </p>
                         <p>
@@ -201,101 +200,101 @@
                     </div>
                 </div>
 
-                </div>
-
             </div>
-            <!-- ./Icon Cards-->
 
-            <!-- Example DataTables Card-->
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-table"></i> Semua Komentar
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Email</th>
-                                    <th>Isi Komentar</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+        </div>
+        <!-- ./Icon Cards-->
+
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Semua Komentar
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Email</th>
+                                <th>Isi Komentar</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                             // Ambil semua record dari tabel laporan
-                                $statement = $koneksi->query("SELECT * FROM komentar ORDER BY id_komentar DESC");
-                            
-                                $no = 1;
-                            foreach ($statement as $key ) {
-                                ?>
+                            $statement = $koneksi->query("SELECT * FROM komentar ORDER BY id_komentar DESC");
+
+                            $no = 1;
+                            foreach ($statement as $key) {
+                            ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
                                     <td><?php echo $key['email']; ?></td>
                                     <td><?php echo $key['isi_komentar']; ?></td>
                                     <td>
-                                    <a class="btn btn-danger" href="?action=delete&id=<?= $key['id_komentar'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                        <a class="btn btn-danger" href="?action=delete&id=<?= $key['id_komentar'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
 
                                     </td>
                                 </tr>
-                                <?php
+                            <?php
                             }
                             ?>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Kantor Kecamatan Tanralili</small>
             </div>
         </div>
-        <!-- /.container-fluid-->
+    </footer>
 
-        <!-- /.content-wrapper-->
-        <footer class="sticky-footer">
-            <div class="container">
-                <div class="text-center">
-                    <small>Copyright © Andi Sri Mulyani</small>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Yakin Ingin Keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-            </div>
-        </footer>
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Yakin Ingin Keluar?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Pilih "Logout" jika anda ingin mengakhiri sesi.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-close card-shadow-2 btn-sm" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-primary btn-sm card-shadow-2" href="login.php">Logout</a>
-                    </div>
+                <div class="modal-body">Pilih "Logout" jika anda ingin mengakhiri sesi.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-close card-shadow-2 btn-sm" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary btn-sm card-shadow-2" href="login.php">Logout</a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <!-- Page level plugin JavaScript-->
-        <script src="vendor/datatables/jquery.dataTables.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="js/admin.js"></script>
-        <!-- Custom scripts for this page-->
-        <script src="js/admin-datatables.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/admin.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/admin-datatables.js"></script>
 
     </div>
 

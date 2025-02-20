@@ -32,6 +32,7 @@ if (isset($_GET['edit'])) {
         $nik_alm = $data['nik_alm'];
         $nama_lengkap_alm = $data['nama_lengkap_alm'];
         $hari_tanggal_kematian = $data['hari_tanggal_kematian'];
+        $status = $data['status'];
     }
 }
 
@@ -61,14 +62,23 @@ if (isset($_POST['submit'])) {
         kewarganegaraan_ibu = '$_POST[kewarganegaraan_ibu]',
         nik_alm = '$_POST[nik_alm]',
         nama_lengkap_alm = '$_POST[nama_lengkap_alm]',
-        hari_tanggal_kematian = '$_POST[hari_tanggal_kematian]'
+        hari_tanggal_kematian = '$_POST[hari_tanggal_kematian]',
+        status = '$status'
         WHERE id = '$_GET[id]'");
 
     if ($simpan) {
-        echo "<script>
-                alert('Edit data sukses!');
-                document.location='/pengaduan/data-akta-kematian/index.php';
-            </script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+              <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                      Swal.fire({
+                          icon: 'success',
+                          title: 'Selesai',
+                          text: 'Data Berhasil Di Edit.'
+                      }).then(() => {
+                          window.location.href = '/pengaduan/data-akta-kematian/index.php';
+                      });
+                  });
+              </script>";
     } else {
         echo "<script>
                 alert('Edit data Gagal!');
@@ -87,8 +97,9 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="user/public/images/logo.png">
-    <title>Dashboard - Pengaduan Masyarakat Kelurahan Tamalanrea</title>
+    <link rel="shortcut icon" href="../user/public/images/logomaros.png">
+    <link rel="shortcut icon" href="../image/logomaros.png" width="20">
+    <title>Dashboard - Pelayanan Administrasi Kependudukan Kecamatan Tanralili</title>
     <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
@@ -98,8 +109,10 @@ if (isset($_POST['submit'])) {
 <body class="fixed-nav sticky-footer" id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index">Pengaduan Masyarakat Kelurahan Tamalanrea</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index">Pelayanan Administrasi Kependudukan Kecamatan Tanralili</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -108,12 +121,10 @@ if (isset($_POST['submit'])) {
                 <li class="sidebar-profile nav-item" data-toggle="tooltip" data-placement="right" title="Admin">
                     <div class="profile-main">
                         <p class="image">
-                            <img alt="image" src="../user/public/images/logo.png" width="80">
-                            <span class="status"><i class="fa fa-circle text-success"></i></span>
+                            <img alt="image" src="../user/public/images/logomaros.png" width="80">
                         </p>
                         <p>
                             <span class="">Admin</span><br><br>
-                            <span class="user" style="font-family: monospace;"><?php echo $divisi; ?></span>
                         </p>
                     </div>
                 </li>
@@ -132,7 +143,7 @@ if (isset($_POST['submit'])) {
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" href="../perubahan_data/perubahan.php">
+                    <a class="nav-link" href="../perubahan_data/index.php">
                         <i class="fa fa-fw fa-table"></i>
                         <span class="nav-link-text">Data Perubahan</span>
                     </a>
@@ -189,8 +200,8 @@ if (isset($_POST['submit'])) {
                 <div class="card-header">
                     <i class="fa fa-table"></i> Edit Data Akta Kematian
                 </div>
-                <div class="card-body">
-                    <a href="akta_kematian.php" class="btn btn-primary mb-3">Kembali</a>
+                <div class="card-body mx-2 col-8">
+                    <a href="index.php" class="btn btn-primary mb-3">Kembali</a>
                     <form method="post">
                         <div class="form-group">
                             <label for="id">Nomor Pengaduan</label>
@@ -198,99 +209,136 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="nama_pelapor">Nama Pelapor</label>
-                            <input type="text" class="form-control" id="nama_pelapor" name="nama_pelapor" value="<?= $nama_pelapor ?>" required>
+                            <input type="text" class="form-control" id="nama_pelapor" name="nama_pelapor"
+                                value="<?= $nama_pelapor ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nik_pelapor">NIK Pelapor</label>
-                            <input type="text" class="form-control" id="nik_pelapor" name="nik_pelapor" value="<?= $nik_pelapor ?>" required>
+                            <input type="text" class="form-control" id="nik_pelapor" name="nik_pelapor"
+                                value="<?= $nik_pelapor ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nomor_dokumen_perjalanan">Nomor Dokumen Perjalanan</label>
-                            <input type="text" class="form-control" id="nomor_dokumen_perjalanan" name="nomor_dokumen_perjalanan" value="<?= $nomor_dokumen_perjalanan ?>" required>
+                            <input type="text" class="form-control" id="nomor_dokumen_perjalanan"
+                                name="nomor_dokumen_perjalanan" value="<?= $nomor_dokumen_perjalanan ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nomor_kartu_keluarga_pelapor">Nomor Kartu Keluarga Pelapor</label>
-                            <input type="text" class="form-control" id="nomor_kartu_keluarga_pelapor" name="nomor_kartu_keluarga_pelapor" value="<?= $nomor_kartu_keluarga_pelapor ?>" required>
+                            <input type="text" class="form-control" id="nomor_kartu_keluarga_pelapor"
+                                name="nomor_kartu_keluarga_pelapor" value="<?= $nomor_kartu_keluarga_pelapor ?>"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="kewarganegaraan_pelapor">Kewarganegaraan Pelapor</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_pelapor" name="kewarganegaraan_pelapor" value="<?= $kewarganegaraan_pelapor ?>" required>
+                            <input type="text" class="form-control" id="kewarganegaraan_pelapor"
+                                name="kewarganegaraan_pelapor" value="<?= $kewarganegaraan_pelapor ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nomor_handphone">Nomor Handphone</label>
-                            <input type="text" class="form-control" id="nomor_handphone" name="nomor_handphone" value="<?= $nomor_handphone ?>" required>
+                            <input type="text" class="form-control" id="nomor_handphone" name="nomor_handphone"
+                                value="<?= $nomor_handphone ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?= $email ?>" required>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= $email ?>"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="nama_saksi_1">Nama Saksi 1</label>
-                            <input type="text" class="form-control" id="nama_saksi_1" name="nama_saksi_1" value="<?= $nama_saksi_1 ?>" required>
+                            <input type="text" class="form-control" id="nama_saksi_1" name="nama_saksi_1"
+                                value="<?= $nama_saksi_1 ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nik_saksi_1">NIK Saksi 1</label>
-                            <input type="text" class="form-control" id="nik_saksi_1" name="nik_saksi_1" value="<?= $nik_saksi_1 ?>" required>
+                            <input type="text" class="form-control" id="nik_saksi_1" name="nik_saksi_1"
+                                value="<?= $nik_saksi_1 ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nomor_kartu_keluarga_saksi_1">Nomor Kartu Keluarga Saksi 1</label>
-                            <input type="text" class="form-control" id="nomor_kartu_keluarga_saksi_1" name="nomor_kartu_keluarga_saksi_1" value="<?= $nomor_kartu_keluarga_saksi_1 ?>" required>
+                            <input type="text" class="form-control" id="nomor_kartu_keluarga_saksi_1"
+                                name="nomor_kartu_keluarga_saksi_1" value="<?= $nomor_kartu_keluarga_saksi_1 ?>"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="kewarganegaraan_saksi_1">Kewarganegaraan Saksi 1</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_saksi_1" name="kewarganegaraan_saksi_1" value="<?= $kewarganegaraan_saksi_1 ?>" required>
+                            <input type="text" class="form-control" id="kewarganegaraan_saksi_1"
+                                name="kewarganegaraan_saksi_1" value="<?= $kewarganegaraan_saksi_1 ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_ayah">Nama Ayah</label>
-                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" value="<?= $nama_ayah ?>" required>
+                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah"
+                                value="<?= $nama_ayah ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nik_ayah">NIK Ayah</label>
-                            <input type="text" class="form-control" id="nik_ayah" name="nik_ayah" value="<?= $nik_ayah ?>" required>
+                            <input type="text" class="form-control" id="nik_ayah" name="nik_ayah"
+                                value="<?= $nik_ayah ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="tempat_lahir_ayah">Tempat Lahir Ayah</label>
-                            <input type="text" class="form-control" id="tempat_lahir_ayah" name="tempat_lahir_ayah" value="<?= $tempat_lahir_ayah ?>" required>
+                            <input type="text" class="form-control" id="tempat_lahir_ayah" name="tempat_lahir_ayah"
+                                value="<?= $tempat_lahir_ayah ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_lahir_ayah">Tanggal Lahir Ayah</label>
-                            <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" value="<?= $tanggal_lahir_ayah ?>" required>
+                            <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah"
+                                value="<?= $tanggal_lahir_ayah ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="kewarganegaraan_ayah">Kewarganegaraan Ayah</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_ayah" name="kewarganegaraan_ayah" value="<?= $kewarganegaraan_ayah ?>" required>
+                            <input type="text" class="form-control" id="kewarganegaraan_ayah"
+                                name="kewarganegaraan_ayah" value="<?= $kewarganegaraan_ayah ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_ibu">Nama Ibu</label>
-                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" value="<?= $nama_ibu ?>" required>
+                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu"
+                                value="<?= $nama_ibu ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nik_ibu">NIK Ibu</label>
-                            <input type="text" class="form-control" id="nik_ibu" name="nik_ibu" value="<?= $nik_ibu ?>" required>
+                            <input type="text" class="form-control" id="nik_ibu" name="nik_ibu" value="<?= $nik_ibu ?>"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="tempat_lahir_ibu">Tempat Lahir Ibu</label>
-                            <input type="text" class="form-control" id="tempat_lahir_ibu" name="tempat_lahir_ibu" value="<?= $tempat_lahir_ibu ?>" required>
+                            <input type="text" class="form-control" id="tempat_lahir_ibu" name="tempat_lahir_ibu"
+                                value="<?= $tempat_lahir_ibu ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_lahir_ibu">Tanggal Lahir Ibu</label>
-                            <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" value="<?= $tanggal_lahir_ibu ?>" required>
+                            <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu"
+                                value="<?= $tanggal_lahir_ibu ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="kewarganegaraan_ibu">Kewarganegaraan Ibu</label>
-                            <input type="text" class="form-control" id="kewarganegaraan_ibu" name="kewarganegaraan_ibu" value="<?= $kewarganegaraan_ibu ?>" required>
+                            <input type="text" class="form-control" id="kewarganegaraan_ibu" name="kewarganegaraan_ibu"
+                                value="<?= $kewarganegaraan_ibu ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nik_alm">NIK Alm</label>
-                            <input type="text" class="form-control" id="nik_alm" name="nik_alm" value="<?= $nik_alm ?>" required>
+                            <input type="text" class="form-control" id="nik_alm" name="nik_alm" value="<?= $nik_alm ?>"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="nama_lengkap_alm">Nama Lengkap Alm</label>
-                            <input type="text" class="form-control" id="nama_lengkap_alm" name="nama_lengkap_alm" value="<?= $nama_lengkap_alm ?>" required>
+                            <input type="text" class="form-control" id="nama_lengkap_alm" name="nama_lengkap_alm"
+                                value="<?= $nama_lengkap_alm ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="hari_tanggal_kematian">Hari Tanggal Kematian</label>
-                            <input type="date" class="form-control" id="hari_tanggal_kematian" name="hari_tanggal_kematian" value="<?= $hari_tanggal_kematian ?>" required>
+                            <input type="date" class="form-control" id="hari_tanggal_kematian"
+                                name="hari_tanggal_kematian" value="<?= $hari_tanggal_kematian ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="Menunggu" <?= $status == 'Menunggu' ? 'selected' : '' ?>>Menunggu
+                                </option>
+                                <option value="Ditolak" <?= $status == 'Ditolak' ? 'selected' : '' ?>>Ditolak</option>
+                                <option value="Sedang diproses" <?= $status == 'Sedang diproses' ? 'selected' : '' ?>>
+                                    Sedang diproses</option>
+                                <option value="Selesai" <?= $status == 'Selesai' ? 'selected' : '' ?>>Selesai</option>
+                            </select>
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                     </form>
